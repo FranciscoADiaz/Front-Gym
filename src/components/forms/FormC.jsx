@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./FormC.css";
-import clientAxios, { configHeaders } from "../../helpers/axios.config.helpers";
+import clientAxios, { configHeaders } from "../../helpers/axios.config.helper";
 import axios from "axios";
 
 const FormC = ({ idPage }) => {
