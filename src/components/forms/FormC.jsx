@@ -3,6 +3,8 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./FormC.css";
+import clientAxios, { configHeaders } from "../../helpers/axios.config.helpers";
+import axios from "axios";
 
 const FormC = ({ idPage }) => {
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ const FormC = ({ idPage }) => {
     setRegistro({ ...registro, [ev.target.name]: value });
   };
 
-  const registroUsuario = (ev) => {
+  const registroUsuario = async (ev) => {
     ev.preventDefault();
     const { usuario, email, contrasenia, repContrasenia, check } = registro;
     let nuevoError = {};
@@ -40,20 +42,31 @@ const FormC = ({ idPage }) => {
       return;
     }
 
-    const usuariosLs = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const verificarUsuarioExistente = async (usuario, email) => {
+      try {
+        const respuesta = await axios.get(`${import.meta.env.VITE_URL_BACK_PROD}/usuarios`);
+        const usuarios = respuesta.data.usuarios;
 
-    const usuarioExistente = usuariosLs.find(
-      (user) => user.nombreUsuario === usuario || user.emailUsuario === email
-    );
+        return usuarios.find(
+          (u) => u.nombreUsuario === usuario || u.emailUsuario === email
+        );
+      } catch (error) {
+        console.error("Error al buscar usuario:", error);
+        return null;
+      }
+    };
+    const usuarioExistente = await verificarUsuarioExistente(usuario, email);
 
     if (usuarioExistente) {
       Swal.fire({
         icon: "error",
         title: "ERROR",
-        text: "El nombre de usuario o correo ya están en uso.",
+        text: "Ese nombre de usuario o email ya está registrado",
       });
       return;
     }
+
+    // seguir con el registro...
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
@@ -100,49 +113,38 @@ const FormC = ({ idPage }) => {
 
     if (usuario && email && contrasenia && repContrasenia && check) {
       if (contrasenia === repContrasenia) {
-        const usuariosLs = JSON.parse(localStorage.getItem("usuarios")) || [];
+        const res = await clientAxios.post(
+          "/usuarios/registrarse",
+          {
+            nombreUsuario: usuario,
+            emailUsuario: email,
+            contrasenia,
+          },
+          configHeaders
+        );
 
-        const nuevoUsuario = {
-          id: usuariosLs[usuariosLs.length - 1]?.id + 1 || 1,
-          nombreUsuario: usuario,
-          emailUsuario: email,
-          contrasenia,
-          tyc: check,
-          rol: "administrador",
-          login: false,
-          status: "enable",
-        };
+        if (res.status === 201) {
+          Swal.fire({
+            title: "Gracias por registrarte!",
+            text: `${res.data.msg}`,
+            icon: "success",
+          });
 
-        usuariosLs.push(nuevoUsuario);
-        localStorage.setItem("usuarios", JSON.stringify(usuariosLs));
-
-        Swal.fire({
-          title: "Registro exitoso!",
-          icon: "success",
-        });
-
-        setRegistro({
-          usuario: "",
-          email: "",
-          contrasenia: "",
-          repContrasenia: "",
-          check: false,
-        });
-
-        setTimeout(() => {
-          navigate("/IniciarSesion");
-        }, 1000);
-        
+          setTimeout(() => {
+            navigate("/iniciarsesion");
+          }, 1000);
+        }
       } else {
         Swal.fire({
           icon: "error",
-          title: "ERROR",
+          title: "Oops...",
           text: "Las contraseñas no son iguales!",
         });
       }
     }
     setErrores(nuevoError);
   };
+
 
   const handleChangeFormLogin = (ev) => {
     setInicioSesion({ ...inicioSesion, [ev.target.name]: ev.target.value });
