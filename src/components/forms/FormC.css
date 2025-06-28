@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Orbitron:wght@500;700&display=swap');
+
+body{  
+  background-color: #B0B0B0 !important;     
+}
+
+.formulario-page {
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.form-wrapper {   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.form-personalizado {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.473);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.form-titulo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  color: #0066ff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-personalizado .form-control {
+  border-radius: 20px;
+  font-size: 1rem;
+  padding: 12px;
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid #1A1A2E;
+}
+
+.form-personalizado .form-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: #0066ff;
+}
+
+.form-check-input {
+  border: 1px solid #1A1A2E !important; 
+  border-radius: 6px;
+  cursor: pointer; 
+}
+
+.form-check-label {
+  font-size: 0.95rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btn-agregar {
+  background-color: #0066ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.btn-agregar:hover {
+  background-color: #fff;
+  color: #0066ff;
+  border: 2px solid #0066ff;
+  transform: scale(1.05);
+}
+
+.btn-agregar:active {
+  transform: scale(0.95);
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
