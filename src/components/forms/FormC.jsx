@@ -168,7 +168,7 @@ const FormC = ({ idPage }) => {
 
     setErrores(nuevoError);
 
-   
+  }
   };
 
   return (
