@@ -111,7 +111,7 @@ const FormC = ({ idPage }) => {
       } else {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
+          title: "ERROR",
           text: "Las contraseñas no son iguales!",
         });
       }
@@ -151,11 +151,18 @@ const FormC = ({ idPage }) => {
     if (res.status === 200) {
       sessionStorage.setItem("token", JSON.stringify(res.data.token));
       sessionStorage.setItem("rol", JSON.stringify(res.data.rol));
+      
 
       if (res.data.rol === "admin") {
         navigate("/admin");
       } else {
         navigate("/user");
+       {
+          Swal.fire({
+            title: "Gracias por registrarte!",
+            text: "Recibirás un correo para confirmar tu cuenta",
+            icon: "success",
+          });
       }
     }
 
