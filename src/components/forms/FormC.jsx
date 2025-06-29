@@ -99,7 +99,7 @@ const FormC = ({ idPage }) => {
 
         if (res.status === 201) {
           Swal.fire({
-            title: "Gracias por registrarte!",
+            title: "Gracias por registrarte! 😃",
             text: `${res.data.msg}`,
             icon: "success",
           });
@@ -138,6 +138,13 @@ const FormC = ({ idPage }) => {
         text: "Los campos usuario y contraseña no pueden estar vacíos.",
       });
     }
+    else {
+      Swal.fire({
+        title: "Te enviamos un correo para verificar tu cuenta",
+        text: `${res.data.msg}`,
+        icon: "success",
+      });
+    }
 
     const res = await clientAxios.post(
       "/usuarios/iniciarsesion",
@@ -157,13 +164,6 @@ const FormC = ({ idPage }) => {
         navigate("/admin");
       } else {
         navigate("/user");
-       {
-          Swal.fire({
-            title: "Gracias por registrarte!",
-            text: "Recibirás un correo para confirmar tu cuenta",
-            icon: "success",
-          });
-      }
     }
 
     setErrores(nuevoError);
