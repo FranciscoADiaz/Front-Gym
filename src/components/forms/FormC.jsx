@@ -42,31 +42,6 @@ const FormC = ({ idPage }) => {
       return;
     }
 
-    const verificarUsuarioExistente = async (usuario, email) => {
-      try {
-        const respuesta = await axios.get(`${import.meta.env.VITE_URL_BACK_PROD}/usuarios`);
-        const usuarios = respuesta.data.usuarios;
-
-        return usuarios.find(
-          (u) => u.nombreUsuario === usuario || u.emailUsuario === email
-        );
-      } catch (error) {
-        console.error("Error al buscar usuario:", error);
-        return null;
-      }
-    };
-    const usuarioExistente = await verificarUsuarioExistente(usuario, email);
-
-    if (usuarioExistente) {
-      Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: "Ese nombre de usuario o email ya está registrado",
-      });
-      return;
-    }
-
-    // seguir con el registro...
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
@@ -113,8 +88,7 @@ const FormC = ({ idPage }) => {
 
     if (usuario && email && contrasenia && repContrasenia && check) {
       if (contrasenia === repContrasenia) {
-        const res = await clientAxios.post(
-          "/usuarios/registrarse",
+        const res = await clientAxios.post("/usuarios/registrarse",
           {
             nombreUsuario: usuario,
             emailUsuario: email,
@@ -150,14 +124,12 @@ const FormC = ({ idPage }) => {
     setInicioSesion({ ...inicioSesion, [ev.target.name]: ev.target.value });
   };
 
-  const iniciarSesionUsuario = (ev) => {
-    ev.preventDefault();
-    const usuariosLs = JSON.parse(localStorage.getItem("usuarios")) || [];
-    const { usuario, contrasenia } = inicioSesion;
 
-    const usuarioExiste = usuariosLs.find(
-      (user) => user.nombreUsuario === usuario
-    );
+
+  const iniciarSesionUsuario = async (ev) => {
+    ev.preventDefault();
+    const { usuario, contrasenia } = inicioSesion;
+    let nuevoError = {};
 
     if (!usuario || !contrasenia) {
       return Swal.fire({
@@ -167,31 +139,29 @@ const FormC = ({ idPage }) => {
       });
     }
 
-    if (!usuarioExiste) {
-      Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: "El usuario y/o contraseña son incorrectos.",
-      });
-    }
+    const res = await clientAxios.post(
+      "/usuarios/iniciarsesion",
+      {
+        nombreUsuario: inicioSesion.usuario,
+        contrasenia: inicioSesion.contrasenia,
+      },
+      configHeaders
+    );
 
-    if (usuarioExiste.contrasenia === contrasenia) {
-      usuarioExiste.login = true;
-      localStorage.setItem("usuarios", JSON.stringify(usuariosLs));
-      sessionStorage.setItem("usuarioLogeado", JSON.stringify(usuarioExiste));
+    if (res.status === 200) {
+      sessionStorage.setItem("token", JSON.stringify(res.data.token));
+      sessionStorage.setItem("rol", JSON.stringify(res.data.rol));
 
-      if (usuarioExiste.rol === "usuario") {
-        navigate("/user");
-      } else {
+      if (res.data.rol === "admin") {
         navigate("/admin");
+      } else {
+        navigate("/user");
       }
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: "El usuario y/o contraseña son incorrectos.",
-      });
     }
+
+    setErrores(nuevoError);
+
+   
   };
 
   return (
