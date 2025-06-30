@@ -138,15 +138,8 @@ const FormC = ({ idPage }) => {
         text: "Los campos usuario y contraseña no pueden estar vacíos.",
       });
     }
-    else {
-      Swal.fire({
-        title: "Te enviamos un correo para verificar tu cuenta",
-        text: `${res.data.msg}`,
-        icon: "success",
-      });
-    }
-
-    const res = await clientAxios.post(
+    
+     const res = await clientAxios.post(
       "/usuarios/iniciarsesion",
       {
         nombreUsuario: inicioSesion.usuario,
@@ -154,6 +147,11 @@ const FormC = ({ idPage }) => {
       },
       configHeaders
     );
+      Swal.fire({
+        title: "Te enviamos un correo para verificar tu cuenta",
+        text: `${res.data.msg}`,
+        icon: "success",
+      });
 
     if (res.status === 200) {
       sessionStorage.setItem("token", JSON.stringify(res.data.token));
