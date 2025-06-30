@@ -126,48 +126,56 @@ const FormC = ({ idPage }) => {
 
 
 
-  const iniciarSesionUsuario = async (ev) => {
-    ev.preventDefault();
-    const { usuario, contrasenia } = inicioSesion;
-    let nuevoError = {};
+ const iniciarSesionUsuario = async (ev) => {
+  ev.preventDefault();
+  const { usuario, contrasenia } = inicioSesion;
 
-    if (!usuario || !contrasenia) {
-      return Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: "Los campos usuario y contraseña no pueden estar vacíos.",
-      });
-    }
-    
-     const res = await clientAxios.post(
+  if (!usuario || !contrasenia) {
+    return Swal.fire({
+      icon: "error",
+      title: "ERROR",
+      text: "Los campos usuario y contraseña no pueden estar vacíos.",
+    });
+  }
+
+  try {
+    const res = await clientAxios.post(
       "/usuarios/iniciarsesion",
       {
-        nombreUsuario: inicioSesion.usuario,
-        contrasenia: inicioSesion.contrasenia,
+        nombreUsuario: usuario, // Este nombre coincide con lo que espera el backend
+        contrasenia,
       },
       configHeaders
     );
+
+    if (res.status === 200) {
       Swal.fire({
-        title: "Te enviamos un correo para verificar tu cuenta",
+        title: "Inicio de sesión exitoso",
         text: `${res.data.msg}`,
         icon: "success",
       });
 
-    if (res.status === 200) {
       sessionStorage.setItem("token", JSON.stringify(res.data.token));
-      sessionStorage.setItem("rol", JSON.stringify(res.data.rol));
-      
+      sessionStorage.setItem("rol", JSON.stringify(res.data.rolUsuario));
 
-      if (res.data.rol === "admin") {
+      if (res.data.rolUsuario === "admin") {
         navigate("/admin");
       } else {
         navigate("/user");
+      }
     }
-
-    setErrores(nuevoError);
-
+  } catch (error) {
+    // Mostrar mensaje del backend o un mensaje genérico
+    Swal.fire({
+      icon: "error",
+      title: "ERROR",
+      text: error.response?.data?.msg || "No se pudo iniciar sesión. Verificá tus datos.",
+    });
+    console.error("Error al iniciar sesión:", error);
   }
-  };
+};
+
+  
 
   return (
     <div className="formulario-page">
