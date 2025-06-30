@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";  // Corregido: importar desde react-router-dom
+import { useNavigate } from "react-router";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./FormC.css";
 import clientAxios, { configHeaders } from "../../helpers/axios.config.helper";
-import axios from "axios";  // Se mantiene si lo necesitas en el futuro
+import axios from "axios";
 
 const FormC = ({ idPage }) => {
   const navigate = useNavigate();
@@ -23,7 +23,8 @@ const FormC = ({ idPage }) => {
   });
 
   const handleChangeFormRegister = (ev) => {
-    const value = ev.target.type === "checkbox" ? ev.target.checked : ev.target.value;
+    const value =
+      ev.target.type === "checkbox" ? ev.target.checked : ev.target.value;
     setRegistro({ ...registro, [ev.target.name]: value });
   };
 
@@ -33,78 +34,141 @@ const FormC = ({ idPage }) => {
     let nuevoError = {};
 
     if (!usuario.trim()) {
-      Swal.fire({ icon: "error", title: "ERROR", text: "Tenés que ingresar un nombre de usuario" });
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email.trim()) {
-      Swal.fire({ icon: "error", title: "ERROR", text: "Tenés que ingresar un correo" });
-      return;
-    } else if (!emailRegex.test(email)) {
-      Swal.fire({ icon: "error", title: "ERROR", text: "El formato de correo no es válido" });
-      return;
-    }
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-    if (!contrasenia.trim()) {
-      Swal.fire({ icon: "error", title: "ERROR", text: "Tenés que ingresar una contraseña" });
-      return;
-    } else if (!passwordRegex.test(contrasenia)) {
-      Swal.fire({ icon: "error", title: "ERROR", text: "La contraseña debe tener al menos 8 carácteres, una mayúscula y un número" });
-      return;
-    }
-    if (!check) {
-      Swal.fire({ icon: "error", title: "ERROR", text: "Tenés que aceptar los términos y condiciones" });
-      return;
-    }
-    if (contrasenia !== repContrasenia) {
-      Swal.fire({ icon: "error", title: "ERROR", text: "Las contraseñas no son iguales!" });
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Tenés que ingresar un nombre de usuario",
+      });
       return;
     }
 
-    try {
-      const res = await clientAxios.post(
-        "/usuarios/registrarse",
-        { nombreUsuario: usuario, emailUsuario: email, contrasenia },
-        configHeaders
-      );
-      if (res.status === 201) {
-        Swal.fire({ title: "Gracias por registrarte! 😃", text: res.data.msg, icon: "success" });
-        setTimeout(() => navigate("/iniciarsesion"), 1000);
-      }
-    } catch (error) {
-      Swal.fire({ icon: "error", title: "ERROR", text: error.response?.data?.msg || "No se pudo registrar" });
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Tenés que ingresar un correo",
+      });
+      return;
+    } else if (!emailRegex.test(email)) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "El formato de correo no es válido",
+      });
+      return;
     }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!contrasenia.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Tenés que ingresar una contraseña",
+      });
+      return;
+    } else if (!passwordRegex.test(contrasenia)) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "La contraseña debe tener al menos 8 carácteres, una mayúscula y un número",
+      });
+      return;
+    }
+
+    if (!check) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Tenés que aceptar los términos y condiciones",
+      });
+      return;
+    }
+
+    if (usuario && email && contrasenia && repContrasenia && check) {
+      if (contrasenia === repContrasenia) {
+        const res = await clientAxios.post("/usuarios/registrarse",
+          {
+            nombreUsuario: usuario,
+            emailUsuario: email,
+            contrasenia,
+          },
+          configHeaders
+        );
+
+        if (res.status === 201) {
+          Swal.fire({
+            title: "Gracias por registrarte! 😃",
+            text: `${res.data.msg}`,
+            icon: "success",
+          });
+
+          setTimeout(() => {
+            navigate("/iniciarsesion");
+          }, 1000);
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "ERROR",
+          text: "Las contraseñas no son iguales!",
+        });
+      }
+    }
+    setErrores(nuevoError);
   };
+
 
   const handleChangeFormLogin = (ev) => {
     setInicioSesion({ ...inicioSesion, [ev.target.name]: ev.target.value });
   };
+
+
 
   const iniciarSesionUsuario = async (ev) => {
     ev.preventDefault();
     const { usuario, contrasenia } = inicioSesion;
     let nuevoError = {};
 
-    if (!usuario.trim() || !contrasenia.trim()) {
-      return Swal.fire({ icon: "error", title: "ERROR", text: "Los campos usuario y contraseña no pueden estar vacíos." });
+    if (!usuario || !contrasenia) {
+      return Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Los campos usuario y contraseña no pueden estar vacíos.",
+      });
     }
-    
-    try {
-      const res = await clientAxios.post(
-        "/usuarios/iniciarsesion",
-        { nombreUsuario: usuario, contrasenia },
-        configHeaders
-      );
-      if (res.status === 200) {
-        Swal.fire({ title: "Te enviamos un correo para verificar tu cuenta", text: res.data.msg, icon: "success" });
-        sessionStorage.setItem("token", JSON.stringify(res.data.token));
-        sessionStorage.setItem("rol", JSON.stringify(res.data.rol));
-        if (res.data.rol === "admin") navigate("/admin"); else navigate("/user");
-        setErrores(nuevoError);
-      }
-    } catch (error) {
-      Swal.fire({ icon: "error", title: "ERROR", text: error.response?.data?.msg || "No se pudo iniciar sesión" });
+    else {
+      Swal.fire({
+        title: "Te enviamos un correo para verificar tu cuenta",
+        text: `${res.data.msg}`,
+        icon: "success",
+      });
     }
+
+    const res = await clientAxios.post(
+      "/usuarios/iniciarsesion",
+      {
+        nombreUsuario: inicioSesion.usuario,
+        contrasenia: inicioSesion.contrasenia,
+      },
+      configHeaders
+    );
+
+    if (res.status === 200) {
+      sessionStorage.setItem("token", JSON.stringify(res.data.token));
+      sessionStorage.setItem("rol", JSON.stringify(res.data.rol));
+      
+
+      if (res.data.rol === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+    }
+
+    setErrores(nuevoError);
+
+  }
   };
 
   return (
@@ -114,7 +178,9 @@ const FormC = ({ idPage }) => {
           <Col xs={12} md={8} lg={6}>
             <div className="form-personalizado">
               <h2 className="form-titulo">
-                {idPage === "registrarse" ? "Registrarse 🏋️‍♂️" : "Iniciar Sesión 💪"}
+                {idPage === "registrarse"
+                  ? "Registrarse 🏋️‍♂️"
+                  : "Iniciar Sesión 💪"}
               </h2>
               <Form className="w-100 text-center">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -122,12 +188,28 @@ const FormC = ({ idPage }) => {
                   <Form.Control
                     type="text"
                     placeholder="pepito123"
-                    value={ idPage === "registrarse" ? registro.usuario : inicioSesion.usuario }
-                    onChange={ idPage === "registrarse" ? handleChangeFormRegister : handleChangeFormLogin }
+                    value={
+                      idPage === "registrarse"
+                        ? registro.usuario
+                        : inicioSesion.usuario
+                    }
+                    onChange={
+                      idPage === "registrarse"
+                        ? handleChangeFormRegister
+                        : handleChangeFormLogin
+                    }
                     name="usuario"
-                    className={ errores.usuario ? "form-control is-invalid" : "form-control" }
+                    className={
+                      errores.usuario
+                        ? "form-control is-invalid"
+                        : "form-control"
+                    }
                   />
-                  {errores.usuario && (<Form.Text className="text-danger">{errores.usuario}</Form.Text>)}
+                  {errores.usuario && (
+                    <Form.Text className="text-danger">
+                      El campo usuario es obligatorio
+                    </Form.Text>
+                  )}
                 </Form.Group>
 
                 {idPage === "registrarse" && (
@@ -139,9 +221,10 @@ const FormC = ({ idPage }) => {
                       placeholder="pepito123@gmail.com"
                       value={registro.email}
                       onChange={handleChangeFormRegister}
-                      className={ errores.email ? "form-control is-invalid" : "form-control" }
                     />
-                    {errores.email && (<Form.Text className="text-danger">{errores.email}</Form.Text>)}
+                    <Form.Text className="text-muted">
+                      Nunca compartiremos tu e-mail con nadie
+                    </Form.Text>
                   </Form.Group>
                 )}
 
@@ -151,11 +234,17 @@ const FormC = ({ idPage }) => {
                     type="password"
                     placeholder="********"
                     name="contrasenia"
-                    value={ idPage === "registrarse" ? registro.contrasenia : inicioSesion.contrasenia }
-                    onChange={ idPage === "registrarse" ? handleChangeFormRegister : handleChangeFormLogin }
-                    className={ errores.contrasenia ? "form-control is-invalid" : "form-control" }
+                    value={
+                      idPage === "registrarse"
+                        ? registro.contrasenia
+                        : inicioSesion.contrasenia
+                    }
+                    onChange={
+                      idPage === "registrarse"
+                        ? handleChangeFormRegister
+                        : handleChangeFormLogin
+                    }
                   />
-                  {errores.contrasenia && (<Form.Text className="text-danger">{errores.contrasenia}</Form.Text>)}
                 </Form.Group>
 
                 {idPage === "registrarse" && (
@@ -168,10 +257,9 @@ const FormC = ({ idPage }) => {
                         name="repContrasenia"
                         value={registro.repContrasenia}
                         onChange={handleChangeFormRegister}
-                        className={ errores.repContrasenia ? "form-control is-invalid" : "form-control" }
                       />
-                      {errores.repContrasenia && (<Form.Text className="text-danger">{errores.repContrasenia}</Form.Text>)}
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       <Form.Check
                         type="checkbox"
@@ -179,13 +267,20 @@ const FormC = ({ idPage }) => {
                         name="check"
                         checked={registro.check}
                         onChange={handleChangeFormRegister}
-                        className={ errores.check ? "is-invalid" : "" }
                       />
-                      {errores.check && (<Form.Text className="text-danger">{errores.check}</Form.Text>)}
                     </Form.Group>
                   </>
                 )}
-                <Button className="btn-agregar" variant="primary" type="submit" onClick={ idPage === "registrarse" ? registroUsuario : iniciarSesionUsuario }>
+                <Button
+                  className="btn-agregar"
+                  variant="primary"
+                  type="submit"
+                  onClick={
+                    idPage === "registrarse"
+                      ? registroUsuario
+                      : iniciarSesionUsuario
+                  }
+                >
                   {idPage === "registrarse" ? "Registrarse" : "Iniciar Sesión"}
                 </Button>
               </Form>
