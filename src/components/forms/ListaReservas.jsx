@@ -1,24 +1,42 @@
-import React, { useEffect, useState } from "react";
-
-import { obtenerReservas, cancelarReserva, crearReserva } from "../../helpers/apiReservas";
+import React, { useEffect, useState, useCallback } from "react";
+import { obtenerReservas, cancelarReserva } from "../../helpers/apiReservas";
 import Swal from "sweetalert2";
-import "./FormularioReserva.css"; 
+import "./FormularioReserva.css";
 
 const ListaReservas = () => {
+  const token = JSON.parse(sessionStorage.getItem("token")) || null;
+  const usuarioActual = token
+    ? (() => {
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          return payload.idUsuario;
+        } catch (e) {
+          console.error("Error decodificando token:", e);
+          return null;
+        }
+      })()
+    : null;
+
   const [reservas, setReservas] = useState([]);
 
-  const cargarReservas = async () => {
+  const cargarReservas = useCallback(async () => {
+    if (!usuarioActual) return;
     const { data } = await obtenerReservas();
-    setReservas(data);
-  };
+    const reservasFiltradas = data.filter(
+      (reserva) => reserva.idUsuario === usuarioActual
+    );
+    setReservas(reservasFiltradas);
+  }, [usuarioActual]);
+
 
   useEffect(() => {
     cargarReservas();
-  }, []);
+  }, [cargarReservas]);
+
 
   const cancelar = async (id) => {
     const confirm = await Swal.fire({
-      title: "¿Cancelar reserva?",
+      title: "Confirmar Cancelación",
       showCancelButton: true,
       confirmButtonText: "Sí",
       cancelButtonText: "No",
@@ -26,19 +44,19 @@ const ListaReservas = () => {
 
     if (confirm.isConfirmed) {
       await cancelarReserva(id);
-      Swal.fire("Cancelado", "", "success");
+      Swal.fire("Clase cancelada con éxito", "", "success");
       cargarReservas();
     }
   };
 
   return (
     <div className="lista-reservas">
-      <h2>Reservas actuales</h2>
+      <h2>Mis reservas</h2>
       <ul>
         {reservas.map((reserva) => (
           <li key={reserva._id}>
-            <strong>{reserva.nombreUsuario}</strong> – {reserva.tipoClase} –{" "}
-            {reserva.fecha.slice(0, 10)} a las {reserva.hora}
+            <strong>{reserva.tipoClase}</strong> – {reserva.fecha.slice(0, 10)}{" "}
+            a las {reserva.hora}
             <button onClick={() => cancelar(reserva._id)}>Cancelar</button>
           </li>
         ))}
