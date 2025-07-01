@@ -16,14 +16,35 @@ const obtenerIdUsuario = () => {
   }
 };
 
+
+const definirHoraPorProfesor = (profesor) => {
+  if (profesor === "andres") return "08:00";
+  if (profesor === "walter") return "14:00";
+  if (profesor === "daniela") return "20:00";
+  return "";
+};
+
+
+const diasPermitidosPorProfesor = {
+  andres: [1, 3], // lunes, miércoles
+  walter: [2, 4], // martes, jueves
+  daniela: [5, 6], // viernes, sábado
+};
+
+const esDiaPermitido = (profesor, fechaString) => {
+  if (!profesor || !fechaString) return false;
+  const fecha = new Date(fechaString);
+  const dia = fecha.getDay();
+  return diasPermitidosPorProfesor[profesor]?.includes(dia);
+};
+
 const FormularioReserva = () => {
   const idUsuario = obtenerIdUsuario();
 
-
   const [reserva, setReserva] = useState({
     fecha: "",
-    hora: "",
     tipoClase: "",
+    profesor: "",
   });
 
 
@@ -31,13 +52,46 @@ const FormularioReserva = () => {
     setReserva({ ...reserva, [e.target.name]: e.target.value });
   };
 
-  
+ 
+  const generarFechasValidas = () => {
+    const hoy = new Date();
+    const fechas = [];
+    for (let i = 0; i < 14; i++) {
+      const fecha = new Date(hoy);
+      fecha.setDate(hoy.getDate() + i);
+      if (esDiaPermitido(reserva.profesor, fecha.toISOString().split("T")[0])) {
+        fechas.push(fecha.toISOString().split("T")[0]);
+      }
+    }
+    return fechas;
+  };
+
+  const fechasValidas = generarFechasValidas();
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const hora = definirHoraPorProfesor(reserva.profesor);
+    if (!hora) {
+      Swal.fire("⚠️ Seleccioná un profesor válido", "", "warning");
+      return;
+    }
+
+    if (!esDiaPermitido(reserva.profesor, reserva.fecha)) {
+      Swal.fire("❌ Día no válido", "Ese profesor no atiende ese día", "error");
+      return;
+    }
+
     try {
-      await clientAxios.post("/reservar", { ...reserva, idUsuario });
+      await clientAxios.post("/reservar", {
+        ...reserva,
+        hora,
+        idUsuario,
+      });
+
       Swal.fire("✅ Turno reservado con éxito", "", "success");
-      setReserva({ fecha: "", hora: "", tipoClase: "" });
+      setReserva({ fecha: "", tipoClase: "", profesor: "" });
     } catch (error) {
       Swal.fire(
         "❌ Error",
@@ -65,6 +119,7 @@ const FormularioReserva = () => {
                 onChange={handleChange}
                 required
               >
+                <option value="">Elegir Clase</option>
                 <option value="Spinning">Spinning</option>
                 <option value="Funcional">Funcional</option>
                 <option value="Crossfit">Crossfit</option>
@@ -79,32 +134,40 @@ const FormularioReserva = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="andres">Andrés</option>
-                <option value="walter">Walter</option>
-                <option value="daniela">Daniela</option>
+                <option value="">Elegir Profesor</option>
+                <option value="andres">
+                  Andrés (Lun y Mié - 08:00 a 10:00)
+                </option>
+                <option value="walter">
+                  Walter (Mar y Jue - 14:00 a 16:00)
+                </option>
+                <option value="daniela">
+                  Daniela (Vie y Sáb - 20:00 a 22:00)
+                </option>
               </Form.Select>
             </Form.Group>
 
             <Form.Group controlId="fecha" className="mb-3">
               <Form.Label>Fecha</Form.Label>
-              <Form.Control
-                type="date"
+              <Form.Select
                 name="fecha"
                 value={reserva.fecha}
                 onChange={handleChange}
                 required
-              />
-            </Form.Group>
-
-            <Form.Group controlId="hora" className="mb-4">
-              <Form.Label>Hora</Form.Label>
-              <Form.Control
-                type="time"
-                name="hora"
-                value={reserva.hora}
-                onChange={handleChange}
-                required
-              />
+                disabled={!reserva.profesor}
+              >
+                <option value="">Elegí una fecha</option>
+                {fechasValidas.map((fecha) => (
+                  <option key={fecha} value={fecha}>
+                    {new Date(fecha).toLocaleDateString("es-AR", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
 
             <Button variant="primary" type="submit" className="w-100">
@@ -118,3 +181,4 @@ const FormularioReserva = () => {
 };
 
 export default FormularioReserva;
+
