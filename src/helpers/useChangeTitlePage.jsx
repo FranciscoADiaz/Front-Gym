@@ -15,6 +15,9 @@ export const useChangeTitle = (idPage) => {
     case "registrarse":
       document.title = "Registrarse";
       break;
+    case "reservar":
+      document.title = "Reservar Clase";
+      break;
 
     default:
       document.title = "Error";
