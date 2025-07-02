@@ -93,9 +93,7 @@ const FormC = ({ idPage }) => {
             nombreUsuario: usuario,
             emailUsuario: email,
             contrasenia,
-          },
-          configHeaders
-        );
+          });
 
         if (res.status === 201) {
           Swal.fire({
