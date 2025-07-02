@@ -51,28 +51,40 @@ const ListaReservas = () => {
   };
 
   return (
+ <Container>
+      <ul className="lista-reservas p-0">
+        {reservas.map((reserva) => (
+          <li
+            key={reserva._id}
+            className="mb-3 list-group-item border shadow-sm rounded"
+          >
+            <Row>
+              <Col xs={12} sm={6} className="mb-2 mb-sm-0">
+                <strong>{reserva.tipoClase}</strong>
+                <br />
+                {reserva.fecha.slice(0, 10)} a las {reserva.hora}
+              </Col>
 
-<ul className="lista-reservas">
-  {reservas.map((reserva) => (
-    <li key={reserva._id} className="mb-3 list-group-item">
-      <Row>
-        <Col xs={12} sm={6}>
-          <strong>{reserva.tipoClase}</strong>
-          <br />
-          {reserva.fecha.slice(0, 10)} a las {reserva.hora}
-        </Col>
-        <Col xs={12} sm={4}>
-          Profesor/a: {reserva.profesor}
-        </Col>
-        <Col xs={12} sm={2} className="mt-2 mt-sm-0">
-          <button onClick={() => cancelar(reserva._id)} className="btn btn-danger btn-sm">
-            Cancelar
-          </button>
-        </Col>
-      </Row>
-    </li>
-  ))}
-</ul>
+              <Col xs={12} sm={4} className="mb-2 mb-sm-0">
+                Profesor/a: {reserva.profesor}
+              </Col>
+
+              <Col xs={12} sm={2}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => cancelar(reserva._id)}
+                  className="w-100"
+                >
+                  Cancelar
+                </Button>
+              </Col>
+            </Row>
+          </li>
+        ))}
+      </ul>
+    </Container>
+)
 };
 
 export default ListaReservas;
