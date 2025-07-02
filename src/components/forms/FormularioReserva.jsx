@@ -18,9 +18,9 @@ const obtenerIdUsuario = () => {
 
 
 const definirHoraPorProfesor = (profesor) => {
-  if (profesor === "andres") return "08:00";
-  if (profesor === "walter") return "14:00";
-  if (profesor === "daniela") return "20:00";
+  if (profesor === "Andres") return "08:00";
+  if (profesor === "Walter") return "14:00";
+  if (profesor === "Daniela") return "20:00";
   return "";
 };
 
@@ -135,13 +135,13 @@ const FormularioReserva = () => {
                 required
               >
                 <option value="">Elegir Profesor</option>
-                <option value="andres">
+                <option value="Andres">
                   Andrés (Lun y Mié - 08:00 a 10:00)
                 </option>
-                <option value="walter">
+                <option value="Walter">
                   Walter (Mar y Jue - 14:00 a 16:00)
                 </option>
-                <option value="daniela">
+                <option value="Daniela">
                   Daniela (Vie y Sáb - 20:00 a 22:00)
                 </option>
               </Form.Select>
