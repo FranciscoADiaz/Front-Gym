@@ -58,8 +58,8 @@ const ListaReservas = () => {
             key={reserva._id}
             className="mb-3 list-group-item border shadow-sm rounded"
           >
-            <Row>
-              <Col xs={12} sm={6} className="mb-2 mb-sm-0">
+            <Row className="w-100">
+              <Col xs={12} sm={5} className="mb-2 mb-sm-0">
                 <strong>{reserva.tipoClase}</strong>
                 <br />
                 {reserva.fecha.slice(0, 10)} a las {reserva.hora}
@@ -69,7 +69,7 @@ const ListaReservas = () => {
                 Profesor/a: {reserva.profesor}
               </Col>
 
-              <Col xs={12} sm={2}>
+              <Col xs={12} sm={3}>
                 <Button
                   variant="danger"
                   onClick={() => cancelar(reserva._id)}
