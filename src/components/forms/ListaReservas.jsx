@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { obtenerReservas, cancelarReserva } from "../../helpers/apiReservas";
 import Swal from "sweetalert2";
 import "./FormularioReserva.css";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 
 const ListaReservas = () => {
   const token = JSON.parse(sessionStorage.getItem("token")) || null;
