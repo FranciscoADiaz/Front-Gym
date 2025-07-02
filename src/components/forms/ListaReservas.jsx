@@ -50,19 +50,21 @@ const ListaReservas = () => {
   };
 
   return (
-    <div className="lista-reservas">
-      <h2>Mis reservas</h2>
-      <ul>
-        {reservas.map((reserva) => (
-          <li key={reserva._id}>
-            <strong>{reserva.tipoClase}</strong> – {reserva.fecha.slice(0, 10)}{" "}
-            a las {reserva.hora}
-            <button onClick={() => cancelar(reserva._id)}>Cancelar</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  <div className="lista-reservas">
+    <h2>Mis reservas</h2>
+    <ul>
+      {reservas.map((reserva) => (
+        <li key={reserva._id}>
+          <strong>{reserva.tipoClase}</strong> – {reserva.fecha.slice(0, 10)} a las {reserva.hora}
+          <br />
+          <span>Profesor/a: {reserva.nombreProfesor || "Sin asignar"}</span>
+          <br />
+          <button onClick={() => cancelar(reserva._id)}>Cancelar</button>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 };
 
 export default ListaReservas;
