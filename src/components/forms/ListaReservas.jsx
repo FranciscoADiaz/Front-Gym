@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { obtenerReservas, cancelarReserva } from "../../helpers/apiReservas";
 import Swal from "sweetalert2";
 import "./FormularioReserva.css";
+import { Row, Col, Container, Button } from "react-bootstrap";
 
 const ListaReservas = () => {
   const token = JSON.parse(sessionStorage.getItem("token")) || null;
@@ -50,19 +51,39 @@ const ListaReservas = () => {
   };
 
   return (
-    <div className="lista-reservas">
-      <h2>Mis reservas</h2>
-      <ul>
+ <Container>
+      <ul className="lista-reservas p-0">
         {reservas.map((reserva) => (
-          <li key={reserva._id}>
-            <strong>{reserva.tipoClase}</strong> – {reserva.fecha.slice(0, 10)}{" "}
-            a las {reserva.hora}
-            <button onClick={() => cancelar(reserva._id)}>Cancelar</button>
+          <li
+            key={reserva._id}
+            className="mb-3 list-group-item border shadow-sm rounded"
+          >
+            <Row className="w-100">
+              <Col xs={12} sm={5} className="mb-2 mb-sm-0">
+                <strong>{reserva.tipoClase}</strong>
+                <br />
+                {reserva.fecha.slice(0, 10)} a las {reserva.hora}
+              </Col>
+
+              <Col xs={12} sm={4} className="mb-2 mb-sm-0">
+                Profesor/a: {reserva.profesor}
+              </Col>
+
+              <Col xs={12} sm={3}>
+                <Button
+                  variant="danger"
+                  onClick={() => cancelar(reserva._id)}
+                  className="w-100"
+                >
+                  Cancelar
+                </Button>
+              </Col>
+            </Row>
           </li>
         ))}
       </ul>
-    </div>
-  );
+    </Container>
+)
 };
 
 export default ListaReservas;
