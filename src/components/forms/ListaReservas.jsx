@@ -72,7 +72,6 @@ const ListaReservas = () => {
               <Col xs={12} sm={2}>
                 <Button
                   variant="danger"
-                  size="sm"
                   onClick={() => cancelar(reserva._id)}
                   className="w-100"
                 >
