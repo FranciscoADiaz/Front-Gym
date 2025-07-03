@@ -9,17 +9,18 @@ const AdminHomePage = () => {
   useChangeTitle("Panel Admin");
 
   useEffect(() => {
-    const obtenerClasesHoy = async () => {
-      try {
-        const res = await clientAxios.get("/admin");
-        setClasesDelDia(res.data);
-      } catch (error) {
-        console.error("Error al obtener clases:", error);
-      }
-    };
+  const obtenerClasesHoy = async () => {
+    try {
+      const res = await clientAxios.get("/admin", configHeaders);
+      console.log("Clases recibidas:", res.data);
+      setClasesDelDia(res.data); // o res.data.clases, si tu backend envía { clases: [...] }
+    } catch (error) {
+      console.error("Error al obtener clases:", error);
+    }
+  };
 
-    obtenerClasesHoy();
-  }, []);
+  obtenerClasesHoy();
+}, []);
 
   return (
     <Container className="my-4">
