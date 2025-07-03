@@ -11,7 +11,7 @@ const AdminHomePage = () => {
   useEffect(() => {
     const obtenerClasesHoy = async () => {
       try {
-        const res = await clientAxios.get("/admin/clases-hoy");
+        const res = await clientAxios.get("/admin");
         setClasesDelDia(res.data);
       } catch (error) {
         console.error("Error al obtener clases:", error);
