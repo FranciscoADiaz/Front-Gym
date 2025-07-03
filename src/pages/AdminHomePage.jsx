@@ -13,7 +13,9 @@ const AdminHomePage = () => {
   const obtenerClasesHoy = async () => {
     try {
       const res = await clientAxios.get("/admin", configHeaders);
-      setClasesDelDia(res.data);
+      console.log("Respuesta completa:", res);
+      console.log("Datos recibidos:", res.data);
+      setClasesDelDia(res.data.clases ?? res.data); // por si viene en res.data.clases
     } catch (error) {
       console.error("Error al obtener clases:", error);
     }
@@ -21,7 +23,7 @@ const AdminHomePage = () => {
 
   obtenerClasesHoy();
 }, []);
-
+  
   return (
     <Container className="my-4">
       <h1 className="mb-3">🔑 Bienvenido, Administrador</h1>
