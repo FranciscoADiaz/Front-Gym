@@ -1,6 +1,7 @@
+
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import clientAxios from "../helpers/axios.config.helper";
+import clientAxios, { configHeaders } from "../helpers/axios.config.helper";
 import ClasesHoy from "../components/admin/ClasesHoy";
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
 
@@ -9,18 +10,19 @@ const AdminHomePage = () => {
   useChangeTitle("Panel Admin");
 
   useEffect(() => {
-    const obtenerClasesHoy = async () => {
-      try {
-        const res = await clientAxios.get("/admin/clases-hoy");
-        setClasesDelDia(res.data);
-      } catch (error) {
-        console.error("Error al obtener clases:", error);
-      }
-    };
+  const obtenerClasesHoy = async () => {
+    try {
+      const res = await clientAxios.get("/admin", configHeaders);
+      console.log("Datos recibidos en React:", res.data);
+      setClasesDelDia(res.data); // O res.data.clases, según el backend
+    } catch (error) {
+      console.error("Error al obtener clases:", error);
+    }
+  };
 
-    obtenerClasesHoy();
-  }, []);
-
+  obtenerClasesHoy();
+}, []);
+  
   return (
     <Container className="my-4">
       <h1 className="mb-3">🔑 Bienvenido, Administrador</h1>
