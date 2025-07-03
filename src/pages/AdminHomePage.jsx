@@ -1,6 +1,7 @@
+
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import clientAxios from "../helpers/axios.config.helper";
+import clientAxios, { configHeaders } from "../helpers/axios.config.helper";
 import ClasesHoy from "../components/admin/ClasesHoy";
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
 
@@ -12,8 +13,7 @@ const AdminHomePage = () => {
   const obtenerClasesHoy = async () => {
     try {
       const res = await clientAxios.get("/admin", configHeaders);
-      console.log("Clases recibidas:", res.data);
-      setClasesDelDia(res.data); // o res.data.clases, si tu backend envía { clases: [...] }
+      setClasesDelDia(res.data);
     } catch (error) {
       console.error("Error al obtener clases:", error);
     }
