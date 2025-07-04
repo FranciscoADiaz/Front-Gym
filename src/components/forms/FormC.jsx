@@ -287,11 +287,17 @@ const FormC = ({ idPage }) => {
                 >
                   {idPage === "registrarse" ? "Registrarse" : "Iniciar Sesión"}
                 </Button>
-                 <div className="mt-2">
-        <Link to="/recuperarcontrasenia">
-          ¿Olvidaste tu contraseña?
-        </Link>
-      </div>
+                <div className="mt-2">
+                  {idPage === "registrarse" ? (
+                    <Link to="/iniciarsesion">
+                      ¿Ya tenés una cuenta? Iniciar sesión
+                    </Link>
+                  ) : (
+                    <Link to="/recuperarcontrasenia">
+                      ¿Olvidaste tu contraseña?
+                    </Link>
+                  )}
+                </div>
               </Form>
             </div>
           </Col>
