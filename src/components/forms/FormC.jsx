@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
-import { Container, Row, Col, Form, Button, Link } from "react-bootstrap";
+import { useNavigate, Link } from "react-router";
+import { Container, Row, Col, Form, Button} from "react-bootstrap";
 import "./FormC.css";
 import clientAxios, { configHeaders } from "../../helpers/axios.config.helper";
 import axios from "axios";
