@@ -1,54 +1,73 @@
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate} from "react-router";
+import logo from "../../assets/logo.png";
 
 function NavbarC() {
+  const usuarioLog = JSON.parse(sessionStorage.getItem('token'))
+    const usuarioRolLog = JSON.parse(sessionStorage.getItem('rol'))
+    const navigate = useNavigate()
+  
+    const logoutUser = () => {
+      sessionStorage.removeItem('token')
+      sessionStorage.removeItem('rol')
+  
+      setTimeout(() => {
+        navigate('/')
+      }, 100);
+    }
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary ">
         <Container fluid>
-          <NavLink to="/">
-            <img src="freepik__background__34329.png" alt="" width="120" />
+          <NavLink
+            to={
+              usuarioLog && usuarioRolLog === "usuario"
+                ? "/user"
+                : usuarioLog && usuarioRolLog === "admin"
+                ? "/admin"
+                : "/"
+            }
+          >
+            <img src={logo} alt="Logo" width="120" />
           </NavLink>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="ms-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
-              navbarScroll
-            >
-              <NavLink className="nav-link" to="sobre">
-                Sobre nosotros
-              </NavLink>
-              <NavLink className="nav-link" to="iniciar">
-                Iniciar sesion
-              </NavLink>
-              <NavDropdown title="Link" id="navbarScrollingDropdown">
-                <NavLink className="nav-link" to="#action3">
-                  Action
-                </NavLink>
-                <NavLink className="nav-link" to="#action4">
-                  Another action
-                </NavLink>
-                <NavDropdown.Divider />
-                <NavLink className="nav-link" to="#action5">
-                  Something else here
-                </NavLink>
-              </NavDropdown>
-            </Nav>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Buscar"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Buscador</Button>
-            </Form>
+          
+                      {
+                        usuarioLog && usuarioRolLog === 'usuario' ?
+                          <Nav className="ms-auto">
+                            <NavLink className='nav-link' to="/user">Inicio</NavLink>
+                            <NavLink className='nav-link' to="/user/cart">Mis Clases</NavLink>
+                            <NavLink className='nav-link' to="/user/fav">Planes</NavLink>
+                          </Nav>
+                          :
+                          usuarioLog && usuarioRolLog === 'admin' ?
+                            <Nav className="ms-auto">
+                              <NavLink className='nav-link' to="/admin">Inicio</NavLink>
+                              <NavLink className='nav-link' to="/admin/users">Administrar Usuarios</NavLink>
+                              <NavLink className='nav-link' to="/admin/clases">Administrar Clases</NavLink>
+                            </Nav>
+                            :
+                            <Nav className="ms-auto">
+                              <NavLink className='nav-link' to="/">Inicio</NavLink>
+                              <NavLink className='nav-link' to="/sobrenosotros">Sobre Nosotros</NavLink>
+                              <NavLink className='nav-link' to="/contacto">Contacto</NavLink>
+                            </Nav>
+                      }
+                      {
+                        usuarioLog ?
+                          <Nav className="ms-auto">
+                            <NavLink className='nav-link' to="#" onClick={logoutUser}>Cerrar Sesion</NavLink>
+          
+                          </Nav>
+                          :
+                          <Nav className="ms-auto">
+                            <NavLink className='nav-link' to="/iniciarsesion">Iniciar Sesion</NavLink>
+                            <NavLink className='nav-link' to="/registrarse">Registrarse</NavLink>
+                          </Nav>
+                      }
           </Navbar.Collapse>
         </Container>
       </Navbar>
