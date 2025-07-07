@@ -13,12 +13,14 @@ const AdminHomePage = () => {
 
   const [admin, setAdmin] = useState({ nombre: "" });
   useEffect(() => {
-    const datosAdmin = JSON.parse(sessionStorage.getItem("admin"));
-    if (datosAdmin) {
-      setAdmin(datosAdmin);
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    if (token) {
+      const payloadBase64 = token.split(".")[1];
+      const payload = JSON.parse(atob(payloadBase64));
+      setAdmin({ nombre: payload.nombreUsuario || "Administrador" });
     }
   }, []);
-
+  
   useEffect(() => {
   const obtenerClasesHoy = async () => {
     try {
