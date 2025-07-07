@@ -184,121 +184,166 @@ const FormC = ({ idPage }) => {
               <h2 className="form-titulo">
                 {idPage === "registrarse"
                   ? "Registrarse 🏋️‍♂️"
+                  : idPage === "recuperarcontrasenia"
+                  ? "Recuperar Contraseña 🔑"
                   : "Iniciar Sesión 💪"}
               </h2>
-              <Form className="w-100 text-center">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Nombre Usuario</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="pepito123"
-                    value={
-                      idPage === "registrarse"
-                        ? registro.usuario
-                        : inicioSesion.usuario
-                    }
-                    onChange={
-                      idPage === "registrarse"
-                        ? handleChangeFormRegister
-                        : handleChangeFormLogin
-                    }
-                    name="usuario"
-                    className={
-                      errores.usuario
-                        ? "form-control is-invalid"
-                        : "form-control"
-                    }
-                  />
-                  {errores.usuario && (
-                    <Form.Text className="text-danger">
-                      El campo usuario es obligatorio
-                    </Form.Text>
-                  )}
-                </Form.Group>
-
-                {idPage === "registrarse" && (
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email Usuario</Form.Label>
+              {idPage === "recuperarcontrasenia" ? (
+                <Form className="w-100 text-center">
+                  <Form.Group className="mb-3" controlId="formRecuperarEmail">
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
                       name="email"
-                      placeholder="pepito123@gmail.com"
+                      placeholder="Ingresa tu correo"
                       value={registro.email}
                       onChange={handleChangeFormRegister}
                     />
                     <Form.Text className="text-muted">
-                      Nunca compartiremos tu e-mail con nadie
+                      Ingresa tu correo para recuperar la contraseña
                     </Form.Text>
                   </Form.Group>
-                )}
+                  <Button
+                    className="btn-agregar"
+                    variant="primary"
+                    type="button"
+                    onClick={() => {
+                      if (!registro.email.trim()) {
+                        Swal.fire({
+                          icon: "error",
+                          title: "ERROR",
+                          text: "Tenés que ingresar un correo",
+                        });
+                        return;
+                      }
+                    }}
+                  >
+                    Recuperar
+                  </Button>
+                </Form>
+              ) : (
+                <Form className="w-100 text-center">
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Nombre Usuario</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Ingresa tu usuario"
+                      value={
+                        idPage === "registrarse"
+                          ? registro.usuario
+                          : inicioSesion.usuario
+                      }
+                      onChange={
+                        idPage === "registrarse"
+                          ? handleChangeFormRegister
+                          : handleChangeFormLogin
+                      }
+                      name="usuario"
+                      className={
+                        errores.usuario
+                          ? "form-control is-invalid"
+                          : "form-control"
+                      }
+                    />
+                    {errores.usuario && (
+                      <Form.Text className="text-danger">
+                        El campo usuario es obligatorio
+                      </Form.Text>
+                    )}
+                  </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Contraseña</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="********"
-                    name="contrasenia"
-                    value={
-                      idPage === "registrarse"
-                        ? registro.contrasenia
-                        : inicioSesion.contrasenia
-                    }
-                    onChange={
-                      idPage === "registrarse"
-                        ? handleChangeFormRegister
-                        : handleChangeFormLogin
-                    }
-                  />
-                </Form.Group>
-
-                {idPage === "registrarse" && (
-                  <>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Label>Repetir Contraseña</Form.Label>
+                  {idPage === "registrarse" && (
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Email Usuario</Form.Label>
                       <Form.Control
-                        type="password"
-                        placeholder="********"
-                        name="repContrasenia"
-                        value={registro.repContrasenia}
+                        type="email"
+                        name="email"
+                        placeholder="Ingresa tu correo"
+                        value={registro.email}
                         onChange={handleChangeFormRegister}
                       />
+                      <Form.Text className="text-muted">
+                        Nunca compartiremos tu e-mail con nadie
+                      </Form.Text>
                     </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check
-                        type="checkbox"
-                        label="Aceptar términos y condiciones"
-                        name="check"
-                        checked={registro.check}
-                        onChange={handleChangeFormRegister}
-                      />
-                    </Form.Group>
-                  </>
-                )}
-                <Button
-                  className="btn-agregar"
-                  variant="primary"
-                  type="submit"
-                  onClick={
-                    idPage === "registrarse"
-                      ? registroUsuario
-                      : iniciarSesionUsuario
-                  }
-                >
-                  {idPage === "registrarse" ? "Registrarse" : "Iniciar Sesión"}
-                </Button>
-                 <div className="mt-2">
-                  {idPage === "registrarse" ? (
-                    <Link to="/iniciarsesion">
-                      ¿Ya tenés una cuenta? Iniciar sesión
-                    </Link>
-                  ) : (
-                    <Link to="/recuperarcontrasenia">
-                      ¿Olvidaste tu contraseña?
-                    </Link>
                   )}
-                </div>
-              </Form>
+
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="********"
+                      name="contrasenia"
+                      value={
+                        idPage === "registrarse"
+                          ? registro.contrasenia
+                          : inicioSesion.contrasenia
+                      }
+                      onChange={
+                        idPage === "registrarse"
+                          ? handleChangeFormRegister
+                          : handleChangeFormLogin
+                      }
+                    />
+                  </Form.Group>
+
+                  {idPage === "registrarse" && (
+                    <>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicPassword"
+                      >
+                        <Form.Label>Repetir Contraseña</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="********"
+                          name="repContrasenia"
+                          value={registro.repContrasenia}
+                          onChange={handleChangeFormRegister}
+                        />
+                      </Form.Group>
+
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicCheckbox"
+                      >
+                        <Form.Check
+                          type="checkbox"
+                          label="Aceptar términos y condiciones"
+                          name="check"
+                          checked={registro.check}
+                          onChange={handleChangeFormRegister}
+                        />
+                      </Form.Group>
+                    </>
+                  )}
+                  <Button
+                    className="btn-agregar"
+                    variant="primary"
+                    type="submit"
+                    onClick={
+                      idPage === "registrarse"
+                        ? registroUsuario
+                        : iniciarSesionUsuario
+                    }
+                  >
+                    {idPage === "registrarse"
+                      ? "Registrarse"
+                      : "Iniciar Sesión"}
+                  </Button>
+                  <div className="mt-2">
+                    {idPage === "registrarse" ? (
+                      <Link to="/iniciarsesion">
+                        ¿Ya tenés una cuenta? Iniciar sesión
+                      </Link>
+                    ) : (
+                      <Link to="/recuperarcontrasenia">
+                        ¿Olvidaste tu contraseña?
+                      </Link>
+                    )}
+                  </div>
+                </Form>
+              )}
             </div>
           </Col>
         </Row>

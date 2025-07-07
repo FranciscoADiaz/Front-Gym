@@ -1,10 +1,10 @@
 export const useChangeTitle = (idPage) => {
   switch (idPage) {
-    case "home":
+    case "inicio":
       document.title = "Pagina Pricipal";
       break;
-    case "aboutUs":
-      document.title = "Sobre Nosotros";
+    case "admin":
+      document.title = "Panel Administrador";
       break;
     case "contact":
       document.title = "Contacto";
@@ -17,6 +17,9 @@ export const useChangeTitle = (idPage) => {
       break;
     case "reservar":
       document.title = "Reservar Clase";
+      break;
+    case "recuperarcontrasenia":
+      document.title = "Recuperar Contraseña";
       break;
 
     default:
