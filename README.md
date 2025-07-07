@@ -33,7 +33,7 @@ Incluye también un panel para administración interna.
 ```bash
 git clone https://github.com/FranciscoADiaz/Front-Gym
 
-
+---
 ## 👥 Autores
 
 Francisco Díaz
