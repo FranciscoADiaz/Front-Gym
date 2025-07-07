@@ -32,3 +32,10 @@ Incluye también un panel para administración interna.
 ### 1️⃣ Clonar el repositorio
 ```bash
 git clone https://github.com/FranciscoADiaz/Front-Gym
+
+
+## 👥 Autores
+
+Francisco Díaz
+
+Valentín
