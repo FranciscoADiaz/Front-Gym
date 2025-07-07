@@ -38,9 +38,9 @@ function NavbarC() {
                       {
                         usuarioLog && usuarioRolLog === 'usuario' ?
                           <Nav className="ms-auto">
-                            <NavLink className='nav-link' to="/user">Inicio</NavLink>
-                            <NavLink className='nav-link' to="/user/cart">Mis Clases</NavLink>
-                            <NavLink className='nav-link' to="/user/fav">Planes</NavLink>
+                            <NavLink className='nav-link' to="/">Inicio</NavLink>
+                            <NavLink className='nav-link' to="/reservar">Mis Clases</NavLink>
+                            <NavLink className='nav-link' to="/planes">Planes</NavLink>
                           </Nav>
                           :
                           usuarioLog && usuarioRolLog === 'admin' ?
