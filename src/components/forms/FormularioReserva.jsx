@@ -119,7 +119,7 @@ const FormularioReserva = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="">Elegir Clase</option>
+                
                 <option value="Spinning">Spinning</option>
                 <option value="Funcional">Funcional</option>
                 <option value="Crossfit">Crossfit</option>
@@ -134,7 +134,7 @@ const FormularioReserva = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="">Elegir Profesor</option>
+               
                 <option value="andres">
                   Andrés (Lun y Mié - 08:00 a 10:00)
                 </option>
@@ -156,7 +156,7 @@ const FormularioReserva = () => {
                 required
                 disabled={!reserva.profesor}
               >
-                <option value="">Elegí una fecha</option>
+              
                 {fechasValidas.map((fecha) => (
                   <option key={fecha} value={fecha}>
                     {new Date(fecha).toLocaleDateString("es-AR", {
