@@ -17,17 +17,23 @@ const App = () => {
   return (
     <>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/registrarse" element={<RegisterPage />} />
-          <Route path="/iniciarsesion" element={<LoginPage />} />
-          <Route path="/reservar" element={<ReservaPage />} />
-          <Route path="/admin" element={<AdminHomePage />} />
-          <Route path="/recuperarcontrasenia" element={<RecuperarContrasenia />} /> 
-
-        </Routes>
-        <Footer />
+        <div className="app-contenido">
+          <Navbar />
+          <main className="main">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/registrarse" element={<RegisterPage />} />
+              <Route path="/iniciarsesion" element={<LoginPage />} />
+              <Route path="/reservar" element={<ReservaPage />} />
+              <Route path="/admin" element={<AdminHomePage />} />
+              <Route
+                path="/recuperarcontrasenia"
+                element={<RecuperarContrasenia />}
+              />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </Router>
     </>
   );

@@ -1,6 +1,7 @@
 
 import { useChangeTitle } from '../helpers/useChangeTitlePage'
-import nada from '../assets/nada.mp4'
+
+import home from '../assets/Home.png'
 import { Container } from 'react-bootstrap'
 
 const HomePage = () => {
@@ -8,7 +9,7 @@ const HomePage = () => {
   return (
     <>
       <Container idPage="inicio">
-        <video src={nada}></video>
+        <img src={home} alt="" className="app-contenido" />
       </Container>
     </>
   );
