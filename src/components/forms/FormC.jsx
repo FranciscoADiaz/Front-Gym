@@ -140,7 +140,7 @@ const FormC = ({ idPage }) => {
     const res = await clientAxios.post(
       "/usuarios/iniciarsesion",
       {
-        nombreUsuario: usuario, // Este nombre coincide con lo que espera el backend
+        nombreUsuario: usuario, 
         contrasenia,
       },
       configHeaders
@@ -149,7 +149,7 @@ const FormC = ({ idPage }) => {
     if (res.status === 200) {
       Swal.fire({
         title: "Inicio de sesión exitoso",
-        text: `${res.data.msg}`,
+        text: ``,
         icon: "success",
       });
 
