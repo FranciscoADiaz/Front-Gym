@@ -98,7 +98,7 @@ const FormC = ({ idPage }) => {
         if (res.status === 201) {
           Swal.fire({
             title: "Gracias por registrarte! 😃",
-            text: `${res.data.msg}`,
+            text: ``,
             icon: "success",
           });
 

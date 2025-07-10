@@ -1,7 +1,7 @@
 export const useChangeTitle = (idPage) => {
   switch (idPage) {
-    case "inicio":
-      document.title = "Pagina Pricipal";
+    case "Inicio":
+      document.title = "Home - Tucumán Gym";
       break;
     case "admin":
       document.title = "Panel Administrador";
