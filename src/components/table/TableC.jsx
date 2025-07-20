@@ -168,6 +168,8 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
               <td>{element.nombreUsuario}</td>
               <td className="w-25">{element.emailUsuario}</td>
               <td>{element.rol}</td>
+              <td>{element.telefono}</td>
+              <td>{element.plan}</td>
               <td>
                 <Button
                   variant="danger"
@@ -182,7 +184,7 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
                       if (result.isConfirmed) {
                         try {
                           await eliminarUsuario(element._id);
-                          funcionReseteador(); // para que refresque la tabla
+                          funcionReseteador();
                           Swal.fire("Eliminado!", "", "success");
                         } catch {
                           Swal.fire("Error al eliminar", "", "error");
@@ -196,7 +198,9 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
 
                 <Button
                   className="mx-2"
-                  variant={element.estado === "habilitado" ? "warning" : "info"}
+                  variant={
+                    element.estado === "habilitado" ? "secondary" : "success"
+                  }
                   onClick={async () => {
                     try {
                       await toggleUsuario(element._id);
@@ -212,7 +216,7 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
                     : "Habilitar"}
                 </Button>
 
-                <Button variant="success">Editar</Button>
+                <Button variant="primary">Editar</Button>
               </td>
             </tr>
           )
