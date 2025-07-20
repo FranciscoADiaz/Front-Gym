@@ -9,8 +9,8 @@ import AdminHomePage from "./pages/AdminHomePage";
 import Navbar from "./components/navbar/NavbarC"; 
 import Footer from "./components/footer/FooterC"; 
 import HomePage from "./pages/HomePage";
-import RecuperarContrasenia from "./pages/RecuperarContrasenia"; // Import the RecuperarContrasenia page
-
+import RecuperarContrasenia from "./pages/RecuperarContrasenia"; 
+import AdminUsersPage from "./pages/AdminUsersPage"; 
 
 
 const App = () => {
@@ -26,6 +26,7 @@ const App = () => {
               <Route path="/iniciarsesion" element={<LoginPage />} />
               <Route path="/reservar" element={<ReservaPage />} />
               <Route path="/admin" element={<AdminHomePage />} />
+              <Route path="/admin/usuarios" element={<AdminUsersPage/>} />
               <Route
                 path="/recuperarcontrasenia"
                 element={<RecuperarContrasenia />}
