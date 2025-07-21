@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink, useNavigate} from "react-router";
 import logo from "../../assets/logo.png";
+import Clima from "../clima/ClimaC";
 
 function NavbarC() {
   const usuarioLog = JSON.parse(sessionStorage.getItem('token'))
@@ -22,6 +23,7 @@ function NavbarC() {
       <Navbar expand="lg" className="bg-body-tertiary ">
         <Container fluid>
           <NavLink
+          
             to={
               usuarioLog && usuarioRolLog === "usuario"
                 ? "/user"
@@ -32,12 +34,15 @@ function NavbarC() {
           >
             <img src={logo} alt="Logo" width="120" />
           </NavLink>
+          
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
+            <div className="ms-3"> <Clima /> </div>
           
                       {
                         usuarioLog && usuarioRolLog === 'usuario' ?
                           <Nav className="ms-auto">
+                            
                             <NavLink className='nav-link' to="/">Inicio</NavLink>
                             <NavLink className='nav-link' to="/reservar">Mis Clases</NavLink>
                             <NavLink className='nav-link' to="/planes">Planes</NavLink>
