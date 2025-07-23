@@ -1,5 +1,17 @@
 import clientAxios from "./axios.config.helper";
 
+export const obtenerUsuarios = async () => {
+  const token = JSON.parse(sessionStorage.getItem("token"));
+
+  const res = await clientAxios.get("/usuarios", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data.usuarios;
+};
+
 
 export const eliminarUsuario = async (id) => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -12,7 +24,7 @@ export const eliminarUsuario = async (id) => {
 };
 
 
-export const toggleUsuario = async (id) => {
+export const habilitarDeshabilitarUsuario = async (id) => {
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   return clientAxios.put(

@@ -1,95 +1,11 @@
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { eliminarUsuario, toggleUsuario } from "../../helpers/usuarios.helper";
+import { eliminarUsuario, habilitarDeshabilitarUsuario } from "../../helpers/usuarios.helper";
+import { borrarProducto, deshabilitarOhabilitarProducto } from "../../helpers/productos.helper";
 
 const TableC = ({ array, idPage, funcionReseteador }) => {
-  const navigate = useNavigate();
-
-  const borrarProducto = (idProducto) => {
-    const usuarioLog = JSON.parse(sessionStorage.getItem("token"));
-
-    if (!usuarioLog) {
-      Swal.fire({
-        title: "Debes iniciar sesion!",
-        icon: "info",
-      });
-
-      setTimeout(() => {
-        navigate("/login");
-      }, 500);
-      return;
-    }
-
-    Swal.fire({
-      title: "Estas seguro de que quieres eliminar este producto?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, estoy seguro!",
-      cancelButtonText: "NO, no quiero eliminarlo!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const nuevoArray = array.filter(
-          (producto) => producto.id !== idProducto
-        );
-        localStorage.setItem("productos", JSON.stringify(nuevoArray));
-
-        funcionReseteador();
-
-        Swal.fire({
-          title: "Producto eliminado con exito!",
-          icon: "success",
-        });
-      }
-    });
-  };
-
-  const deshabilitarOhabilitarProducto = (idProducto) => {
-    const usuarioLog = JSON.parse(sessionStorage.getItem("token"));
-
-    if (!usuarioLog) {
-      Swal.fire({
-        title: "Debes iniciar sesion!",
-        icon: "info",
-      });
-
-      setTimeout(() => {
-        navigate("/login");
-      }, 500);
-      return;
-    }
-
-    const producto = array.find((producto) => producto.id === idProducto);
-
-    Swal.fire({
-      title: `Estas seguro de que quieres ${
-        producto.status === "enable" ? "deshabilitar" : "habilitar"
-      } este producto?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, estoy seguro!",
-      cancelButtonText: "NO, no quiero eliminarlo!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        producto.status = producto.status === "enable" ? "disabled" : "enable";
-        localStorage.setItem("productos", JSON.stringify(array));
-
-        funcionReseteador();
-
-        Swal.fire({
-          title: `Producto ${
-            producto.status === "enable" ? "habilitado" : "deshabilitado"
-          }  con exito!`,
-          icon: "success",
-        });
-      }
-    });
-  };
 
   return (
     <Table striped bordered hover>
@@ -182,7 +98,7 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
                       if (result.isConfirmed) {
                         try {
                           await eliminarUsuario(element._id);
-                          funcionReseteador(); // para que refresque la tabla
+                          funcionReseteador();
                           Swal.fire("Eliminado!", "", "success");
                         } catch {
                           Swal.fire("Error al eliminar", "", "error");
@@ -199,7 +115,7 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
                   variant={element.estado === "habilitado" ? "warning" : "info"}
                   onClick={async () => {
                     try {
-                      await toggleUsuario(element._id);
+                      await habilitarDeshabilitarUsuario(element._id);
                       funcionReseteador();
                       Swal.fire("Estado cambiado!", "", "success");
                     } catch {
