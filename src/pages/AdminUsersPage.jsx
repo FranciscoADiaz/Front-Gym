@@ -2,19 +2,23 @@ import { Container } from "react-bootstrap";
 import TableC from "../components/table/TableC";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import clientAxios from "../helpers/axios.config.helper";
+import { obtenerUsuarios } from "../helpers/usuarios.helper";
 
 const AdminUsersPage = () => {
   const [usuarios, setUsuarios] = useState([]);
   const usuarioLog = JSON.parse(sessionStorage.getItem("token"));
 
-  const obtenerUsuarios = async () => {
-    const res = await clientAxios.get("/usuarios");
-    setUsuarios(res.data.usuarios);
-  };
-
   useEffect(() => {
-    obtenerUsuarios();
+    const usuarios = async () => {
+      try {
+        const usuariosDB = await obtenerUsuarios();
+        setUsuarios(usuariosDB);
+      } catch (error) {
+        console.error("Error al obtener usuarios", error);
+      }
+    };
+
+    usuarios();
   }, []);
 
   return (
@@ -27,7 +31,10 @@ const AdminUsersPage = () => {
           <TableC
             array={usuarios}
             idPage="users"
-            funcionReseteador={obtenerUsuarios}
+            funcionReseteador={async () => {
+              const usuariosDB = await obtenerUsuarios();
+              setUsuarios(usuariosDB);
+            }}
           />
         </Container>
       )}
