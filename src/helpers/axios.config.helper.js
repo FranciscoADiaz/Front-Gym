@@ -1,12 +1,12 @@
 import axios from "axios";
 
-// Creamos la instancia de Axios con la URL base
+
 const clientAxios = axios.create({
   baseURL: `${import.meta.env.VITE_URL_BACK_PROD}/api`,
 });
 
 
-export const getAuthHeaders = () => {
+export const configHeaders = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   return {
