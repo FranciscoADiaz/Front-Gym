@@ -1,14 +1,14 @@
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { Link, useNavigate} from "react-router";
+import { Link, /* useNavigate */} from "react-router";
 import Swal from "sweetalert2";
 import { eliminarUsuario, habilitarDeshabilitarUsuario } from "../../helpers/usuarios.helper";
-import { borrarProducto, deshabilitarOhabilitarProducto } from "../../helpers/productos.helper";
-
+/* import { borrarProducto, deshabilitarOhabilitarProducto } from "../../helpers/productos.helper";
+ */
 const TableC = ({ array, idPage, funcionReseteador }) => {
 
-  const navigate = useNavigate();
-
+/*   const navigate = useNavigate();
+ */
   return (
     <Table striped bordered hover>
       <thead>
@@ -57,14 +57,14 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
               <td>
                 <Button
                   variant="danger"
-                  onClick={() => borrarProducto(element.id)}
+                 /*  onClick={() => borrarProducto(element.id)} */
                 >
                   Eliminar
                 </Button>
                 <Button
                   className="mx-2"
                   variant={element.status === "enable" ? "warning" : "info"}
-                  onClick={() => deshabilitarOhabilitarProducto(element.id)}
+                 /*  onClick={() => deshabilitarOhabilitarProducto(element.id)} */
                 >
                   {element.status === "enable" ? "Deshabilitar" : "Habilitar"}
                 </Button>
