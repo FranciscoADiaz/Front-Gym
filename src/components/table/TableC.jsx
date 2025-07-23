@@ -1,11 +1,13 @@
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { Link } from "react-router";
+import { Link, useNavigate} from "react-router";
 import Swal from "sweetalert2";
 import { eliminarUsuario, habilitarDeshabilitarUsuario } from "../../helpers/usuarios.helper";
 import { borrarProducto, deshabilitarOhabilitarProducto } from "../../helpers/productos.helper";
 
 const TableC = ({ array, idPage, funcionReseteador }) => {
+
+  const navigate = useNavigate();
 
   return (
     <Table striped bordered hover>

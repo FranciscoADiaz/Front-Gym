@@ -1,7 +1,8 @@
-
+/* 
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router";
-const navigate = useNavigate();
+
+
 
 const borrarProducto = (idProducto) => {
   const usuarioLog = JSON.parse(sessionStorage.getItem("token"));
@@ -84,3 +85,7 @@ const deshabilitarOhabilitarProducto = (idProducto) => {
     }
   });
 };
+
+
+export { borrarProducto, deshabilitarOhabilitarProducto };
+ */
