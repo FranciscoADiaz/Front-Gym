@@ -12,7 +12,7 @@ const HomePage = () => {
   return (
     <>
       <Container idPage="inicio">
-        <img src={home} alt="" className="app-contenido" />
+        <img src={home} alt="" className="app-contenido-dos" />
   <img src={ejercicio} alt="" className='app-contenido-dos' />
         <Wp />
       </Container>
