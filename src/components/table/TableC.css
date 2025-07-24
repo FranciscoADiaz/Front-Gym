@@ -11,30 +11,41 @@
   tr {
     margin-bottom: 1rem;
     border: 1px solid #ccc;
-    padding: 0.5rem;
+    padding: 1rem 0.75rem; /* ⬆ aumentamos altura */
     border-radius: 8px;
     box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    background-color: #fff;
   }
 
   td {
     text-align: right;
-    padding-left: 25%;
+    padding-left: 35%; /* ⬅ menos espacio que antes */
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
     position: relative;
     border: none;
     border-bottom: 1px solid #eee;
+    white-space: normal;
+    word-break: break-word;
   }
 
   td::before {
     content: attr(data-label);
     position: absolute;
     left: 1rem;
-    width: 25%;
+    width: 30%; /* ⬅ más angosto que antes */
     text-align: left;
     font-weight: bold;
     white-space: nowrap;
+    color: #444;
   }
 
   td:last-child {
     border-bottom: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
