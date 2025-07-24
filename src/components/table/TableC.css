@@ -28,7 +28,7 @@
     content: attr(data-label);
     position: absolute;
     left: 1rem;
-    width: 50%;
+    width: 25%;
     text-align: left;
     font-weight: bold;
     white-space: nowrap;
