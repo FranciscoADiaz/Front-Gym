@@ -24,7 +24,7 @@ const AdminUsersPage = () => {
   return (
     <>
       {usuarioLog && (
-        <Container className="my-5">
+        <Container className="my-5 app-contenido-dos">
           <div className="d-flex justify-content-end mb-3">
             <Link className="btn btn-primary">Agregar Usuario</Link>
           </div>
