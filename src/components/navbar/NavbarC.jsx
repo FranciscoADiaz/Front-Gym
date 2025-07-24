@@ -4,20 +4,37 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink, useNavigate} from "react-router";
 import logo from "../../assets/logo.png";
 import Clima from "../clima/ClimaC";
+import Swal from "sweetalert2";
 
 function NavbarC() {
   const usuarioLog = JSON.parse(sessionStorage.getItem('token'))
     const usuarioRolLog = JSON.parse(sessionStorage.getItem('rol'))
     const navigate = useNavigate()
   
-    const logoutUser = () => {
-      sessionStorage.removeItem('token')
-      sessionStorage.removeItem('rol')
-  
-      setTimeout(() => {
-        navigate('/')
-      }, 100);
-    }
+   const logoutUser = () => {
+     Swal.fire({
+       title: "Confirmar Cierre de Sesión",
+       text: "Vas a cerrar sesión y volver al inicio",
+       icon: "warning",
+       showCancelButton: true,
+       confirmButtonColor: "#3085d6", 
+       cancelButtonColor: "#d3333d", 
+       confirmButtonText: "Sí, cerrar sesión",
+       cancelButtonText: "Cancelar",
+     }).then((result) => {
+       if (result.isConfirmed) {
+         sessionStorage.removeItem("token");
+         sessionStorage.removeItem("rol");
+
+        
+         setTimeout(() => {
+           navigate("/");
+         }, 100);
+       }
+   
+     });
+   };
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary ">

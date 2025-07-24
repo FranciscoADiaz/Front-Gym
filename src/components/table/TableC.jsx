@@ -39,14 +39,22 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
           idPage === "products" ? (
             <tr key={element._id}>
               <td data-label="ID">{i + 1}</td>
-              <td data-label="Nombre" className="w-25">{element.nombre}</td>
-              <td data-label="Descripcion" className="w-25">{element.descripcion}</td>
-              <td data-label="Precio" className="text-center">${element.precio}</td>
+              <td data-label="Nombre" className="w-25">
+                {element.nombre}
+              </td>
+              <td data-label="Descripcion" className="w-25">
+                {element.descripcion}
+              </td>
+              <td data-label="Precio" className="text-center">
+                ${element.precio}
+              </td>
               <td data-label="Imagen">
                 <img
                   src={
                     element.imagen.includes("public")
-                      ? `${import.meta.env.VITE_URL_BACK_LOCAL}/${element.imagen}`
+                      ? `${import.meta.env.VITE_URL_BACK_LOCAL}/${
+                          element.imagen
+                        }`
                       : element.imagen
                   }
                   alt={element.description}
@@ -119,12 +127,33 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
                     element.estado === "habilitado" ? "secondary" : "success"
                   }
                   onClick={async () => {
-                    try {
-                      await habilitarDeshabilitarUsuario(element._id);
-                      funcionReseteador();
-                      Swal.fire("Estado cambiado!", "", "success");
-                    } catch {
-                      Swal.fire("Error al cambiar estado", "", "error");
+                    const accion = element.estado
+                      ? "deshabilitar"
+                      : "habilitar"; 
+                    const mensaje = `¿${accion} usuario?`;
+
+                    const result = await Swal.fire({
+                      title: mensaje,
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: `Sí, ${accion}`,
+                      cancelButtonText: "Cancelar",
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                    });
+
+                    if (result.isConfirmed) {
+                      try {
+                        await habilitarDeshabilitarUsuario(element._id);
+                        funcionReseteador(); 
+                        Swal.fire(
+                          `Usuario ${accion} correctamente`,
+                          "",
+                          "success"
+                        );
+                      } catch {
+                        Swal.fire("Error al cambiar estado", "", "error");
+                      }
                     }
                   }}
                 >
