@@ -11,15 +11,15 @@
   tr {
     margin-bottom: 1rem;
     border: 1px solid #ccc;
-    padding: 1rem 0.75rem; /* ⬆ aumentamos altura */
+    padding: 1rem 0.75rem; /**/
     border-radius: 8px;
     box-shadow: 0 0 4px rgba(0,0,0,0.1);
     background-color: #fff;
   }
 
   td {
-    text-align: right;
-    padding-left: 35%; /* ⬅ menos espacio que antes */
+    text-align: center;
+    padding-left: 5%; /**/
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     position: relative;
@@ -33,7 +33,7 @@
     content: attr(data-label);
     position: absolute;
     left: 1rem;
-    width: 30%; /* ⬅ más angosto que antes */
+    width: 50%; /**/
     text-align: left;
     font-weight: bold;
     white-space: nowrap;
