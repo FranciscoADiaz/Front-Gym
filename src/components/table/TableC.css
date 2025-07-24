@@ -1,47 +1,163 @@
+
+
+
 @media (max-width: 768px) {
-  table thead {
-    display: none;
-  }
 
-  table, tbody, tr, td {
-    display: block;
-    width: 100%;
-  }
 
-  tr {
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-    border-radius: 8px;
-    box-shadow: 0 0 4px rgba(0,0,0,0.1);
-  }
 
-  td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-    border: none;
-    border-bottom: 1px solid #eee;
-    word-break: break-word; /* 🆕 rompe palabras largas */
-    white-space: normal;     /* 🆕 permite salto de línea */
-  }
+ table thead {
 
-  td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 1rem;
-    width: 45%;
-    text-align: left;
-    font-weight: bold;
-    white-space: nowrap;
-  }
 
-  td:last-child {
-    border-bottom: none;
-  }
 
-  img {
-    max-width: 100%; /* 🆕 para evitar que la imagen sobresalga */
-    height: auto;
-  }
+   display: none;
+
+
+
+ }
+
+
+
+
+
+
+
+ table, tbody, tr, td {
+
+
+
+   display: block;
+
+
+
+   width: 100%;
+
+
+
+ }
+
+
+
+
+
+
+
+ tr {
+
+
+
+   margin-bottom: 1rem;
+
+
+
+   border: 1px solid #ccc;
+
+
+
+   padding: 0.5rem;
+
+
+
+   border-radius: 8px;
+
+
+
+   box-shadow: 0 0 4px rgba(0,0,0,0.1);
+
+
+
+ }
+
+
+
+
+
+
+
+ td {
+
+
+
+   text-align: right;
+
+
+
+   padding-left: 50%;
+
+
+
+   position: relative;
+
+
+
+   border: none;
+
+
+
+   border-bottom: 1px solid #eee;
+
+
+
+ }
+
+
+
+
+
+
+
+ td::before {
+
+
+
+   content: attr(data-label);
+
+
+
+   position: absolute;
+
+
+
+   left: 1rem;
+
+
+
+   width: 45%;
+
+
+
+   text-align: left;
+
+
+
+   font-weight: bold;
+
+
+
+   white-space: nowrap;
+
+
+
+ }
+
+
+
+
+
+
+
+ td:last-child {
+
+
+
+   border-bottom: none;
+
+
+
+ }
+
+
+
 }
+
+
+
