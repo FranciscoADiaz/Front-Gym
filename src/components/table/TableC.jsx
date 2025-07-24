@@ -3,12 +3,13 @@ import Table from "react-bootstrap/Table";
 import { Link, /* useNavigate */} from "react-router";
 import Swal from "sweetalert2";
 import { eliminarUsuario, habilitarDeshabilitarUsuario } from "../../helpers/usuarios.helper";
-/* import { borrarProducto, deshabilitarOhabilitarProducto } from "../../helpers/productos.helper";
- */
+/* import { borrarProducto, deshabilitarOhabilitarProducto } from "../../helpers/productos.helper"; */
+import "./TableC.css"; 
+
 const TableC = ({ array, idPage, funcionReseteador }) => {
 
-/*   const navigate = useNavigate();
- */
+  /* const navigate = useNavigate(); */
+
   return (
     <Table striped bordered hover>
       <thead>
@@ -37,34 +38,32 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
         {array.map((element, i) =>
           idPage === "products" ? (
             <tr key={element._id}>
-              <td>{i + 1}</td>
-              <td className="w-25">{element.nombre}</td>
-              <td className="w-25">{element.descripcion}</td>
-              <td className="text-center">${element.precio}</td>
-              <td>
+              <td data-label="ID">{i + 1}</td>
+              <td data-label="Nombre" className="w-25">{element.nombre}</td>
+              <td data-label="Descripcion" className="w-25">{element.descripcion}</td>
+              <td data-label="Precio" className="text-center">${element.precio}</td>
+              <td data-label="Imagen">
                 <img
                   src={
                     element.imagen.includes("public")
-                      ? `${import.meta.env.VITE_URL_BACK_LOCAL}/${
-                          element.imagen
-                        }`
+                      ? `${import.meta.env.VITE_URL_BACK_LOCAL}/${element.imagen}`
                       : element.imagen
                   }
                   alt={element.description}
                   width={50}
                 />
               </td>
-              <td>
+              <td data-label="Acciones">
                 <Button
                   variant="danger"
-                 /*  onClick={() => borrarProducto(element.id)} */
+                  /* onClick={() => borrarProducto(element.id)} */
                 >
                   Eliminar
                 </Button>
                 <Button
                   className="mx-2"
                   variant={element.status === "enable" ? "warning" : "info"}
-                 /*  onClick={() => deshabilitarOhabilitarProducto(element.id)} */
+                  /* onClick={() => deshabilitarOhabilitarProducto(element.id)} */
                 >
                   {element.status === "enable" ? "Deshabilitar" : "Habilitar"}
                 </Button>
@@ -82,13 +81,13 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
             </tr>
           ) : (
             <tr key={element._id}>
-              <td>{i + 1}</td>
-              <td>{element.nombreUsuario}</td>
-              <td className="w-25">{element.emailUsuario}</td>
-              <td>{element.rol}</td>
-              <td>{element.telefono}</td>
-              <td>{element.plan}</td>
-              <td>
+              <td data-label="ID">{i + 1}</td>
+              <td data-label="Nombre">{element.nombreUsuario}</td>
+              <td data-label="Email" className="w-25">{element.emailUsuario}</td>
+              <td data-label="Rol">{element.rol}</td>
+              <td data-label="Teléfono">{element.telefono}</td>
+              <td data-label="Plan">{element.plan}</td>
+              <td data-label="Acciones">
                 <Button
                   variant="danger"
                   onClick={() => {
