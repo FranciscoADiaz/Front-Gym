@@ -83,7 +83,7 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
             <tr key={element._id}>
               <td data-label="ID">{i + 1}</td>
               <td data-label="Nombre">{element.nombreUsuario}</td>
-              <td data-label="Email" className="w-25">{element.emailUsuario}</td>
+              <td data-label="Email">{element.emailUsuario}</td>
               <td data-label="Rol">{element.rol}</td>
               <td data-label="Teléfono">{element.telefono}</td>
               <td data-label="Plan">{element.plan}</td>
