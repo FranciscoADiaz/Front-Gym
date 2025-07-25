@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
+import axios from "axios"; 
+
 const apiKey = import.meta.env.VITE_API_KEY;
-const url = `https://api.openweathermap.org/data/2.5/weather?q=Tucuman,AR&appid=${apiKey}&units=metric&lang=es`;
+
 function Clima() {
   const [clima, setClima] = useState(null);
 
   useEffect(() => {
     async function obtenerClima() {
-      const respuesta = await fetch(
-        url
-      );
-      const datos = await respuesta.json();
-      setClima(datos);
+      try {
+        const respuesta = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Tucuman,AR&appid=${apiKey}&units=metric&lang=es`;
+  );
+        setClima(respuesta.data); 
+      } catch (error) {
+        console.error("Error al obtener el clima:", error);
+      }
     }
-    obtenerClima();
+
+    obtenerClima(); 
   }, []);
 
   if (!clima) return <p>Cargando clima...</p>;
 
   return (
     <div>
-      <spam>{clima.name}</spam>
+      
+      <span>{clima.name}</span>
       <p>
         🌡 {clima.main.temp}°C ☁ {clima.weather[0].description}
       </p>
