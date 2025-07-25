@@ -9,8 +9,7 @@ function Clima() {
   useEffect(() => {
     async function obtenerClima() {
       try {
-        const respuesta = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Tucuman,AR&appid=${apiKey}&units=metric&lang=es`;
-  );
+        const respuesta = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Tucuman,AR&appid=${apiKey}&units=metric&lang=es`);
         setClima(respuesta.data); 
       } catch (error) {
         console.error("Error al obtener el clima:", error);
