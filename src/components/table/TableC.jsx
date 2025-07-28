@@ -122,45 +122,36 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
                 </Button>
 
                 <Button
-                  className="mx-2"
-                  variant={
-                    element.estado === "habilitado" ? "secondary" : "success"
-                  }
-                  onClick={async () => {
-                    const accion = element.estado
-                      ? "deshabilitar"
-                      : "habilitar"; 
-                    const mensaje = `¿${accion} usuario?`;
+  className="mx-2"
+  variant={element.estado === "habilitado" ? "secondary" : "success"}
+  onClick={async () => {
+    const accion =
+      element.estado === "habilitado" ? "deshabilitar" : "habilitar";
+    const mensaje = `¿${accion} usuario?`;
 
-                    const result = await Swal.fire({
-                      title: mensaje,
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonText: `Sí, ${accion}`,
-                      cancelButtonText: "Cancelar",
-                      confirmButtonColor: "#3085d6",
-                      cancelButtonColor: "#d33",
-                    });
+    const result = await Swal.fire({
+      title: mensaje,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: `Sí, ${accion}`,
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    });
 
-                    if (result.isConfirmed) {
-                      try {
-                        await habilitarDeshabilitarUsuario(element._id);
-                        funcionReseteador(); 
-                        Swal.fire(
-                          `Usuario ${accion} correctamente`,
-                          "",
-                          "success"
-                        );
-                      } catch {
-                        Swal.fire("Error al cambiar estado", "", "error");
-                      }
-                    }
-                  }}
-                >
-                  {element.estado === "habilitado"
-                    ? "Deshabilitar"
-                    : "Habilitar"}
-                </Button>
+    if (result.isConfirmed) {
+      try {
+        await habilitarDeshabilitarUsuario(element._id);
+        funcionReseteador();
+        Swal.fire(`Usuario ${accion} correctamente`, "", "success");
+      } catch {
+        Swal.fire("Error al cambiar estado", "", "error");
+      }
+    }
+  }}
+>
+  {element.estado === "habilitado" ? "Deshabilitar" : "Habilitar"}
+</Button>
 
                 <Button variant="primary">Editar</Button>
               </td>

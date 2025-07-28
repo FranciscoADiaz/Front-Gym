@@ -1,0 +1,43 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.publicidad-section {
+  width: 100%; 
+  position: relative;
+  overflow: hidden;
+  min-height: 100px;
+}
+
+.publicidad-gif {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+@media (min-width: 992px) {
+  .publicidad-section {
+    min-height: 250px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .publicidad-section {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 576px) {
+  .publicidad-section {
+    min-height: 120px;
+  }
+}
