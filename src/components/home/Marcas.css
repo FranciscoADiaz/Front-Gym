@@ -1,0 +1,9 @@
+.marca-logo {
+  max-height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.marca-logo:hover {
+  transform: scale(1.1);
+}

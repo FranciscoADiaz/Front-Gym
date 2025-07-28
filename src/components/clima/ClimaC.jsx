@@ -14,7 +14,7 @@ function Clima() {
       } catch (error) {
         console.error("Error al obtener el clima:", error);
       }
-    }
+    } 
 
     obtenerClima(); 
   }, []);
