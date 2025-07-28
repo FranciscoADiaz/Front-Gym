@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router";
 import { Container, Row, Col, Form, Button} from "react-bootstrap";
 import "./FormC.css";
 import clientAxios, { configHeaders } from "../../helpers/axios.config.helper";
-import axios from "axios";
 
 const FormC = ({ idPage }) => {
   const navigate = useNavigate();

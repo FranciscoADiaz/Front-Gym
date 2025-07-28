@@ -14,11 +14,12 @@ function Clima() {
       } catch (error) {
         console.error("Error al obtener el clima:", error);
       }
-    }
+    } 
 
     obtenerClima(); 
   }, []);
 
+  console.log(clima);
   if (!clima) return <p>Cargando clima...</p>;
 
   return (
