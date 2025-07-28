@@ -5,19 +5,19 @@ import profe3 from "../../assets/profe3.webp";
 
 const listaProfes = [
   {
-    nombre: "Lucas Gómez",
+    nombre: "Walter Rivas",
     especialidad: "Musculación",
     turno: "Mañana",
     imagen: profe2,
   },
   {
-    nombre: "Carla Ruiz",
+    nombre: "Daniela Cardozo",
     especialidad: "Funcional",
     turno: "Tarde",
     imagen: profe3,
   },
   {
-    nombre: "Matías Pérez",
+    nombre: "Andrés Perlo",
     especialidad: "Zumba",
     turno: "Noche",
     imagen: profe1,
