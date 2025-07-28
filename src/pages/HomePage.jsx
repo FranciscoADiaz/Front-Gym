@@ -1,20 +1,28 @@
+import { useChangeTitle } from "../helpers/useChangeTitlePage";
+import { Container } from "react-bootstrap";
+import Wp from "../components/wp/BotonWhatsapp";
 
-import { useChangeTitle } from '../helpers/useChangeTitlePage'
-
-
-import home from '../assets/home.webp'
-import { Container } from 'react-bootstrap'
-import Wp from '../components/wp/BotonWhatsapp'
-import ejercicio from '../assets/ejercicio.jpeg'
+import Servicios from "../components/home/Servicios";
+import Productos from "../components/home/Productos";
+import Marcas from "../components/home/Marcas";
+import Comentarios from "../components/home/Comentarios";
+import Profesores from "../components/home/Profesores";
+import Planes from "../components/home/Planes";
+import CarruselInicio from "../components/home/CarouselC";
 
 const HomePage = () => {
   useChangeTitle("Inicio");
+
   return (
     <>
       <Container idPage="inicio">
-        <img src={home} alt="" className="app-contenido" />
-  <img src={ejercicio} alt="" className='app-contenido-dos' />
         <Wp />
+        <CarruselInicio />
+        <Planes />
+        <Productos />
+        <Comentarios />
+        <Profesores />
+        <Marcas />
       </Container>
     </>
   );
