@@ -11,6 +11,8 @@ import Footer from "./components/footer/FooterC";
 import HomePage from "./pages/HomePage";
 import RecuperarContrasenia from "./pages/RecuperarContrasenia"; 
 import AdminUsersPage from "./pages/AdminUsersPage"; 
+import Sobrenosotros from "./pages/Sobrenosotros"; 
+import Contacto from "./pages/Contacto"; 
 
 
 const App = () => {
@@ -31,6 +33,9 @@ const App = () => {
                 path="/recuperarcontrasenia"
                 element={<RecuperarContrasenia />}
               />
+
+              <Route path="/sobre-nosotros" element={<Sobrenosotros />} />
+              <Route path="/contacto" element={<Contacto />} />
             </Routes>
           </main>
           <Footer />
