@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
-import { Card, Button, Row, Col } from "react-bootstrap";
-
+import { Card, Row, Col } from "react-bootstrap";
+import AnimacionLottieFile from "../lottie/AnimacionLottieFile";
 
 const Planes = () => {
   const navigate = useNavigate();
@@ -9,21 +9,25 @@ const Planes = () => {
     {
       nombre: "Solo musculación",
       ruta: "musculacion",
-      icono: "🏋️‍♂️",
+      animacion:
+        "https://lottie.host/2f98893d-77c6-452b-aa6c-37f94eee9394/LerCTmhGod.lottie",
       descripcion:
         "Acceso ilimitado al área de pesas y máquinas. Ideal para quienes entrenan por cuenta propia.",
     },
     {
       nombre: "Solo clases",
       ruta: "clases",
-      icono: "🧘‍♀️",
+      animacion:
+        "https://lottie.host/797f8162-2d32-46ad-84dd-86793b2edd32/UsnxvBfH6Y.lottie",
+
       descripcion:
         "Incluye todas las clases grupales: funcional, spinning, zumba, entre otras.",
     },
     {
       nombre: "Plan Full",
       ruta: "full",
-      icono: "🔥",
+      animacion:
+        "https://lottie.host/6295e538-eac4-45e8-824f-162b16a9bfdc/dpVR6cyxno.lottie",
       descripcion:
         "Incluye musculación y clases. La opción más completa para transformar tu cuerpo.",
     },
@@ -42,7 +46,9 @@ const Planes = () => {
                 style={{ cursor: "pointer" }}
               >
                 <Card.Body>
-                  <div className="text-center fs-1">{plan.icono}</div>
+                  <div className="text-center">
+                    <AnimacionLottieFile url={plan.animacion} />
+                  </div>
                   <Card.Title className="text-center mt-3">
                     {plan.nombre}
                   </Card.Title>
