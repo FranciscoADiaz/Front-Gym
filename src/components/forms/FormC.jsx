@@ -222,7 +222,7 @@ const FormC = ({ idPage }) => {
                 </Form>
               ) : (
                 <Form className="w-100 text-center">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3" controlId="formBasicUser">
                     <Form.Label>Nombre Usuario</Form.Label>
                     <Form.Control
                       type="text"
@@ -290,7 +290,7 @@ const FormC = ({ idPage }) => {
                     <>
                       <Form.Group
                         className="mb-3"
-                        controlId="formBasicPassword"
+                        controlId="formBasicPasswordRepeat"
                       >
                         <Form.Label>Repetir Contraseña</Form.Label>
                         <Form.Control
