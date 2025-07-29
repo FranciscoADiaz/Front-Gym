@@ -1,7 +1,7 @@
 
 import { Container } from "react-bootstrap";
 
-const SobreNosotros = () => {
+const Sobrenosotros = () => {
   return (
     <section className="py-5 bg-light">
       <Container>
@@ -24,4 +24,4 @@ const SobreNosotros = () => {
   );
 };
 
-export default SobreNosotros;
+export default Sobrenosotros;
