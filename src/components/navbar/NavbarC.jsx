@@ -74,7 +74,7 @@ function NavbarC() {
                             :
                             <Nav className="ms-auto">
                               <NavLink className='nav-link' to="/">Inicio</NavLink>
-                              <NavLink className='nav-link' to="/sobrenosotros">Sobre Nosotros</NavLink>
+                              <NavLink className='nav-link' to="/sobre-nosotros">Sobre Nosotros</NavLink>
                               <NavLink className='nav-link' to="/contacto">Contacto</NavLink>
                             </Nav>
                       }
