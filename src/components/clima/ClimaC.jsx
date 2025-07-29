@@ -19,7 +19,6 @@ function Clima() {
     obtenerClima(); 
   }, []);
 
-  console.log(clima);
   if (!clima) return <p>Cargando clima...</p>;
 
   return (
