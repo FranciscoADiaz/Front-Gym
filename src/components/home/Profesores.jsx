@@ -37,8 +37,15 @@ const Profesores = () => {
                   variant="top"
                   src={profe.imagen}
                   alt={profe.nombre}
-                  style={{ height: "220px", objectFit: "cover" }}
+                  style={{
+                    width: "180px",
+                    height: "180px",
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    margin: "20px auto 0", 
+                  }}
                 />
+
                 <Card.Body>
                   <Card.Title>{profe.nombre}</Card.Title>
                   <Card.Text>
