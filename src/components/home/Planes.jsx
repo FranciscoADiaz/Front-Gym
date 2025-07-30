@@ -48,19 +48,15 @@ const Planes = () => {
                 <Card.Body>
   <div className="text-center">
     <AnimacionLottieFile url={plan.animacion} />
-  </div>
-                  
-  <div
-    style={{
-      backgroundColor: "#e0f7fa", 
-      padding: "1rem",
-      borderRadius: "10px",       
-      marginTop: "1rem",          
-    }}
-  >
-    <Card.Title className="text-center text-dark mb-2">
+    
+  </div><Card.Title className="text-center text-dark mb-2">
       {plan.nombre}
     </Card.Title>
+                  
+  <div
+    className="bg-info"
+  >
+    
     <Card.Text className="text-center text-dark">
       {plan.descripcion}
     </Card.Text>
