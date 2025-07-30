@@ -21,7 +21,7 @@ const Planes = () => {
         "https://lottie.host/797f8162-2d32-46ad-84dd-86793b2edd32/UsnxvBfH6Y.lottie",
 
       descripcion:
-        "Incluye todas las clases grupales: funcional, spinning, zumba, entre otras.",
+        "Incluye todas las clases grupales: funcional, spinning, zumba. Elige la que más te gusta.",
     },
     {
       nombre: "Plan Full",
@@ -55,7 +55,7 @@ const Planes = () => {
                   
 
     
-    <div className="bg-info text-white py-2 my-0 text-center">
+    <div className="bg-light text-white py-2 my-0 text-center">
   <Card.Text className="mx-0 my-0">{plan.descripcion}</Card.Text>
 </div>
   
