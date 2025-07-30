@@ -10,7 +10,7 @@ const Planes = () => {
       nombre: "SOLO MUSCULACIÓN",
       ruta: "musculacion",
       animacion:
-        "https://lottie.host/2f98893d-77c6-452b-aa6c-37f94eee9394/LerCTmhGod.lottie",
+        "https://lottie.host/6ac3b4a3-7afb-42a0-90b0-2ab22a711515/5P93d1YrNA.lottie",
       descripcion:
         "Acceso ilimitado al área de pesas y máquinas. Ideal para quienes entrenan por cuenta propia.",
     },
