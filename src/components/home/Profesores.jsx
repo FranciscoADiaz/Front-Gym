@@ -28,7 +28,7 @@ const Profesores = () => {
   return (
     <section className="py-5 bg-dark text-white">
       <Container>
-        <h2 className="text-center mb-4">Nuestro Equipo de Profesores</h2>
+        <h2 className="text-center mb-4">UESTRO EQUIPO DE PROFESORES</h2>
         <Row className="g-4 justify-content-center">
           {listaProfes.map((profe, i) => (
             <Col key={i} xs={12} sm={6} md={4}>
