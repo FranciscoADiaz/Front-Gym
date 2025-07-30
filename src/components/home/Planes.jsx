@@ -55,9 +55,9 @@ const Planes = () => {
                   
 
     
-    <Card.Text className="text-center text-dark bg-secondary">
-      {plan.descripcion}
-    </Card.Text>
+    <div className="bg-secondary text-white px-3 py-2 text-center">
+  <Card.Text className="mb-0">{plan.descripcion}</Card.Text>
+</div>
   
 </Card.Body>
               </Card>
