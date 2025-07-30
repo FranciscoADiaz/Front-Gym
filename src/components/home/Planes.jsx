@@ -7,7 +7,7 @@ const Planes = () => {
 
   const planes = [
     {
-      nombre: "Solo musculación",
+      nombre: "SOLO MUSCULACIÓN",
       ruta: "musculacion",
       animacion:
         "https://lottie.host/2f98893d-77c6-452b-aa6c-37f94eee9394/LerCTmhGod.lottie",
@@ -15,7 +15,7 @@ const Planes = () => {
         "Acceso ilimitado al área de pesas y máquinas. Ideal para quienes entrenan por cuenta propia.",
     },
     {
-      nombre: "Solo clases",
+      nombre: "SOLO CLASES",
       ruta: "clases",
       animacion:
         "https://lottie.host/797f8162-2d32-46ad-84dd-86793b2edd32/UsnxvBfH6Y.lottie",
@@ -24,7 +24,7 @@ const Planes = () => {
         "Incluye todas las clases grupales: funcional, spinning, zumba. Elige la que más te gusta.",
     },
     {
-      nombre: "Plan Full",
+      nombre: "PLAN FULL",
       ruta: "full",
       animacion:
         "https://lottie.host/6295e538-eac4-45e8-824f-162b16a9bfdc/dpVR6cyxno.lottie",
@@ -56,7 +56,7 @@ const Planes = () => {
 
     
     <div className="bg-light text-dark py-2 my-0 text-center">
-  <Card.Text className="mx-0 my-0">{plan.descripcion}</Card.Text>
+  <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
 </div>
   
 </Card.Body>
