@@ -32,7 +32,7 @@ const Productos = () => {
   return (
     <section className="py-5 bg-dark text-white">
       <Container>
-        <h2 className="text-center mb-4">Productos Disponibles</h2>
+        <h2 className="text-center mb-4">PRODUCTOS DISPONIBLES</h2>
         <Row className="g-4 justify-content-center">
           {productos.map((prod, i) => (
             <Col key={i} xs={12} sm={6} md={4}>
