@@ -21,7 +21,7 @@ const Planes = () => {
         "https://lottie.host/797f8162-2d32-46ad-84dd-86793b2edd32/UsnxvBfH6Y.lottie",
 
       descripcion:
-        "Incluye todas las clases grupales: funcional, spinning, zumba. Elige la que más te gusta.",
+        "Incluye todas las clases grupales: funcional, spinning, zumba. Eligí la que más te guste.",
     },
     {
       nombre: "PLAN FULL",
