@@ -7,7 +7,7 @@ import { Link } from "react-router";
 
 const productos = [
   {
-    titulo: "Suplementos y batidos",
+    titulo: "Suplementos",
     imagen: suplementos,
     descripcion:
       "Proteína, creatina, pre-entreno y batidos listos para consumir.",
@@ -20,10 +20,10 @@ const productos = [
     ruta: "/productos/accesorios",
   },
   {
-    titulo: "Botellas y ropa deportiva",
+    titulo: "Ropa deportiva",
     imagen: ropa,
     descripcion:
-      "Botellas térmicas, camisetas dry-fit, shorts y joggers cómodos.",
+      "Camisetas dry-fit, shorts y joggers cómodos.",
     ruta: "/productos/ropa",
   },
 ];
@@ -32,7 +32,7 @@ const Productos = () => {
   return (
     <section className="py-5 bg-dark text-white">
       <Container>
-        <h2 className="text-center mb-4">Productos disponibles</h2>
+        <h2 className="text-center mb-4">Productos Disponibles</h2>
         <Row className="g-4 justify-content-center">
           {productos.map((prod, i) => (
             <Col key={i} xs={12} sm={6} md={4}>

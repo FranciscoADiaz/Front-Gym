@@ -20,7 +20,7 @@ const comentarios = [
   {
     imagen: com3,
     texto:
-      "El área de musculación está muy bien equipada. Me siento cómodo entrenando acá.",
+      "El área de musculación está muy bien equipada. Me siento cómoda entrenando acá.",
     autor: "Eliana Gómez - Musculación",
   },
 ];
