@@ -45,7 +45,7 @@ const Planes = () => {
                 className="h-100 shadow-sm border-0 card-hover"
                 style={{ cursor: "pointer" }}
               >
-                <Card.Body>
+                <Card.Body className="p-0" >
   <div className="text-center">
     <AnimacionLottieFile url={plan.animacion} />
     
@@ -55,8 +55,8 @@ const Planes = () => {
                   
 
     
-    <div className="bg-secondary text-white px-3 py-2 text-center">
-  <Card.Text className="mb-0">{plan.descripcion}</Card.Text>
+    <div className="bg-secondary text-white pt-2 text-center">
+  <Card.Text className="mx-0 my-0">{plan.descripcion}</Card.Text>
 </div>
   
 </Card.Body>
