@@ -15,7 +15,7 @@ const CarouselC = () => {
             alt="Primera imagen"
             style={{ maxHeight: "500px", objectFit: "cover" }}
           />
-          <div className="bg-light text-dark p-4 text-center">
+          <div className="bg-info text-dark p-4 text-center">
             <h3>Bienvenido a TucuGym</h3>
             <p>Las mejores máquinas, un lugar para entrenar cuerpo y mente</p>
           </div>
