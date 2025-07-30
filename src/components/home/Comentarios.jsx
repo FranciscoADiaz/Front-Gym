@@ -29,7 +29,7 @@ const Comentarios = () => {
   return (
     <section className="py-5 bg-secondary text-white">
       <Container className="text-center">
-        <h2 className="mb-4">Comentarios</h2>
+        <h2 className="mb-4">COMENTARIOS</h2>
         <Carousel controls={false} indicators={false} interval={9000}>
           {comentarios.map((c, i) => (
             <Carousel.Item key={i}>
