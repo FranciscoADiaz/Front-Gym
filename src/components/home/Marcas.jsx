@@ -18,7 +18,7 @@ const MarcasC = () => {
   return (
     <section className="py-5 bg-white">
       <Container>
-        <h2 className="text-center mb-4">Marcas Asociadas</h2>
+        <h2 className="text-center mb-4">MARCAS ASOCIADAS</h2>
 
         <div className="marcas-wrapper">
           <div className="marcas-slider">
