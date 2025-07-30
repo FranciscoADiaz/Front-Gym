@@ -36,7 +36,7 @@ const Planes = () => {
   return (
     <section className="py-5 my-5 bg-secondary text-white">
       <div className="container">
-        <h2 className="text-center mb-4">Nuestros Planes Mensuales</h2>
+        <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
         <Row className="g-4 justify-content-center">
           {planes.map((plan, i) => (
             <Col key={i} xs={12} sm={6} md={4}>
@@ -46,16 +46,26 @@ const Planes = () => {
                 style={{ cursor: "pointer" }}
               >
                 <Card.Body>
-                  <div className="text-center">
-                    <AnimacionLottieFile url={plan.animacion} />
-                  </div>
-                  <Card.Title className="text-center mt-3">
-                    {plan.nombre}
-                  </Card.Title>
-                  <Card.Text className="text-muted text-center">
-                    {plan.descripcion}
-                  </Card.Text>
-                </Card.Body>
+  <div className="text-center">
+    <AnimacionLottieFile url={plan.animacion} />
+  </div>
+                  
+  <div
+    style={{
+      backgroundColor: "#e0f7fa", 
+      padding: "1rem",
+      borderRadius: "10px",       
+      marginTop: "1rem",          
+    }}
+  >
+    <Card.Title className="text-center text-dark mb-2">
+      {plan.nombre}
+    </Card.Title>
+    <Card.Text className="text-center text-dark">
+      {plan.descripcion}
+    </Card.Text>
+  </div>
+</Card.Body>
               </Card>
             </Col>
           ))}
