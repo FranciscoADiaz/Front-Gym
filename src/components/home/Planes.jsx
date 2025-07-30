@@ -53,14 +53,12 @@ const Planes = () => {
       {plan.nombre}
     </Card.Title>
                   
-  <div
-    className="bg-info"
-  >
+
     
-    <Card.Text className="text-center text-dark">
+    <Card.Text className="text-center text-dark bg-secondary">
       {plan.descripcion}
     </Card.Text>
-  </div>
+  
 </Card.Body>
               </Card>
             </Col>
