@@ -1,87 +1,85 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaTiktok,
+  FaWhatsapp,
+} from "react-icons/fa6";
 import logo from "../../assets/logo.png";
+import "./FooterC.css";
 
 const FooterC = () => {
   return (
-    <footer className="bg-secondary text-white py-4 mt-5">
-      <Container>
-        <Row className="text-center text-md-start">
-          <Col xs={12} md={4} className="mb-3">
-            <Link to="/">
+    <footer className="footer bg-dark text-white pt-4">
+      <Container className="pb-3">
+        <Row className="text-center text-md-start align-items-center">
+          {/* Logo */}
+          <Col xs={12} md={4} className="mb-4 mb-md-0">
+            <a href="/" aria-label="Inicio">
               <img
                 src={logo}
-                alt="Logo"
-                style={{ width: "80px", height: "auto", cursor: "pointer" }}
+                alt="Logo TucuGym"
+                style={{ maxHeight: "80px", width: "auto" }}
+                className="d-block mx-auto mx-md-0 mb-2"
               />
-            </Link>
+            </a>
           </Col>
 
-          <Col xs={12} md={4} className="mb-3">
-            <h6>Enlaces útiles</h6>
-            <ul className="list-unstyled">
-              <li>
-                <Link to="/" className="text-light text-decoration-none">
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link to="/planes" className="text-light text-decoration-none">
-                  Planes
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/productos"
-                  className="text-light text-decoration-none"
-                >
-                  Productos
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contacto"
-                  className="text-light text-decoration-none"
-                >
-                  Contacto
-                </Link>
-              </li>
-            </ul>
+          <Col
+            xs={12}
+            md={4}
+            className="mb-4 mb-md-0 d-flex flex-column align-items-center align-items-md-start"
+          >
+            <h6 className="text-uppercase mb-3">Seguinos</h6>
+            <div className="d-flex gap-3 fs-5">
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white footer-icon"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white footer-icon"
+              >
+                <FaFacebookF />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white footer-icon"
+              >
+                <FaTiktok />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white footer-icon"
+              >
+                <FaWhatsapp />
+              </a>
+            </div>
           </Col>
 
-          <Col xs={12} md={4} className="mb-3">
-            <h6>Seguinos</h6>
-            <ul className="list-unstyled">
-              <li>
-                <a
-                  href="https://www.instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-light text-decoration-none me-3"
-                >
-                  Instagram
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://wa.me/5493810000000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-light text-decoration-none"
-                >
-                  WhatsApp
-                </a>
-              </li>
-            </ul>
+          <Col xs={12} md={4}>
+            <h6 className="text-uppercase mb-3">Contacto</h6>
+            <p className="mb-1 small">Av. Mitre 1234, Tucumán</p>
+            <p className="mb-1 small">Lunes a Sábados - 8 a 22 hs</p>
+            <p className="mb-1 small">Tel: 381-1234567</p>
+            <p className="mb-0 small">tucugym.contacto@gmail.com</p>
           </Col>
         </Row>
-
-        {/* Línea inferior */}
-        <hr className="border-light" />
-        <p className="text-center mb-0 small">
-          © {new Date().getFullYear()} TucuGym. Todos los derechos reservados.
-        </p>
       </Container>
+
+      <div className="footer-bottom text-center py-2 bg-secondary text-white-50 small">
+        © 2025 TucuGym. Todos los derechos reservados.
+      </div>
     </footer>
   );
 };

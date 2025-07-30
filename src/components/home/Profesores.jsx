@@ -26,7 +26,7 @@ const listaProfes = [
 
 const Profesores = () => {
   return (
-    <section className="py-5 bg-light">
+    <section className="py-5 bg-dark text-white">
       <Container>
         <h2 className="text-center mb-4">Nuestro equipo de profesores</h2>
         <Row className="g-4 justify-content-center">
@@ -42,7 +42,7 @@ const Profesores = () => {
                     height: "180px",
                     objectFit: "cover",
                     borderRadius: "50%",
-                    margin: "20px auto 0", 
+                    margin: "20px auto 0",
                   }}
                 />
 
