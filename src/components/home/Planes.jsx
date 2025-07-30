@@ -36,7 +36,7 @@ const Planes = () => {
   return (
     <section className="py-5 my-5 bg-secondary text-white">
       <div className="container">
-        <h2 className="text-center mb-4">Nuestros planes mensuales</h2>
+        <h2 className="text-center mb-4">Nuestros Planes Mensuales</h2>
         <Row className="g-4 justify-content-center">
           {planes.map((plan, i) => (
             <Col key={i} xs={12} sm={6} md={4}>

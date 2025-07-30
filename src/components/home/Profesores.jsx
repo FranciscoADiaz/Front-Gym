@@ -28,11 +28,11 @@ const Profesores = () => {
   return (
     <section className="py-5 bg-dark text-white">
       <Container>
-        <h2 className="text-center mb-4">Nuestro equipo de profesores</h2>
+        <h2 className="text-center mb-4">Nuestro Equipo de Profesores</h2>
         <Row className="g-4 justify-content-center">
           {listaProfes.map((profe, i) => (
             <Col key={i} xs={12} sm={6} md={4}>
-              <Card className="h-100 text-center shadow-sm border-0 card-hover">
+              <Card className="h-100 text-center text-bg-primary bg-dark shadow-sm border-0 card-hover">
                 <Card.Img
                   variant="top"
                   src={profe.imagen}
