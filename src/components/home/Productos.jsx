@@ -35,7 +35,8 @@ const Productos = () => {
         <h2 className="text-center mb-4">PRODUCTOS DISPONIBLES</h2>
         <Row className="g-4 justify-content-center">
           {productos.map((prod, i) => (
-            <Col key={i} xs={10} sm={6} md={4}> 
+            <Col key={i} xs={12} sm={6} md={4}> 
+              
   <Link to={prod.ruta} className="text-decoration-none text-dark">
     <Card className="h-100 text-center shadow-sm border-0 card-hover cursor-pointer">
       <Card.Img
@@ -45,7 +46,7 @@ const Productos = () => {
         alt={prod.titulo}
       />
 
-      <Card.Body className="p-0">
+      <d.Body className="p-0">
         <Card.Title className="text-center text-dark mb-2 mt-3">
           {prod.titulo}
         </Card.Title>
