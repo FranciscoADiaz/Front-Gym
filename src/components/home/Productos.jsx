@@ -50,8 +50,8 @@ const Productos = () => {
           {prod.titulo}
         </Card.Title>
 
-        <div className="bg-light descripcion-card text-dark py-2 my-0 text-center">
-          <Card.Text className="mx-2 descripcion-card">{prod.descripcion}</Card.Text>
+        <div className="descripcion-card text-dark py-2 my-0 text-center">
+          <Card.Text className="mx-2">{prod.descripcion}</Card.Text>
         </div>
       </Card.Body>
     </Card>
