@@ -19,8 +19,10 @@
   cursor: pointer;
 }
 
+
 .borde-amarillo {
-  border: 2px solid #ffc107 !important;
+  border: 3px solid #ffc107;
+  box-shadow: 0 0 10px #ffc10788;
   border-radius: 0.5rem;
 }
 
