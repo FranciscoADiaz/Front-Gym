@@ -37,7 +37,7 @@ const Comentarios = () => {
               <img
                 src={c.imagen}
                 alt={`Foto de ${c.autor}`}
-                className="rounded-circle mb-3 img-circular"
+                className="rounded-circle mb-3 img-circular-sm"
                 variant="top"
               />
               <p className="fst-italic">"{c.texto}"</p>
