@@ -30,7 +30,7 @@
 }
 
 .borde-amarillo {
-  border: 3px solid #ffc107;
+  border: 3px solid #ffc107 !important;
   box-shadow: 0 0 10px #ffc10788;
   border-radius: 0.5rem;
 }
