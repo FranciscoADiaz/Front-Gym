@@ -37,8 +37,8 @@ const Comentarios = () => {
               <img
                 src={c.imagen}
                 alt={`Foto de ${c.autor}`}
-                className="rounded-circle mb-3"
-                style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                className="rounded-circle mb-3 img-circular"
+                variant="top"
               />
               <p className="fst-italic">"{c.texto}"</p>
               <p className="fw-bold">{c.autor}</p>
