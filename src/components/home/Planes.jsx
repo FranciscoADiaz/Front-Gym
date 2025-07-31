@@ -48,13 +48,13 @@ const Planes = () => {
   <div className="text-center">
     <AnimacionLottieFile url={plan.animacion} />
     
-  </div><Card.Title className="text-center mb-2">
+  </div><Card.Title className="text-center text-dark mb-2">
       {plan.nombre}
     </Card.Title>
                   
 
     
-    <div className="descripcion-card text-dark py-2 my-0 text-center">
+    <div className="descripcion-card py-2 my-0 text-center">
   <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
 </div>
   
