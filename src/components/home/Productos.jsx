@@ -38,7 +38,7 @@ const Productos = () => {
             <Col key={i} xs={10} sm={6} md={4}> 
               
   <Link to={prod.ruta} className="text-decoration-none text-dark">
-    <Card className="h-100 text-center shadow-sm card-hover cursor-pointer borde-card">
+    <Card className="h-100 text-center card-hover cursor-pointer borde-card">
       <Card.Img
         className="altura"
         variant="top"
