@@ -41,7 +41,7 @@ const Planes = () => {
             <Col key={i} xs={10} sm={6} md={4}>
               <Card
                 onClick={() => navigate(`/planes/${plan.ruta}`)}
-                className="h-100 shadow-sm border-0 card-hover cursor-pointer borde-amarillo"
+                className="h-100 shadow-sm card-hover cursor-pointer borde-amarillo"
             
               >
                 <Card.Body className="p-0" >
