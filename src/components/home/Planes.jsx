@@ -18,8 +18,7 @@ const Planes = () => {
       nombre: "SOLO CLASES",
       ruta: "clases",
       animacion:
-        "https://lottie.host/797f8162-2d32-46ad-84dd-86793b2edd32/UsnxvBfH6Y.lottie",
-
+        "https://lottie.host/3cb79ec8-0bd7-4d87-bd83-2dfa3499542b/T3mDyjNYlw.lottie",
       descripcion:
         "Incluye todas las clases grupales: funcional, spinning, zumba. Eligí la que más te guste.",
     },
