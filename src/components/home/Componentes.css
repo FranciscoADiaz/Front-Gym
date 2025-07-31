@@ -19,6 +19,12 @@
   cursor: pointer;
 }
 
+.borde-amarillo {
+  border: 2px solid #ffc107 !important;
+  border-radius: 0.5rem;
+}
+
+
 .altura {
   height: 220px;
   object-fit: cover;
