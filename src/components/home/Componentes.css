@@ -30,7 +30,7 @@
 }
 
 .borde-card {
-  border: 3px solid #ffc107 !important;
+  border: 3px solid #0dcaf0cc !important;
   box-shadow: 0 0 10px #0dcaf0cc;
   border-radius: 0.5rem;
 }
