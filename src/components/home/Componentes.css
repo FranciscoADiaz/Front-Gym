@@ -31,7 +31,7 @@
 
 .borde-card {
   border: 3px solid #0dcaf0cc !important;
-  box-shadow: 0 0 30px yellow;
+  box-shadow: 0 0 15px yellow;
   border-radius: 0.5rem;
 }
 
