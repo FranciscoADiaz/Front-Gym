@@ -1,0 +1,11 @@
+.padding-vertical {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  .padding-vertical {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
