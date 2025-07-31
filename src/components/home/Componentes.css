@@ -19,7 +19,15 @@
   cursor: pointer;
 }
 
-
+.img-circular {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%; 
+  border: 3px solid #ccc; 
+  margin: 20px auto 0;
+  display: block;
+}
 
 .borde-amarillo {
   border: 3px solid #ffc107;
