@@ -38,7 +38,7 @@ const Planes = () => {
         <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
         <Row className="g-4 justify-content-center">
           {planes.map((plan, i) => (
-            <Col key={i} xs={12} sm={6} md={4}>
+            <Col key={i} xs={10} sm={6} md={4}>
               <Card
                 onClick={() => navigate(`/planes/${plan.ruta}`)}
                 className="h-100 shadow-sm border-0 card-hover cursor-pointer"
