@@ -45,7 +45,7 @@ const Planes = () => {
             
               >
                 <Card.Body className="p-0" >
-  <div className="text-center">
+  <div className="text-center altura">
     <AnimacionLottieFile url={plan.animacion} />
     
   </div><Card.Title className="text-center text-dark mb-2">
