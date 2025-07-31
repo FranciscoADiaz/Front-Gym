@@ -34,19 +34,13 @@ const Profesores = () => {
           {listaProfes.map((profe, i) => (
             <Col key={i} xs={12} sm={6} md={4}>
               <Card className="h-100 text-center text-bg-primary bg-dark shadow-sm border-0 card-hover">
-                <Card.Img
-                  variant="top"
-                  src={profe.imagen}
-                  alt={profe.nombre}
-                  style={{
-                    width: "180px",
-                    height: "180px",
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    margin: "20px auto 0",
-                  }}
-                />
-
+                
+<Card.Img
+  variant="top"
+  src={profe.imagen}
+  alt={profe.nombre}
+  className="img-profe"
+/>
                 <Card.Body>
                   <Card.Title>{profe.nombre}</Card.Title>
                   <Card.Text>
