@@ -3,7 +3,7 @@ import accesorios from "../../assets/accesorios.jpg";
 import ropa from "../../assets/ropadeportiva.jpg";
 import suplementos from "../../assets/suplemento.jpeg";
 import { Link } from "react-router";
-
+import './Componentes.css';
 
 const productos = [
   {
@@ -30,7 +30,7 @@ const productos = [
 
 const Productos = () => {
   return (
-    <section className="py-5 bg-dark text-white">
+    <section className="py-5 bg-dark text-white padding-vertical">
       <Container>
         <h2 className="text-center mb-4">PRODUCTOS DISPONIBLES</h2>
         <Row className="g-4 justify-content-center">
