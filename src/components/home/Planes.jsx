@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { Card, Row, Col } from "react-bootstrap";
 import AnimacionLottieFile from "../lottie/AnimacionLottieFile";
-
+import './Componentes.css';
 const Planes = () => {
   const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const Planes = () => {
   ];
 
   return (
-    <section className="py-5 bg-secondary text-white">
+    <section className="py-5 bg-secondary text-white padding-vertical">
       <div className="container">
         <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
         <Row className="g-4 justify-content-center">
