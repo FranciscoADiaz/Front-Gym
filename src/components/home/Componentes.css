@@ -19,3 +19,21 @@
   cursor: pointer;
 }
 
+.altura {
+  height: 220px;
+  object-fit: cover;
+}
+
+  .descripcion-card {
+  background-color: #000;  
+  color: #fff;             
+  border-top: 1px solid #444; 
+}
+}
+
+@media (max-width: 576px) {
+  .col-10 {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
