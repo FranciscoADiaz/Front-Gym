@@ -31,7 +31,7 @@ const Comentarios = () => {
     <section className="padding-vertical bg-secondary text-white">
       <Container className="text-center">
         <h2 className="mb-4">COMENTARIOS</h2>
-        <Carousel controls={false} indicators={false} interval={9000}>
+        <Carousel controls={false} indicators={false} interval={5000}>
           {comentarios.map((c, i) => (
             <Carousel.Item key={i}>
               <img
