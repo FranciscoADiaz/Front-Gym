@@ -39,7 +39,7 @@ const Profesores = () => {
   variant="top"
   src={profe.imagen}
   alt={profe.nombre}
-  className="img-profe"
+  className="img-circular"
 />
                 <Card.Body>
                   <Card.Title>{profe.nombre}</Card.Title>
