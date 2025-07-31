@@ -5,6 +5,9 @@ import img5 from "../../assets/home5.jpg";
 
 const CarouselC = () => {
   return (
+
+
+    <div className="mx-0">
     <Carousel fade controls={false} indicators={false} interval={5000}>
       
       <Carousel.Item>
@@ -57,6 +60,7 @@ const CarouselC = () => {
         </div>
       </Carousel.Item>
     </Carousel>
+      </div>
   );
 };
 
