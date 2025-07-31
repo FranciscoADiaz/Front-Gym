@@ -5,6 +5,7 @@ import { NavLink, useNavigate} from "react-router";
 import logo from "../../assets/logo.png";
 import Clima from "../clima/ClimaC";
 import Swal from "sweetalert2";
+import "../Componentes.css";
 
 function NavbarC() {
   const usuarioLog = JSON.parse(sessionStorage.getItem('token'))
@@ -49,7 +50,7 @@ function NavbarC() {
                 : "/"
             }
           >
-            <img src={logo} alt="Logo" width="120" />
+            <img src={logo} alt="Logo" className="img-circular-sm"/>
           </NavLink>
           
           <Navbar.Toggle aria-controls="navbarScroll" />
