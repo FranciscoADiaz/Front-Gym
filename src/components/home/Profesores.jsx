@@ -35,7 +35,7 @@ const Profesores = () => {
             <Col key={i} xs={12} sm={6} md={4}>
               <Card className="h-100 text-center text-bg-primary bg-dark shadow-sm border-0 card-hover">
                 
-<Card.Img
+<img
   variant="top"
   src={profe.imagen}
   alt={profe.nombre}
