@@ -7,6 +7,8 @@ import {
 } from "react-icons/fa6";
 import logo from "../../assets/logo.png";
 import "./FooterC.css";
+import "../home/Componentes.css";
+
 
 const FooterC = () => {
   return (
@@ -20,7 +22,7 @@ const FooterC = () => {
                 src={logo}
                 alt="Logo TucuGym"
                 style={{ maxHeight: "80px", width: "auto" }}
-                className="d-block mx-auto mx-md-0 mb-2"
+                className="d-block mx-auto mx-md-0 mb-2 img-circular-sm"
               />
             </a>
           </Col>
