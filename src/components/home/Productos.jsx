@@ -46,7 +46,7 @@ const Productos = () => {
         alt={prod.titulo}
       />
 
-      <d.Body className="p-0">
+      <Card.Body className="p-0">
         <Card.Title className="text-center text-dark mb-2 mt-3">
           {prod.titulo}
         </Card.Title>
