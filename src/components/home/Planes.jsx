@@ -34,7 +34,7 @@ const Planes = () => {
   ];
 
   return (
-    <section className="py-5 bg-secondary text-white padding-vertical">
+    <section className="bg-secondary text-white padding-vertical">
       <div className="container">
         <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
         <Row className="g-4 justify-content-center">
