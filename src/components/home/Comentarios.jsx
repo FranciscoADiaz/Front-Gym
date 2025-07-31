@@ -3,6 +3,7 @@ import { Container, Carousel } from "react-bootstrap";
 import com1 from "../../assets/comentario1.jpg";
 import com2 from "../../assets/comentario2.webp";
 import com3 from "../../assets/comentario3.webp";
+import './Componentes.css';
 
 const comentarios = [
   {
@@ -27,7 +28,7 @@ const comentarios = [
 
 const Comentarios = () => {
   return (
-    <section className="py-5 bg-secondary text-white">
+    <section className="padding-vertical bg-secondary text-white">
       <Container className="text-center">
         <h2 className="mb-4">COMENTARIOS</h2>
         <Carousel controls={false} indicators={false} interval={9000}>
