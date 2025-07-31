@@ -2,6 +2,7 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import profe1 from "../../assets/profe1.webp";
 import profe2 from "../../assets/profe2.avif";
 import profe3 from "../../assets/profe3.webp";
+import './Componentes.css';
 
 const listaProfes = [
   {
@@ -26,7 +27,7 @@ const listaProfes = [
 
 const Profesores = () => {
   return (
-    <section className="py-5 bg-dark text-white">
+    <section className="padding-vertical bg-dark text-white">
       <Container>
         <h2 className="text-center mb-4">PROFESORES</h2>
         <Row className="g-4 justify-content-center">
