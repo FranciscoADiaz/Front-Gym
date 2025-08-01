@@ -12,7 +12,7 @@ import HomePage from "./pages/HomePage";
 import RecuperarContrasenia from "./pages/RecuperarContrasenia"; 
 import AdminUsersPage from "./pages/AdminUsersPage"; 
 import Sobrenosotros from "./pages/Sobrenosotros"; 
-import Contacto from "./pages/Contacto"; 
+import Contacto from "./pages/ContactoPage"; 
 
 
 const App = () => {

@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 const Sobrenosotros = () => {
   return (
-    <section className="py-5 bg-light">
+    <section className="py-5 bg-dark text-white">
       <Container>
         <h2 className="text-center mb-4">Sobre Nosotros</h2>
         <p>

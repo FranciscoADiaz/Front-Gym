@@ -33,8 +33,8 @@ const Planes = () => {
   ];
 
   return (
-    <section className="bg-dark text-white padding-vertical">
-      <div className="container">
+    <section className="bg-dark text-white padding-vertical ">
+      <div className="container-fluid">
         <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
         <Row className="g-4 justify-content-center">
           {planes.map((plan, i) => (
@@ -42,23 +42,19 @@ const Planes = () => {
               <Card
                 onClick={() => navigate(`/planes/${plan.ruta}`)}
                 className="h-100 card-hover cursor-pointer borde-card"
-            
               >
-                <Card.Body className="p-0" >
-  <div className="text-center">
-    <AnimacionLottieFile url={plan.animacion} />
-    
-  </div><Card.Title className="text-center text-dark mb-2">
-      {plan.nombre}
-    </Card.Title>
-                  
+                <Card.Body className="p-0">
+                  <div className="text-center">
+                    <AnimacionLottieFile url={plan.animacion} />
+                  </div>
+                  <Card.Title className="text-center text-dark mb-2">
+                    {plan.nombre}
+                  </Card.Title>
 
-    
-    <div className="descripcion-card py-2 my-0 text-center">
-  <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
-</div>
-  
-</Card.Body>
+                  <div className="descripcion-card py-2 my-0 text-center">
+                    <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
+                  </div>
+                </Card.Body>
               </Card>
             </Col>
           ))}

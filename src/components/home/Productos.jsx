@@ -30,7 +30,7 @@ const productos = [
 
 const Productos = () => {
   return (
-    <section className="bg-dark text-white padding-vertical">
+    <section className="bg-dark text-white padding-vertical contenedor-pagina">
       <Container>
         <h2 className="text-center mb-4">PRODUCTOS DISPONIBLES</h2>
         <Row className="g-4 justify-content-center">

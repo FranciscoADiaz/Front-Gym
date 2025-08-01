@@ -16,7 +16,7 @@ const marcas = [
 
 const MarcasC = () => {
   return (
-    <section className="py-5 bg-white">
+    <section className="py-5 bg-dark">
       <Container>
         <h2 className="text-center mb-4">MARCAS ASOCIADAS</h2>
 
