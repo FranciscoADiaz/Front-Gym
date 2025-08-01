@@ -35,7 +35,7 @@ const FooterC = () => {
             <h6 className="text-uppercase mb-3">Seguinos</h6>
             <div className="d-flex gap-3 fs-5">
               <a
-                href="#"
+                href="https://www.instagram.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white footer-icon"
@@ -43,7 +43,7 @@ const FooterC = () => {
                 <FaInstagram />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/?locale=es_LA"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white footer-icon"
@@ -51,7 +51,7 @@ const FooterC = () => {
                 <FaFacebookF />
               </a>
               <a
-                href="#"
+                href="https://www.tiktok.com/es/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white footer-icon"
@@ -59,7 +59,7 @@ const FooterC = () => {
                 <FaTiktok />
               </a>
               <a
-                href="#"
+                href="https://www.whatsapp.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white footer-icon"

@@ -38,7 +38,7 @@ function NavbarC() {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary ">
+      <Navbar expand="lg" className="bg-dark text-white">
         <Container fluid>
           <NavLink
           
