@@ -33,7 +33,7 @@ const Planes = () => {
   ];
 
   return (
-    <section className="bg-secondary text-white padding-vertical">
+    <section className="bg-dark text-white padding-vertical">
       <div className="container">
         <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
         <Row className="g-4 justify-content-center">
