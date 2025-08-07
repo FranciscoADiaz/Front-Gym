@@ -9,6 +9,7 @@ import Comentarios from "../components/home/Comentarios";
 import Profesores from "../components/home/Profesores";
 import Planes from "../components/home/Planes";
 import CarruselInicio from "../components/home/CarouselC";
+import Redes from "../components/home/RedesC";
 
 const HomePage = () => {
   useChangeTitle("Inicio");
@@ -16,6 +17,7 @@ const HomePage = () => {
   return (
     <>
       <Container idPage="inicio">
+        <Redes />
         <Wp />
         <CarruselInicio />
         <Planes />

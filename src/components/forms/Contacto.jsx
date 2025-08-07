@@ -26,6 +26,8 @@ const Contacto = () => {
 
   return (
     <div className="formulario-page form-personalizado text-center">
+   
+
       <Form onSubmit={manejarEnvio}>
         <h2 className="text-center mb-4 form-titulo">Contacto 📞</h2>
         <Form.Group className="mb-3">

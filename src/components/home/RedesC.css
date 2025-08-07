@@ -1,0 +1,54 @@
+
+.container-redes {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  margin: 0;
+  height: auto;
+}
+
+
+.container-redes a {
+  text-decoration: none;
+  color: #ffffff;
+  width: 70px;
+  height: 55px;
+  transition: all 0.3s ease; 
+}
+
+.container-redes a:hover {
+  color: #424242; 
+}
+
+
+.icon {
+  width: 40px;
+  height: 25px;
+  margin: 5px;
+  transition: transform 0.3s ease; 
+}
+
+
+@media (max-width: 768px) {
+  .container-redes {
+    left: 10px; 
+  }
+
+  .container-redes a {
+    width: 40px; 
+    height: 25px;
+  }
+
+
+}
+
+
+@media (max-width: 480px) {
+  .container-redes {
+    display: none;
+  }
+}
