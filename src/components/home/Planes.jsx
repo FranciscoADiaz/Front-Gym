@@ -20,7 +20,7 @@ const Planes = () => {
       animacion:
         "https://lottie.host/3cb79ec8-0bd7-4d87-bd83-2dfa3499542b/T3mDyjNYlw.lottie",
       descripcion:
-        "Incluye todas las clases grupales: funcional, spinning, zumba. Eligí la que más te guste.",
+        "Incluye todas las clases grupales: funcional, spinning, zumba. Ideal para quienes buscan variedad y motivación.",
     },
     {
       nombre: "PLAN FULL",
@@ -28,7 +28,7 @@ const Planes = () => {
       animacion:
         "https://lottie.host/6295e538-eac4-45e8-824f-162b16a9bfdc/dpVR6cyxno.lottie",
       descripcion:
-        "Incluye musculación y clases. La opción más completa para transformar tu cuerpo.",
+        "Incluye musculación y clases. La opción más completa para transformar tu cuerpo. Elegí la que más te guste.",
     },
   ];
 

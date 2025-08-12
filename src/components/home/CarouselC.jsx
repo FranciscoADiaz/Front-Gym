@@ -19,7 +19,7 @@ const CarouselC = () => {
             style={{ maxHeight: "500px", objectFit: "cover" }}
           />
           <div className="bg-dark text-white p-4 text-center">
-            <h3>Bienvenido a TucuGym</h3>
+            <h3>Bienvenido a Tucumán Gym</h3>
             <p>Las mejores máquinas, un lugar para entrenar cuerpo y mente</p>
           </div>
         </div>

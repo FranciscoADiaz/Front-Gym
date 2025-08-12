@@ -1,17 +1,17 @@
 import { Container, Image } from "react-bootstrap";
 import "./Marcas.css";
-import marca1 from "../../assets/marca1.svg";
-import marca2 from "../../assets/marca2.jpg";
-import marca3 from "../../assets/marca3.png";
-import marca4 from "../../assets/marca4.png";
-import marca6 from "../../assets/marca6.png";
+import Gatorade from "../../assets/Gatorade.svg";
+import ON from "../../assets/ON.png";
+import Nike from "../../assets/Nike.webp";
+import PLS from "../../assets/PLS.webp";
+import NF from "../../assets/NF.png";
 
 const marcas = [
-  { nombre: "WheyPro", imagen: marca1 },
-  { nombre: "NutriFit", imagen: marca3 },
-  { nombre: "StrongWear", imagen: marca4 },
-  { nombre: "PowerLabs", imagen: marca6 },
-  { nombre: "Gatorade", imagen: marca2 },
+  { nombre: "ON", imagen: ON },
+  { nombre: "Gatorade", imagen: Gatorade },
+  { nombre: "Adidas", imagen: Nike },
+  { nombre: "PowerLabs", imagen: PLS },
+  { nombre: "NF", imagen: NF },
 ];
 
 const MarcasC = () => {

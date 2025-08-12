@@ -3,12 +3,6 @@
   padding-bottom: 6rem;
 }
 
-@media (max-width: 768px) {
-  .padding-vertical {
-    padding-top: 8rem;
-    padding-bottom: 6rem;
-  }
-}
 
 .card-hover:hover {
   transform: scale(1.02);
