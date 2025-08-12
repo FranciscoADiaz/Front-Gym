@@ -7,20 +7,20 @@ import './Componentes.css';
 
 const productos = [
   {
-    titulo: "Suplementos",
+    titulo: "SUPLEMENTOS",
     imagen: suplementos,
     descripcion:
       "Proteína, creatina, pre-entreno y batidos listos para consumir.",
     ruta: "/productos/suplementos",
   },
   {
-    titulo: "Accesorios de entrenamiento",
+    titulo: "ACCESORIOS",
     imagen: accesorios,
     descripcion: "Guantes, cinturones de fuerza, vendas, agarraderas y más.",
     ruta: "/productos/accesorios",
   },
   {
-    titulo: "Ropa deportiva",
+    titulo: "ROPA DEPORTIVA",
     imagen: ropa,
     descripcion:
       "Camisetas dry-fit, shorts y joggers cómodos.",
