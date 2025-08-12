@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink, useNavigate} from "react-router";
-import logo from "../../assets/logo.png";
+
 import Clima from "../clima/ClimaC";
 import Swal from "sweetalert2";
 import "../home/Componentes.css";
@@ -50,7 +50,7 @@ function NavbarC() {
                 : "/"
             }
           >
-            <img src={logo} alt="Logo" className="img-circular-sm"/>
+            <img src={"https://res.cloudinary.com/dpy5kwico/image/upload/v1754950155/logo_vbmdlo.png"} alt="Logo" className="img-circular-sm"/>
           </NavLink>
           
           <Navbar.Toggle aria-controls="navbarScroll" />

@@ -1,17 +1,28 @@
 import { Container, Image } from "react-bootstrap";
 import "./Marcas.css";
-import Gatorade from "../../assets/Gatorade.svg";
-import ON from "../../assets/ON.png";
-import Nike from "../../assets/Nike.webp";
-import PLS from "../../assets/PLS.webp";
-import NF from "../../assets/NF.png";
 
 const marcas = [
-  { nombre: "ON", imagen: ON },
-  { nombre: "Gatorade", imagen: Gatorade },
-  { nombre: "Adidas", imagen: Nike },
-  { nombre: "PowerLabs", imagen: PLS },
-  { nombre: "NF", imagen: NF },
+  {
+    nombre: "ON",
+
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950159/ON_pknovs.png",
+  },
+  {
+    nombre: "Gatorade",
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950146/Gatorade_hhz3xj.svg",
+  },
+  {
+    nombre: "Nike",
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950156/Nike_uvwc73.webp",
+  },
+  {
+    nombre: "PowerLabs",
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950156/PLS_cblurh.webp",
+  },
+  {
+    nombre: "NF",
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950155/NF_yccoei.png",
+  },
 ];
 
 const MarcasC = () => {
@@ -25,10 +36,16 @@ const MarcasC = () => {
             {marcas.map((marca, i) => (
               <div key={i} className="marca-item">
                 <Image
-                  src={marca.imagen}
+                  src={marca.url} // ✅ URL desde Cloudinary
                   alt={marca.nombre}
                   fluid
+                  loading="lazy"
                   className="marca-logo"
+                  style={{
+                    // Para logos: no recortar; que se adapte sin deformar
+                    objectFit: "contain",
+                    aspectRatio: "2/1", // opcional: da caja estable al slider
+                  }}
                 />
               </div>
             ))}

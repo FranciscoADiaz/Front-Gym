@@ -17,7 +17,7 @@ const AdminHomePage = () => {
     if (token) {
       const payloadBase64 = token.split(".")[1];
       const payload = JSON.parse(atob(payloadBase64));
-      setAdmin({ nombre: payload.nombreUsuario || "Administrador" });
+      setAdmin({ nombre: payload.nombreUsuario});
     }
   }, []);
   
@@ -37,8 +37,7 @@ const AdminHomePage = () => {
   
   return (
     <Container idPage="admin" className="my-4">
-      <h1 className="mb-3">👋 Bienvenido, {admin.nombre || "Administrador"}</h1>
-      <p className="text-muted">Versión del sistema: 1.0</p>
+      <h1 className="mb-3">👋 Bienvenido, {admin.nombre}</h1>
 
       <h3 className="mt-4">📅 Clases de hoy</h3>
 

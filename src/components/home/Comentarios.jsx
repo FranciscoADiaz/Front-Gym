@@ -1,25 +1,22 @@
-
 import { Container, Carousel } from "react-bootstrap";
-import com1 from "../../assets/comentario1.jpg";
-import com2 from "../../assets/comentario2.webp";
-import com3 from "../../assets/comentario3.webp";
-import './Componentes.css';
+import "./Componentes.css";
+
 
 const comentarios = [
   {
-    imagen: com1,
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950146/comentario3_yrxkdf.webp",
     texto:
-      "TucuGym me motivó a entrenar todos los días. Excelente atención y ambiente.",
+      "Tucumán Gym me motivó a entrenar todos los días. Excelente atención y ambiente.",
     autor: "Romina Salazar - Plan Full",
   },
   {
-    imagen: com2,
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950146/comentario2_mmgk5u.webp",
     texto:
       "Las clases son dinámicas y divertidas. Los profes te acompañan en todo.",
     autor: "Carlos Ríos - Solo Clases",
   },
   {
-    imagen: com3,
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950146/comentario1_jxiofm.jpg",
     texto:
       "El área de musculación está muy bien equipada. Me siento cómoda entrenando acá.",
     autor: "Eliana Gómez - Musculación",
@@ -31,15 +28,27 @@ const Comentarios = () => {
     <section className="padding-vertical bg-secondary text-white">
       <Container className="text-center">
         <h2 className="mb-4">COMENTARIOS</h2>
+
+      
         <Carousel controls={false} indicators={false} interval={5000}>
           {comentarios.map((c, i) => (
             <Carousel.Item key={i}>
+        
               <img
-                src={c.imagen}
+                src={c.url}
                 alt={`Foto de ${c.autor}`}
-                className="rounded-circle mb-3 img-circular-sm"
-                variant="top"
+                loading="lazy"
+                className="rounded-circle mb-3 img-circular-sm" 
+                style={{
+                  width: 120,
+                  height: 120,
+                  objectFit: "cover",
+                  display: "block",
+                  margin: "0 auto",
+                }}
               />
+
+              
               <p className="fst-italic">"{c.texto}"</p>
               <p className="fw-bold">{c.autor}</p>
             </Carousel.Item>
