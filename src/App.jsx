@@ -13,6 +13,7 @@ import RecuperarContrasenia from "./pages/RecuperarContrasenia";
 import AdminUsersPage from "./pages/AdminUsersPage"; 
 import Sobrenosotros from "./pages/Sobrenosotros"; 
 import Contacto from "./pages/ContactoPage"; 
+import PlanDetalle from "./components/planes/DetallesPlanC";
 
 
 const App = () => {
@@ -24,11 +25,12 @@ const App = () => {
           <main className="main">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/planes/:slug" element={<PlanDetalle />} />
               <Route path="/registrarse" element={<RegisterPage />} />
               <Route path="/iniciarsesion" element={<LoginPage />} />
               <Route path="/reservar" element={<ReservaPage />} />
               <Route path="/admin" element={<AdminHomePage />} />
-              <Route path="/admin/usuarios" element={<AdminUsersPage/>} />
+              <Route path="/admin/usuarios" element={<AdminUsersPage />} />
               <Route
                 path="/recuperarcontrasenia"
                 element={<RecuperarContrasenia />}

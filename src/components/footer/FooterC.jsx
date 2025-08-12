@@ -5,7 +5,6 @@ import {
   FaTiktok,
   FaWhatsapp,
 } from "react-icons/fa6";
-import logo from "../../assets/logo.png";
 import "./FooterC.css";
 import "../home/Componentes.css";
 
@@ -15,11 +14,11 @@ const FooterC = () => {
     <footer className="footer bg-dark text-white pt-4">
       <Container className="pb-3">
         <Row className="text-center text-md-start align-items-center">
-          {/* Logo */}
+        
           <Col xs={12} md={4} className="mb-4 mb-md-0">
             <a href="/" aria-label="Inicio">
               <img
-                src={logo}
+                src={"https://res.cloudinary.com/dpy5kwico/image/upload/v1754950155/logo_vbmdlo.png"}
                 alt="Logo TucuGym"
                 style={{ maxHeight: "80px", width: "auto" }}
                 className="d-block mx-auto mx-md-0 mb-2 img-circular-sm"
@@ -74,13 +73,13 @@ const FooterC = () => {
             <p className="mb-1 small">Av. Mitre 1234, Tucumán</p>
             <p className="mb-1 small">Lunes a Sábados - 8 a 22 hs</p>
             <p className="mb-1 small">Tel: 381-1234567</p>
-            <p className="mb-0 small">tucugym.contacto@gmail.com</p>
+            <p className="mb-0 small">tucuman.gym.contacto@gmail.com</p>
           </Col>
         </Row>
       </Container>
 
       <div className="footer-bottom text-center py-2 bg-secondary text-white-50 small">
-        © 2025 TucuGym. Todos los derechos reservados.
+        © 2025 Tucumán Gym. Todos los derechos reservados.
       </div>
     </footer>
   );

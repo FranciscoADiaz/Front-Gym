@@ -332,9 +332,10 @@ const FormC = ({ idPage }) => {
                   </Button>
                   <div className="mt-2">
                     {idPage === "registrarse" ? (
-                      <Link to="/iniciarsesion">
-                        ¿Ya tenés una cuenta? Iniciar sesión
-                      </Link>
+                      <div className="text-light">
+                        ¿Ya tenés cuenta?{" "}
+                        <Link to="/iniciarsesion">Iniciar sesión</Link>
+                      </div>
                     ) : (
                       <Link to="/recuperarcontrasenia">
                         ¿Olvidaste tu contraseña?

@@ -1,32 +1,33 @@
 import { useNavigate } from "react-router";
 import { Card, Row, Col } from "react-bootstrap";
-import AnimacionLottieFile from "../lottie/AnimacionLottieFile";
-import './Componentes.css';
+import "./Componentes.css";
+
 const Planes = () => {
   const navigate = useNavigate();
 
+ 
   const planes = [
     {
       nombre: "SOLO MUSCULACIÓN",
       ruta: "musculacion",
-      animacion:
-        "https://lottie.host/6ac3b4a3-7afb-42a0-90b0-2ab22a711515/5P93d1YrNA.lottie",
+      url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020300/musculaci%C3%B3n1_jnsmsa.jpg",
+      alt: "Área de musculación con máquinas",
       descripcion:
         "Acceso ilimitado al área de pesas y máquinas. Ideal para quienes entrenan por cuenta propia.",
     },
     {
       nombre: "SOLO CLASES",
       ruta: "clases",
-      animacion:
-        "https://lottie.host/3cb79ec8-0bd7-4d87-bd83-2dfa3499542b/T3mDyjNYlw.lottie",
+      url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020301/clases2_v1u6as.jpg",
+      alt: "Clases grupales de funcional y spinning",
       descripcion:
         "Incluye todas las clases grupales: funcional, spinning, zumba. Ideal para quienes buscan variedad y motivación.",
     },
     {
       nombre: "PLAN FULL",
       ruta: "full",
-      animacion:
-        "https://lottie.host/6295e538-eac4-45e8-824f-162b16a9bfdc/dpVR6cyxno.lottie",
+      url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020303/full3_u19eol.webp",
+      alt: "Entrenamiento integral con musculación y clases",
       descripcion:
         "Incluye musculación y clases. La opción más completa para transformar tu cuerpo. Elegí la que más te guste.",
     },
@@ -36,21 +37,36 @@ const Planes = () => {
     <section className="bg-dark text-white padding-vertical ">
       <div className="container-fluid">
         <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
+
         <Row className="g-4 justify-content-center">
           {planes.map((plan, i) => (
             <Col key={i} xs={10} sm={6} md={4}>
               <Card
                 onClick={() => navigate(`/planes/${plan.ruta}`)}
                 className="h-100 card-hover cursor-pointer borde-card"
+                role="button" 
+                tabIndex={0} 
               >
                 <Card.Body className="p-0">
-                  <div className="text-center">
-                    <AnimacionLottieFile url={plan.animacion} />
-                  </div>
+             
+                  <img
+                    src={plan.url} 
+                    alt={plan.alt}
+                    loading="lazy" 
+                    className="img-fluid w-100"
+                    style={{
+                      aspectRatio: "16/9",
+                      objectFit: "cover", 
+                      display: "block",
+                    }}
+                  />
+
+               
                   <Card.Title className="text-center text-dark mb-2">
                     {plan.nombre}
                   </Card.Title>
 
+               
                   <div className="descripcion-card py-2 my-0 text-center">
                     <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
                   </div>

@@ -1,27 +1,25 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
-import profe1 from "../../assets/profe1.webp";
-import profe2 from "../../assets/profe2.avif";
-import profe3 from "../../assets/profe3.webp";
-import './Componentes.css';
+import "./Componentes.css";
 
 const listaProfes = [
   {
     nombre: "Walter Rivas",
     especialidad: "Musculación",
     turno: "Mañana",
-    imagen: profe2,
+
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950151/profe2_lbcacy.avif",
   },
   {
     nombre: "Daniela Cardozo",
     especialidad: "Funcional",
     turno: "Tarde",
-    imagen: profe3,
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950152/profe3_gavkie.webp",
   },
   {
     nombre: "Andrés Perlo",
     especialidad: "Zumba",
     turno: "Noche",
-    imagen: profe1,
+    url: "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950150/profe1_vg2ake.webp",
   },
 ];
 
@@ -30,17 +28,26 @@ const Profesores = () => {
     <section className="padding-vertical bg-dark text-white">
       <Container>
         <h2 className="text-center mb-4">PROFESORES</h2>
+
         <Row className="g-4 justify-content-center">
           {listaProfes.map((profe, i) => (
             <Col key={i} xs={12} sm={6} md={4}>
               <Card className="h-100 text-center text-bg-primary bg-dark shadow-sm border-0 card-hover">
-                
-<img
-  variant="top"
-  src={profe.imagen}
-  alt={profe.nombre}
-  className="img-circular"
-/>
+              
+                <img
+                  src={profe.url}
+                  alt={profe.nombre}
+                  loading="lazy"
+                  className="img-circular" 
+                  style={{
+                    width: 180, 
+                    height: 180,
+                    objectFit: "cover",
+                    display: "block",
+                    margin: "20px auto 0",
+                  }}
+                />
+
                 <Card.Body>
                   <Card.Title>{profe.nombre}</Card.Title>
                   <Card.Text>

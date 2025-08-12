@@ -7,7 +7,7 @@ const Sobrenosotros = () => {
       <Container>
         <h2 className="text-center mb-4">Sobre Nosotros</h2>
         <p>
-          En <strong>TucuGym</strong> nos dedicamos a transformar vidas a través del
+          En <strong>Tucumán Gym</strong> nos dedicamos a transformar vidas a través del
           ejercicio físico, la motivación y una comunidad saludable. Contamos con
           entrenadores certificados, clases dinámicas y planes accesibles.
         </p>

@@ -23,10 +23,9 @@ function Clima() {
 
   return (
     <div>
-      
       <span>{clima.name}</span>
       <p>
-        🌡 {clima.main.temp}°C ☁ {clima.weather[0].description}
+        ☁ {clima.main.temp}°C {clima.weather[0].description}
       </p>
     </div>
   );
