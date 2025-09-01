@@ -2,7 +2,6 @@ import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import "./FormC.css";
 
-
 const Contacto = () => {
   const [formulario, setFormulario] = useState({
     nombre: "",
@@ -19,15 +18,12 @@ const Contacto = () => {
 
   const manejarEnvio = (e) => {
     e.preventDefault();
-    console.log("Mensaje enviado:", formulario);
     alert("Gracias por contactarnos. Te responderemos pronto.");
     setFormulario({ nombre: "", email: "", mensaje: "" });
   };
 
   return (
     <div className="formulario-page form-personalizado text-center">
-   
-
       <Form onSubmit={manejarEnvio}>
         <h2 className="text-center mb-4 form-titulo">Contacto 📞</h2>
         <Form.Group className="mb-3">

@@ -1,8 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { obtenerReservas, cancelarReserva } from "../../helpers/apiReservas";
+import {
+  obtenerReservasUsuario,
+  cancelarReserva,
+} from "../../helpers/apiReservas";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const ListaReservas = () => {
+  const navigate = useNavigate();
   const token = JSON.parse(sessionStorage.getItem("token")) || null;
   const usuarioActual = token
     ? (() => {
@@ -17,35 +22,44 @@ const ListaReservas = () => {
     : null;
 
   const [reservas, setReservas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const cargarReservas = useCallback(async () => {
-    if (!usuarioActual) return;
+    if (!usuarioActual) {
+      setLoading(false);
+      return;
+    }
+
     try {
-      console.log("Cargando reservas para usuario:", usuarioActual);
-      const response = await obtenerReservas();
-      console.log("Respuesta de reservas:", response);
+      setLoading(true);
+      const response = await obtenerReservasUsuario(usuarioActual);
 
-      // Verificar la estructura de la respuesta
       const reservasData = response.data?.reservas || response.data || [];
-      console.log("Datos de reservas:", reservasData);
 
-      // Verificar que sea un array antes de filtrar
       if (!Array.isArray(reservasData)) {
-        console.error("Error: reservasData no es un array:", reservasData);
         setReservas([]);
         return;
       }
 
-      const reservasFiltradas = reservasData.filter(
-        (reserva) => reserva.idUsuario === usuarioActual
-      );
-      console.log("Reservas filtradas:", reservasFiltradas);
-      setReservas(reservasFiltradas);
+      setReservas(reservasData);
     } catch (error) {
-      console.error("Error al cargar reservas:", error);
+      if (error.response?.status === 401) {
+        Swal.fire({
+          title: "Sesión expirada",
+          text: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+          icon: "warning",
+          confirmButtonText: "Iniciar Sesión",
+        }).then(() => {
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("rol");
+          navigate("/iniciarsesion");
+        });
+      }
       setReservas([]);
+    } finally {
+      setLoading(false);
     }
-  }, [usuarioActual]);
+  }, [usuarioActual, navigate]);
 
   useEffect(() => {
     cargarReservas();
@@ -60,11 +74,49 @@ const ListaReservas = () => {
     });
 
     if (confirm.isConfirmed) {
-      await cancelarReserva(id);
-      Swal.fire("Clase cancelada con éxito", "", "success");
-      cargarReservas();
+      try {
+        await cancelarReserva(id);
+        Swal.fire("Clase cancelada con éxito", "", "success");
+        cargarReservas();
+      } catch {
+        Swal.fire("Error", "No se pudo cancelar la clase", "error");
+      }
     }
   };
+
+  // Si no hay usuario logueado, mostrar mensaje
+  if (!usuarioActual) {
+    return (
+      <div className="container-md mt-5">
+        <div className="card fade-in shadow-lg border-0">
+          <div className="card-header bg-gradient-secondary text-white text-center py-4">
+            <h3 className="card-title mb-0 text-black">
+              <i className="fas fa-list-alt me-2"></i>
+              Mis Reservas
+            </h3>
+          </div>
+          <div className="card-body p-4 text-center">
+            <div className="mb-4">
+              <i
+                className="fas fa-user-lock text-muted"
+                style={{ fontSize: "4rem" }}
+              ></i>
+            </div>
+            <h5 className="text-muted mb-2">Debes iniciar sesión</h5>
+            <p className="text-muted small">
+              Para ver tus reservas, necesitas iniciar sesión
+            </p>
+            <button
+              className="btn btn-primary mt-3"
+              onClick={() => navigate("/iniciarsesion")}
+            >
+              Iniciar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container-md mt-5">
@@ -74,11 +126,17 @@ const ListaReservas = () => {
             <i className="fas fa-list-alt me-2"></i>
             Mis Reservas
           </h3>
-  
         </div>
 
         <div className="card-body p-4">
-          {reservas.length === 0 ? (
+          {loading ? (
+            <div className="text-center p-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Cargando...</span>
+              </div>
+              <p className="mt-3 text-muted">Cargando tus reservas...</p>
+            </div>
+          ) : reservas.length === 0 ? (
             <div className="text-center p-5">
               <div className="mb-4">
                 <i

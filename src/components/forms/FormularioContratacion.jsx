@@ -99,15 +99,7 @@ const FormularioContratacion = ({ show, handleClose, plan, onSuccess }) => {
     setLoading(true);
 
     try {
-      // Mapear el nombre del plan al valor correcto del enum
       const planEnum = mapeoPlanes[plan.nombre] || plan.nombre;
-
-      // Crear preferencia de pago en MercadoPago
-      console.log("Enviando datos al backend:", {
-        plan: planEnum,
-        duracion: parseInt(formData.duracion),
-        precio: calcularPrecio(),
-      });
 
       const response = await clientAxios.post("/pagos/crear-preferencia", {
         plan: planEnum,
@@ -115,17 +107,12 @@ const FormularioContratacion = ({ show, handleClose, plan, onSuccess }) => {
         precio: calcularPrecio(),
       });
 
-      console.log("Respuesta del backend:", response.data);
-
       if (response.data.success) {
-        // Redirigir a MercadoPago
         window.location.href = response.data.init_point;
       } else {
         throw new Error("Error al crear preferencia de pago");
       }
     } catch (error) {
-      console.error("Error completo:", error);
-      console.error("Respuesta del servidor:", error.response?.data);
       Swal.fire(
         "❌ Error",
         error.response?.data?.msg || "Error al procesar el pago",

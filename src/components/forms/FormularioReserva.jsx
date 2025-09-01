@@ -71,30 +71,22 @@ const FormularioReserva = () => {
   // Verificar cupos disponibles y plan del usuario
   const verificarDisponibilidad = async (fecha, hora, tipoClase) => {
     try {
-      console.log("Verificando disponibilidad:", { fecha, hora, tipoClase });
       const response = await clientAxios.get(
         `/reservar/cupos?fecha=${fecha}&hora=${hora}&tipoClase=${tipoClase}`
       );
-      console.log("Respuesta de cupos:", response.data);
 
-      // Verificar la estructura de la respuesta
       if (response.data && typeof response.data.cuposDisponibles === "number") {
         setCuposDisponibles(response.data.cuposDisponibles);
       } else if (response.data && typeof response.data.cupos === "number") {
         setCuposDisponibles(response.data.cupos);
       } else {
-        console.log("Estructura de respuesta inesperada:", response.data);
-        // Por ahora, asumimos que hay cupos disponibles si no hay error
-        setCuposDisponibles(10); // Valor por defecto
+        setCuposDisponibles(10);
       }
     } catch (error) {
-      console.error("Error al verificar cupos:", error);
-      // Si hay error, asumimos que hay cupos disponibles por defecto
       setCuposDisponibles(10);
     }
   };
 
-  // Obtener plan del usuario
   const obtenerPlanUsuario = async () => {
     if (!idUsuario) return;
     try {
@@ -103,14 +95,11 @@ const FormularioReserva = () => {
       );
 
       if (response.data.planActivo) {
-        console.log("✅ Plan activo encontrado:", response.data.plan);
         setPlanUsuario(response.data.plan);
       } else {
-        console.log("❌ No hay plan activo");
         setPlanUsuario("Sin plan");
       }
     } catch (error) {
-      console.error("Error al obtener plan:", error);
       setPlanUsuario("Sin plan");
     }
   };
@@ -137,24 +126,12 @@ const FormularioReserva = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log("Intentando reservar:", {
-      reserva,
-      idUsuario,
-      planUsuario,
-      cuposDisponibles,
-    });
-
-    // Verificar que el usuario esté logueado
     if (!idUsuario) {
       Swal.fire("❌ Error", "Debes iniciar sesión para reservar", "error");
       setLoading(false);
       return;
     }
 
-    console.log("🔍 Validando plan:", planUsuario);
-    console.log("🔍 Tipo de plan:", typeof planUsuario);
-
-    // Verificar plan activo
     if (!planUsuario || planUsuario === "Sin plan") {
       Swal.fire(
         "❌ Plan requerido",

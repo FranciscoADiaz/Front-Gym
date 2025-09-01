@@ -56,20 +56,16 @@ const AdminUsersPage = () => {
   };
 
   const handleCloseModal = () => {
-    console.log("=== CERRANDO MODAL ===");
     setShowModal(false);
     setUsuarioEditando(null);
-    console.log("Modal cerrado, usuarioEditando reseteado");
   };
 
   const handleSuccess = async () => {
-    console.log("=== ACTUALIZANDO LISTA DE USUARIOS ===");
     try {
       const usuariosDB = await obtenerUsuarios();
-      console.log("Nueva lista de usuarios:", usuariosDB);
       setUsuarios(usuariosDB);
     } catch (error) {
-      console.error("Error al actualizar lista:", error);
+      Swal.fire("Error", "No se pudieron cargar los usuarios", "error");
     }
   };
 

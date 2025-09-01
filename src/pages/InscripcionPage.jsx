@@ -66,10 +66,6 @@ const InscripcionPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar los datos al backend
-    console.log("Datos del formulario:", formData);
-
-    // Simular envío exitoso
     alert("¡Inscripción exitosa! Te contactaremos pronto.");
     navigate("/planes");
   };
