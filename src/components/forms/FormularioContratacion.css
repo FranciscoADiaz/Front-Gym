@@ -1,0 +1,108 @@
+/* Estilos para el formulario de contratación */
+.pricing-table {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid #dee2e6;
+}
+
+.pricing-table .d-flex {
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pricing-table .d-flex:last-child {
+  border-bottom: none;
+}
+
+/* Animaciones para los iconos */
+.fas.fa-check {
+  animation: checkPulse 2s infinite;
+}
+
+@keyframes checkPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Estilo para el modal más grande */
+.modal-xl {
+  max-width: 1200px;
+}
+
+/* Estilos para las cards */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Estilo para el botón de inscripción */
+.btn-inscripcion {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-inscripcion:hover {
+  background: linear-gradient(45deg, #218838, #1ea085);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* Estilo para el resumen de compra */
+.resumen-compra {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border-left: 4px solid #28a745;
+}
+
+/* Animación para el loading */
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilo para los beneficios */
+.beneficios-list li {
+  padding: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.beneficios-list li:hover {
+  background-color: rgba(40, 167, 69, 0.1);
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal-xl {
+    max-width: 95%;
+    margin: 10px auto;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+
+

@@ -12,6 +12,27 @@ const clientAxios = axios.create({
   baseURL: `${backendURL}/api`,
 });
 
+// Interceptor para agregar el token automáticamente a todas las peticiones
+clientAxios.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+      try {
+        const parsedToken = JSON.parse(token);
+        config.headers.Authorization = `Bearer ${parsedToken}`;
+      } catch (error) {
+        console.error("Error parsing token:", error);
+      }
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const configHeaders = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
 

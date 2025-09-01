@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import "./App.css";
 
-
-import RegisterPage from "./pages/RegisterPage";  
+import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ReservaPage from "./pages/ReservaPage";
 import AdminHomePage from "./pages/AdminHomePage";
@@ -15,6 +14,8 @@ import Sobrenosotros from "./pages/Sobrenosotros";
 import Contacto from "./pages/ContactoPage";
 import PlanDetalle from "./components/planes/DetallesPlanC";
 import PlanesPage from "./pages/PlanesPage";
+import PagoExitosoPage from "./pages/PagoExitosoPage";
+import PagoFallidoPage from "./pages/PagoFallidoPage";
 
 const App = () => {
   return (
@@ -28,6 +29,8 @@ const App = () => {
               <Route path="/user" element={<HomePage />} />
               <Route path="/planes" element={<PlanesPage />} />
               <Route path="/planes/:slug" element={<PlanDetalle />} />
+              <Route path="/pago-exitoso" element={<PagoExitosoPage />} />
+              <Route path="/pago-fallido" element={<PagoFallidoPage />} />
               <Route path="/registrarse" element={<RegisterPage />} />
               <Route path="/iniciarsesion" element={<LoginPage />} />
               <Route path="/reservar" element={<ReservaPage />} />

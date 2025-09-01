@@ -22,18 +22,27 @@ const ListaReservas = () => {
 
   const cargarReservas = useCallback(async () => {
     if (!usuarioActual) return;
-    const { data } = await obtenerReservas();
-    const reservasFiltradas = data.filter(
-      (reserva) => reserva.idUsuario === usuarioActual
-    );
-    setReservas(reservasFiltradas);
-  }, [usuarioActual]);
+    try {
+      console.log("Cargando reservas para usuario:", usuarioActual);
+      const response = await obtenerReservas();
+      console.log("Respuesta de reservas:", response);
 
+      // Verificar la estructura de la respuesta
+      const reservasData = response.data || response;
+      const reservasFiltradas = reservasData.filter(
+        (reserva) => reserva.idUsuario === usuarioActual
+      );
+      console.log("Reservas filtradas:", reservasFiltradas);
+      setReservas(reservasFiltradas);
+    } catch (error) {
+      console.error("Error al cargar reservas:", error);
+      setReservas([]);
+    }
+  }, [usuarioActual]);
 
   useEffect(() => {
     cargarReservas();
   }, [cargarReservas]);
-
 
   const cancelar = async (id) => {
     const confirm = await Swal.fire({
@@ -51,39 +60,47 @@ const ListaReservas = () => {
   };
 
   return (
- <Container>
-      <ul className="lista-reservas p-0">
-        {reservas.map((reserva) => (
-          <li
-            key={reserva._id}
-            className="mb-3 list-group-item border shadow-sm rounded"
-          >
-            <Row className="w-100">
-              <Col xs={12} sm={5} className="mb-2 mb-sm-0">
-                <strong>{reserva.tipoClase}</strong>
-                <br />
-                {reserva.fecha.slice(0, 10)} a las {reserva.hora}
-              </Col>
+    <Container>
+      <h3 className="text-center mb-4">Mis Reservas</h3>
 
-              <Col xs={12} sm={4} className="mb-2 mb-sm-0">
-                Profesor/a: {reserva.profesor}
-              </Col>
+      {reservas.length === 0 ? (
+        <div className="text-center text-muted">
+          <p>No tienes reservas activas</p>
+        </div>
+      ) : (
+        <ul className="lista-reservas p-0">
+          {reservas.map((reserva) => (
+            <li
+              key={reserva._id}
+              className="mb-3 list-group-item border shadow-sm rounded"
+            >
+              <Row className="w-100">
+                <Col xs={12} sm={5} className="mb-2 mb-sm-0">
+                  <strong>{reserva.tipoClase}</strong>
+                  <br />
+                  {reserva.fecha.slice(0, 10)} a las {reserva.hora}
+                </Col>
 
-              <Col xs={12} sm={3}>
-                <Button
-                  variant="danger"
-                  onClick={() => cancelar(reserva._id)}
-                  className="w-100"
-                >
-                  Cancelar
-                </Button>
-              </Col>
-            </Row>
-          </li>
-        ))}
-      </ul>
+                <Col xs={12} sm={4} className="mb-2 mb-sm-0">
+                  Profesor/a: {reserva.profesor}
+                </Col>
+
+                <Col xs={12} sm={3}>
+                  <Button
+                    variant="danger"
+                    onClick={() => cancelar(reserva._id)}
+                    className="w-100"
+                  >
+                    Cancelar
+                  </Button>
+                </Col>
+              </Row>
+            </li>
+          ))}
+        </ul>
+      )}
     </Container>
-)
+  );
 };
 
 export default ListaReservas;

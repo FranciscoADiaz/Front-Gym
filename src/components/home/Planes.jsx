@@ -81,22 +81,15 @@ const Planes = () => {
                     <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
                   </div>
 
-                  {/* Botones de acción */}
+                  {/* Botón de inscripción */}
                   <div className="p-3 text-center">
                     <Button
-                      variant="outline-light"
-                      size="sm"
-                      className="me-2"
-                      onClick={() => navigate(`/planes/${plan.ruta}`)}
-                    >
-                      Ver Detalles
-                    </Button>
-                    <Button
                       variant="success"
-                      size="sm"
+                      size="lg"
+                      className="w-100 fw-bold"
                       onClick={() => handleShowModal(plan)}
                     >
-                      Contratar
+                      INSCRIBIRSE
                     </Button>
                   </div>
                 </Card.Body>

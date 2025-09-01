@@ -1,27 +1,54 @@
 import { Container, Button } from "react-bootstrap";
 import TableC from "../components/table/TableC";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { obtenerUsuarios } from "../helpers/usuarios.helper";
 import FormUsuario from "../components/forms/FormUsuario";
+import Swal from "sweetalert2";
 
 const AdminUsersPage = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [usuarioEditando, setUsuarioEditando] = useState(null);
-  const usuarioLog = JSON.parse(sessionStorage.getItem("token"));
+  const navigate = useNavigate();
+
+  // Verificar autenticación y rol
+  const token = sessionStorage.getItem("token");
+  const rol = sessionStorage.getItem("rol");
 
   useEffect(() => {
-    const usuarios = async () => {
+    // Verificar que el usuario esté logueado y sea admin
+    if (!token) {
+      Swal.fire("Error", "Debes iniciar sesión", "error");
+      navigate("/iniciarsesion");
+      return;
+    }
+
+    try {
+      const rolUsuario = JSON.parse(rol);
+      if (rolUsuario !== "admin") {
+        Swal.fire("Error", "No tienes permisos de administrador", "error");
+        navigate("/");
+        return;
+      }
+    } catch (error) {
+      console.error("Error verificando rol:", error);
+      navigate("/iniciarsesion");
+      return;
+    }
+
+    const cargarUsuarios = async () => {
       try {
         const usuariosDB = await obtenerUsuarios();
         setUsuarios(usuariosDB);
       } catch (error) {
         console.error("Error al obtener usuarios", error);
+        Swal.fire("Error", "No se pudieron cargar los usuarios", "error");
       }
     };
 
-    usuarios();
-  }, []);
+    cargarUsuarios();
+  }, [token, rol, navigate]);
 
   const handleShowModal = (usuario = null) => {
     setUsuarioEditando(usuario);
@@ -29,18 +56,26 @@ const AdminUsersPage = () => {
   };
 
   const handleCloseModal = () => {
+    console.log("=== CERRANDO MODAL ===");
     setShowModal(false);
     setUsuarioEditando(null);
+    console.log("Modal cerrado, usuarioEditando reseteado");
   };
 
   const handleSuccess = async () => {
-    const usuariosDB = await obtenerUsuarios();
-    setUsuarios(usuariosDB);
+    console.log("=== ACTUALIZANDO LISTA DE USUARIOS ===");
+    try {
+      const usuariosDB = await obtenerUsuarios();
+      console.log("Nueva lista de usuarios:", usuariosDB);
+      setUsuarios(usuariosDB);
+    } catch (error) {
+      console.error("Error al actualizar lista:", error);
+    }
   };
 
   return (
     <>
-      {usuarioLog && (
+      {token && (
         <Container className="my-5">
           <div className="d-flex justify-content-end mb-3">
             <Button

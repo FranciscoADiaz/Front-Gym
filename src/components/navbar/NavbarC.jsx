@@ -8,11 +8,14 @@ import Swal from "sweetalert2";
 import "../home/Componentes.css";
 
 function NavbarC() {
+  // Traigo los valores del sessionStorage
   const token = sessionStorage.getItem("token");
   const rol = sessionStorage.getItem("rol");
 
+  // Parseo los valores del sessionStorage
   const usuarioLog = token ? JSON.parse(token) : null;
   const usuarioRolLog = rol ? JSON.parse(rol) : null;
+
   const navigate = useNavigate();
 
   const logoutUser = () => {
@@ -38,91 +41,89 @@ function NavbarC() {
   };
 
   return (
-    <>
-      <Navbar expand="lg" className="bg-dark text-white">
-        <Container fluid>
-          <NavLink
-            to={
-              usuarioLog && usuarioRolLog === "usuario"
-                ? "/user"
-                : usuarioLog && usuarioRolLog === "admin"
-                ? "/admin"
-                : "/"
-            }
-          >
-            <img
-              src={
-                "https://res.cloudinary.com/dpy5kwico/image/upload/v1754950155/logo_vbmdlo.png"
-              }
-              alt="Logo"
-              className="img-circular-sm"
-            />
-          </NavLink>
+    <Navbar expand="lg" className="bg-dark text-white">
+      <Container fluid>
+        <NavLink
+          to={
+            usuarioLog && usuarioRolLog === "usuario"
+              ? "/user"
+              : usuarioLog && usuarioRolLog === "admin"
+              ? "/admin"
+              : "/"
+          }
+        >
+          <img
+            src="https://res.cloudinary.com/dpy5kwico/image/upload/v1754950155/logo_vbmdlo.png"
+            alt="Logo"
+            className="img-circular-sm"
+          />
+        </NavLink>
 
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <div className="ms-3">
-              {" "}
-              <Clima />{" "}
-            </div>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <div className="ms-3">
+            <Clima />
+          </div>
 
-            {usuarioLog && usuarioRolLog === "usuario" ? (
-              <Nav className="ms-auto">
-                <NavLink className="nav-link" to="/">
-                  Inicio
-                </NavLink>
-                <NavLink className="nav-link" to="/reservar">
-                  Mis Clases
-                </NavLink>
-                <NavLink className="nav-link" to="/planes">
-                  Planes
-                </NavLink>
-              </Nav>
-            ) : usuarioLog && usuarioRolLog === "admin" ? (
-              <Nav className="ms-auto">
-                <NavLink className="nav-link" to="/admin">
-                  Inicio
-                </NavLink>
-                <NavLink className="nav-link" to="/admin/usuarios">
-                  Administrar Usuarios
-                </NavLink>
-                <NavLink className="nav-link" to="/admin/clases">
-                  Administrar Clases
-                </NavLink>
-              </Nav>
-            ) : (
-              <Nav className="ms-auto">
-                <NavLink className="nav-link" to="/">
-                  Inicio
-                </NavLink>
-                <NavLink className="nav-link" to="/sobre-nosotros">
-                  Sobre Nosotros
-                </NavLink>
-                <NavLink className="nav-link" to="/contacto">
-                  Contacto
-                </NavLink>
-              </Nav>
-            )}
-            {usuarioLog ? (
-              <Nav className="ms-auto">
-                <NavLink className="nav-link" to="#" onClick={logoutUser}>
-                  Cerrar Sesion
-                </NavLink>
-              </Nav>
-            ) : (
-              <Nav className="ms-auto">
-                <NavLink className="nav-link" to="/iniciarsesion">
-                  Iniciar Sesion
-                </NavLink>
-                <NavLink className="nav-link" to="/registrarse">
-                  Registrarse
-                </NavLink>
-              </Nav>
-            )}
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </>
+          {/* Menú según rol */}
+          {usuarioLog && usuarioRolLog === "usuario" ? (
+            <Nav className="ms-auto">
+              <NavLink className="nav-link" to="/">
+                Inicio
+              </NavLink>
+              <NavLink className="nav-link" to="/reservar">
+                Mis Clases
+              </NavLink>
+              <NavLink className="nav-link" to="/planes">
+                Planes
+              </NavLink>
+            </Nav>
+          ) : usuarioLog && usuarioRolLog === "admin" ? (
+            <Nav className="ms-auto">
+              <NavLink className="nav-link" to="/admin">
+                Inicio
+              </NavLink>
+              <NavLink className="nav-link" to="/admin/usuarios">
+                Administrar Usuarios
+              </NavLink>
+              <NavLink className="nav-link" to="/admin/clases">
+                Administrar Clases
+              </NavLink>
+            </Nav>
+          ) : (
+            <Nav className="ms-auto">
+              <NavLink className="nav-link" to="/">
+                Inicio
+              </NavLink>
+              <NavLink className="nav-link" to="/sobre-nosotros">
+                Sobre Nosotros
+              </NavLink>
+              <NavLink className="nav-link" to="/contacto">
+                Contacto
+              </NavLink>
+            </Nav>
+          )}
+
+          {/* Login / Logout */}
+          {usuarioLog ? (
+            <Nav className="ms-auto">
+              <NavLink className="nav-link" to="#" onClick={logoutUser}>
+                Cerrar Sesion
+              </NavLink>
+            </Nav>
+          ) : (
+            <Nav className="ms-auto">
+              <NavLink className="nav-link" to="/iniciarsesion">
+                Iniciar Sesion
+              </NavLink>
+              <NavLink className="nav-link" to="/registrarse">
+                Registrarse
+              </NavLink>
+            </Nav>
+          )}
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

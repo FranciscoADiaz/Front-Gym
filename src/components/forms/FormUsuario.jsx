@@ -17,25 +17,32 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
 
   // Si es edición, cargar datos del usuario
   useEffect(() => {
+    console.log("=== CARGANDO DATOS DEL USUARIO ===");
+    console.log("Usuario recibido:", usuario);
+
     if (usuario) {
-      setFormData({
+      const datosUsuario = {
         nombreUsuario: usuario.nombreUsuario || "",
         emailUsuario: usuario.emailUsuario || "",
         contrasenia: "", // No mostrar contraseña en edición
         rol: usuario.rol || "usuario",
         telefono: usuario.telefono || "",
         plan: usuario.plan || "Sin plan",
-      });
+      };
+      console.log("Datos cargados en formulario:", datosUsuario);
+      setFormData(datosUsuario);
     } else {
       // Resetear formulario para nuevo usuario
-      setFormData({
+      const datosNuevo = {
         nombreUsuario: "",
         emailUsuario: "",
         contrasenia: "",
         rol: "usuario",
         telefono: "",
         plan: "Sin plan",
-      });
+      };
+      console.log("Formulario reseteado para nuevo usuario:", datosNuevo);
+      setFormData(datosNuevo);
     }
   }, [usuario]);
 
@@ -51,9 +58,17 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
     e.preventDefault();
     setLoading(true);
 
+    console.log("=== DATOS DEL FORMULARIO ===");
+    console.log("Usuario a editar:", usuario);
+    console.log("Datos del formulario:", formData);
+
     try {
       if (usuario) {
         // Editar usuario existente
+        console.log("Enviando datos para actualizar:", {
+          id: usuario._id,
+          datos: formData,
+        });
         await actualizarUsuario(usuario._id, formData);
         Swal.fire("¡Éxito!", "Usuario actualizado correctamente", "success");
       } else {
@@ -65,9 +80,10 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
       onSuccess(); // Actualizar la lista
       handleClose();
     } catch (error) {
+      console.error("Error completo:", error);
       Swal.fire(
         "Error",
-        error.response?.data?.msg || "Ocurrió un error",
+        error.message || error.response?.data?.msg || "Ocurrió un error",
         "error"
       );
     } finally {
@@ -181,8 +197,10 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
                 >
                   <option value="Sin plan">Sin plan</option>
                   <option value="Musculación">Musculación</option>
-                  <option value="Clases">Clases</option>
-                  <option value="Full">Full</option>
+                  <option value="Spinning">Spinning</option>
+                  <option value="Funcional">Funcional</option>
+                  <option value="Crossfit">Crossfit</option>
+                  <option value="Completo">Completo</option>
                 </Form.Select>
               </Form.Group>
             </Col>

@@ -38,7 +38,6 @@ const AdminHomePage = () => {
       {/* Header con saludo */}
       <div className="bg-primary text-white p-4 rounded-3 mb-4 shadow">
         <h1 className="mb-2 fw-bold">👋 Bienvenido, {admin.nombre}</h1>
-      
       </div>
 
       {/* Sección de clases */}
@@ -55,7 +54,6 @@ const AdminHomePage = () => {
             <p className="text-muted fs-5 mb-0">
               No hay clases registradas para hoy
             </p>
-           
           </div>
         ) : (
           <div className="row">
