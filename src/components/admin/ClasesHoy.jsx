@@ -2,19 +2,30 @@ import { Card } from "react-bootstrap";
 
 const ClasesHoy = ({ clase }) => {
   return (
-    <Card className="mb-3 shadow-sm">
-      <Card.Body>
-        <Card.Title>
-          {clase.tipoClase} ({clase.profesor})
+    <Card className="mb-3 shadow-sm border-primary">
+      <Card.Body className="p-4">
+        <Card.Title className="text-primary fw-bold fs-4 mb-3">
+          🏋️ {clase.tipoClase} - Prof. {clase.profesor}
         </Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
-          {new Date(clase.fecha).toLocaleDateString("es-AR")} a las {clase.hora}
+        <Card.Subtitle className="mb-3 text-secondary fs-6">
+          📅{" "}
+          {new Date(clase.fecha).toLocaleDateString("es-AR", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}{" "}
+          a las ⏰ {clase.hora}
         </Card.Subtitle>
-        <Card.Text>
-          <strong>Usuarios anotados:</strong>
-          <ul>
+        <Card.Text className="text-dark">
+          <strong className="text-success">
+            👥 Usuarios anotados ({clase.usuarios.length}):
+          </strong>
+          <ul className="mt-2 list-unstyled">
             {clase.usuarios.map((usuario, i) => (
-              <li key={i}>{usuario.nombreUsuario}</li>
+              <li key={i} className="mb-1 p-2 bg-light rounded">
+                👤 {usuario.nombreUsuario}
+              </li>
             ))}
           </ul>
         </Card.Text>

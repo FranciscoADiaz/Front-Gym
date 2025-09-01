@@ -16,14 +16,12 @@ const obtenerIdUsuario = () => {
   }
 };
 
-
 const definirHoraPorProfesor = (profesor) => {
   if (profesor === "andres") return "08:00";
   if (profesor === "walter") return "14:00";
   if (profesor === "daniela") return "20:00";
   return "";
 };
-
 
 const diasPermitidosPorProfesor = {
   andres: [1, 3], // lunes, miércoles
@@ -47,12 +45,14 @@ const FormularioReserva = () => {
     profesor: "",
   });
 
+  const [cuposDisponibles, setCuposDisponibles] = useState(0);
+  const [planUsuario, setPlanUsuario] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setReserva({ ...reserva, [e.target.name]: e.target.value });
   };
 
- 
   const generarFechasValidas = () => {
     const hoy = new Date();
     const fechas = [];
@@ -68,18 +68,97 @@ const FormularioReserva = () => {
 
   const fechasValidas = generarFechasValidas();
 
+  // Verificar cupos disponibles y plan del usuario
+  const verificarDisponibilidad = async (fecha, hora, tipoClase) => {
+    try {
+      const response = await clientAxios.get(
+        `/reservar/cupos?fecha=${fecha}&hora=${hora}&tipoClase=${tipoClase}`
+      );
+      setCuposDisponibles(response.data.cuposDisponibles);
+    } catch (error) {
+      console.error("Error al verificar cupos:", error);
+      setCuposDisponibles(0);
+    }
+  };
+
+  // Obtener plan del usuario
+  const obtenerPlanUsuario = async () => {
+    if (!idUsuario) return;
+    try {
+      const response = await clientAxios.get(`/usuarios/${idUsuario}`);
+      setPlanUsuario(response.data.usuario.plan);
+    } catch (error) {
+      console.error("Error al obtener plan:", error);
+    }
+  };
+
+  // Verificar disponibilidad cuando cambie la fecha
+  useEffect(() => {
+    if (reserva.fecha && reserva.hora && reserva.tipoClase) {
+      const hora = definirHoraPorProfesor(reserva.profesor);
+      verificarDisponibilidad(reserva.fecha, hora, reserva.tipoClase);
+    }
+  }, [reserva.fecha, reserva.profesor, reserva.tipoClase]);
+
+  // Obtener plan del usuario al cargar
+  useEffect(() => {
+    obtenerPlanUsuario();
+  }, [idUsuario]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    // Verificar que el usuario esté logueado
+    if (!idUsuario) {
+      Swal.fire("❌ Error", "Debes iniciar sesión para reservar", "error");
+      setLoading(false);
+      return;
+    }
+
+    // Verificar plan activo
+    if (!planUsuario || planUsuario === "Sin plan") {
+      Swal.fire(
+        "❌ Plan requerido",
+        "Necesitas un plan activo para reservar clases",
+        "error"
+      );
+      setLoading(false);
+      return;
+    }
+
+    // Verificar que el plan incluya clases
+    if (planUsuario === "Musculación") {
+      Swal.fire(
+        "❌ Plan no válido",
+        "Tu plan solo incluye musculación, no clases",
+        "error"
+      );
+      setLoading(false);
+      return;
+    }
 
     const hora = definirHoraPorProfesor(reserva.profesor);
     if (!hora) {
       Swal.fire("⚠️ Seleccioná un profesor válido", "", "warning");
+      setLoading(false);
       return;
     }
 
     if (!esDiaPermitido(reserva.profesor, reserva.fecha)) {
       Swal.fire("❌ Día no válido", "Ese profesor no atiende ese día", "error");
+      setLoading(false);
+      return;
+    }
+
+    // Verificar cupos disponibles
+    if (cuposDisponibles <= 0) {
+      Swal.fire(
+        "❌ Sin cupos",
+        "No hay cupos disponibles para esta clase",
+        "error"
+      );
+      setLoading(false);
       return;
     }
 
@@ -92,12 +171,15 @@ const FormularioReserva = () => {
 
       Swal.fire("✅ Turno reservado con éxito", "", "success");
       setReserva({ fecha: "", tipoClase: "", profesor: "" });
+      setCuposDisponibles((prev) => prev - 1); // Actualizar cupos
     } catch (error) {
       Swal.fire(
         "❌ Error",
         error.response?.data?.msg || "Debes iniciar sesión para reservar",
         "error"
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,6 +193,25 @@ const FormularioReserva = () => {
           >
             <h2 className="text-center mb-4">Reservar clase</h2>
 
+            {/* Información del plan del usuario */}
+            {planUsuario && (
+              <div className="alert alert-info text-center mb-3">
+                <strong>Tu plan actual:</strong> {planUsuario}
+                {planUsuario === "Musculación" && (
+                  <div className="text-warning mt-1">
+                    ⚠️ Este plan no incluye clases grupales
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Información de cupos */}
+            {cuposDisponibles > 0 && (
+              <div className="alert alert-success text-center mb-3">
+                <strong>Cupos disponibles:</strong> {cuposDisponibles}
+              </div>
+            )}
+
             <Form.Group controlId="tipoClase" className="mb-3">
               <Form.Label>Tipo de clase</Form.Label>
               <Form.Select
@@ -119,7 +220,6 @@ const FormularioReserva = () => {
                 onChange={handleChange}
                 required
               >
-                
                 <option value="Spinning">Spinning</option>
                 <option value="Funcional">Funcional</option>
                 <option value="Crossfit">Crossfit</option>
@@ -134,7 +234,6 @@ const FormularioReserva = () => {
                 onChange={handleChange}
                 required
               >
-               
                 <option value="andres">
                   Andrés (Lun y Mié - 08:00 a 10:00)
                 </option>
@@ -156,7 +255,6 @@ const FormularioReserva = () => {
                 required
                 disabled={!reserva.profesor}
               >
-              
                 {fechasValidas.map((fecha) => (
                   <option key={fecha} value={fecha}>
                     {new Date(fecha).toLocaleDateString("es-AR", {
@@ -170,8 +268,17 @@ const FormularioReserva = () => {
               </Form.Select>
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100">
-              Reservar
+            <Button
+              variant="primary"
+              type="submit"
+              className="w-100"
+              disabled={
+                loading ||
+                cuposDisponibles <= 0 ||
+                planUsuario === "Musculación"
+              }
+            >
+              {loading ? "Reservando..." : "Reservar"}
             </Button>
           </Form>
         </Col>
@@ -181,4 +288,3 @@ const FormularioReserva = () => {
 };
 
 export default FormularioReserva;
-

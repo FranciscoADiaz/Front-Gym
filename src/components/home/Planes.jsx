@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
+import { useState } from "react";
+import FormularioContratacion from "../forms/FormularioContratacion";
 import "./Componentes.css";
 
 const Planes = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [planSeleccionado, setPlanSeleccionado] = useState(null);
 
- 
   const planes = [
     {
       nombre: "SOLO MUSCULACIÓN",
@@ -33,6 +36,21 @@ const Planes = () => {
     },
   ];
 
+  const handleShowModal = (plan) => {
+    setPlanSeleccionado(plan);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setPlanSeleccionado(null);
+  };
+
+  const handleSuccess = () => {
+    // Aquí podrías actualizar algo si es necesario
+    console.log("Plan contratado exitosamente");
+  };
+
   return (
     <section className="bg-dark text-white padding-vertical ">
       <div className="container-fluid">
@@ -41,34 +59,45 @@ const Planes = () => {
         <Row className="g-4 justify-content-center">
           {planes.map((plan, i) => (
             <Col key={i} xs={10} sm={6} md={4}>
-              <Card
-                onClick={() => navigate(`/planes/${plan.ruta}`)}
-                className="h-100 card-hover cursor-pointer borde-card"
-                role="button" 
-                tabIndex={0} 
-              >
+              <Card className="h-100 card-hover borde-card">
                 <Card.Body className="p-0">
-             
                   <img
-                    src={plan.url} 
+                    src={plan.url}
                     alt={plan.alt}
-                    loading="lazy" 
+                    loading="lazy"
                     className="img-fluid w-100"
                     style={{
                       aspectRatio: "16/9",
-                      objectFit: "cover", 
+                      objectFit: "cover",
                       display: "block",
                     }}
                   />
 
-               
                   <Card.Title className="text-center text-dark mb-2">
                     {plan.nombre}
                   </Card.Title>
 
-               
                   <div className="descripcion-card py-2 my-0 text-center">
                     <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
+                  </div>
+
+                  {/* Botones de acción */}
+                  <div className="p-3 text-center">
+                    <Button
+                      variant="outline-light"
+                      size="sm"
+                      className="me-2"
+                      onClick={() => navigate(`/planes/${plan.ruta}`)}
+                    >
+                      Ver Detalles
+                    </Button>
+                    <Button
+                      variant="success"
+                      size="sm"
+                      onClick={() => handleShowModal(plan)}
+                    >
+                      Contratar
+                    </Button>
                   </div>
                 </Card.Body>
               </Card>
@@ -76,6 +105,16 @@ const Planes = () => {
           ))}
         </Row>
       </div>
+
+      {/* Modal de contratación */}
+      {planSeleccionado && (
+        <FormularioContratacion
+          show={showModal}
+          handleClose={handleCloseModal}
+          plan={planSeleccionado}
+          onSuccess={handleSuccess}
+        />
+      )}
     </section>
   );
 };

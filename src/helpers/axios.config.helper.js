@@ -12,8 +12,6 @@ const clientAxios = axios.create({
   baseURL: `${backendURL}/api`,
 });
 
-
-
 export const configHeaders = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
 
