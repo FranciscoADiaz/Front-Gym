@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { obtenerReservas, cancelarReserva } from "../../helpers/apiReservas";
 import Swal from "sweetalert2";
-import "./FormularioReserva.css";
-import { Row, Col, Container, Button } from "react-bootstrap";
 
 const ListaReservas = () => {
   const token = JSON.parse(sessionStorage.getItem("token")) || null;
@@ -28,7 +26,16 @@ const ListaReservas = () => {
       console.log("Respuesta de reservas:", response);
 
       // Verificar la estructura de la respuesta
-      const reservasData = response.data || response;
+      const reservasData = response.data?.reservas || response.data || [];
+      console.log("Datos de reservas:", reservasData);
+
+      // Verificar que sea un array antes de filtrar
+      if (!Array.isArray(reservasData)) {
+        console.error("Error: reservasData no es un array:", reservasData);
+        setReservas([]);
+        return;
+      }
+
       const reservasFiltradas = reservasData.filter(
         (reserva) => reserva.idUsuario === usuarioActual
       );
@@ -60,46 +67,75 @@ const ListaReservas = () => {
   };
 
   return (
-    <Container>
-      <h3 className="text-center mb-4">Mis Reservas</h3>
-
-      {reservas.length === 0 ? (
-        <div className="text-center text-muted">
-          <p>No tienes reservas activas</p>
+    <div className="container-md mt-5">
+      <div className="card fade-in shadow-lg border-0">
+        <div className="card-header bg-gradient-secondary text-white text-center py-4">
+          <h3 className="card-title mb-0 text-black">
+            <i className="fas fa-list-alt me-2"></i>
+            Mis Reservas
+          </h3>
+  
         </div>
-      ) : (
-        <ul className="lista-reservas p-0">
-          {reservas.map((reserva) => (
-            <li
-              key={reserva._id}
-              className="mb-3 list-group-item border shadow-sm rounded"
-            >
-              <Row className="w-100">
-                <Col xs={12} sm={5} className="mb-2 mb-sm-0">
-                  <strong>{reserva.tipoClase}</strong>
-                  <br />
-                  {reserva.fecha.slice(0, 10)} a las {reserva.hora}
-                </Col>
 
-                <Col xs={12} sm={4} className="mb-2 mb-sm-0">
-                  Profesor/a: {reserva.profesor}
-                </Col>
+        <div className="card-body p-4">
+          {reservas.length === 0 ? (
+            <div className="text-center p-5">
+              <div className="mb-4">
+                <i
+                  className="fas fa-calendar-times text-muted"
+                  style={{ fontSize: "4rem" }}
+                ></i>
+              </div>
+              <h5 className="text-muted mb-2">No tienes reservas activas</h5>
+              <p className="text-muted small">
+                Reserva tu primera clase para comenzar tu entrenamiento
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {reservas.map((reserva) => (
+                <div
+                  key={reserva._id}
+                  className="card hover-lift border-0 shadow-sm"
+                  style={{ padding: "var(--spacing-lg)" }}
+                >
+                  <div className="d-flex flex-column align-items-center text-center">
+                    <div className="mb-3">
+                      <div className="d-flex align-items-center justify-content-center mb-2">
+                        <i className="fas fa-dumbbell text-primary me-2"></i>
+                        <h4 className="mb-0">{reserva.tipoClase}</h4>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-center mb-1">
+                        <i className="fas fa-calendar text-secondary me-2"></i>
+                        <p className="text-secondary mb-0">
+                          {reserva.fecha.slice(0, 10)} a las {reserva.hora}
+                        </p>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-center">
+                        <i className="fas fa-user-tie text-muted me-2"></i>
+                        <p className="text-muted mb-0">
+                          Profesor: {reserva.profesor}
+                        </p>
+                      </div>
+                    </div>
 
-                <Col xs={12} sm={3}>
-                  <Button
-                    variant="danger"
-                    onClick={() => cancelar(reserva._id)}
-                    className="w-100"
-                  >
-                    Cancelar
-                  </Button>
-                </Col>
-              </Row>
-            </li>
-          ))}
-        </ul>
-      )}
-    </Container>
+                    <div className="w-full">
+                      <button
+                        onClick={() => cancelar(reserva._id)}
+                        className="btn btn-danger btn-sm shadow-sm w-full"
+                      >
+                        <i className="fas fa-times me-1"></i>
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

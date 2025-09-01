@@ -15,6 +15,7 @@ import Sobrenosotros from "./pages/Sobrenosotros";
 import Contacto from "./pages/ContactoPage";
 import PlanDetalle from "./components/planes/DetallesPlanC";
 import PlanesPage from "./pages/PlanesPage";
+import InscripcionPage from "./pages/InscripcionPage";
 import PagoExitosoPage from "./pages/PagoExitosoPage";
 import PagoFallidoPage from "./pages/PagoFallidoPage";
 
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/user" element={<HomePage />} />
               <Route path="/planes" element={<PlanesPage />} />
               <Route path="/planes/:slug" element={<PlanDetalle />} />
+              <Route path="/inscripcion/:slug" element={<InscripcionPage />} />
               <Route path="/pago-exitoso" element={<PagoExitosoPage />} />
               <Route path="/pago-fallido" element={<PagoFallidoPage />} />
               <Route path="/registrarse" element={<RegisterPage />} />

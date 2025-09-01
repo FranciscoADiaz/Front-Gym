@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import clientAxios from "../../helpers/axios.config.helper";
 import Swal from "sweetalert2";
-import "./FormularioReserva.css";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 const obtenerIdUsuario = () => {
   const token = JSON.parse(sessionStorage.getItem("token")) || null;
@@ -100,12 +98,20 @@ const FormularioReserva = () => {
   const obtenerPlanUsuario = async () => {
     if (!idUsuario) return;
     try {
-      console.log("Obteniendo plan para usuario:", idUsuario);
-      const response = await clientAxios.get(`/usuarios/${idUsuario}`);
-      console.log("Respuesta del plan:", response.data);
-      setPlanUsuario(response.data.usuario.plan);
+      const response = await clientAxios.get(
+        `/usuarios/${idUsuario}/plan-activo`
+      );
+
+      if (response.data.planActivo) {
+        console.log("✅ Plan activo encontrado:", response.data.plan);
+        setPlanUsuario(response.data.plan);
+      } else {
+        console.log("❌ No hay plan activo");
+        setPlanUsuario("Sin plan");
+      }
     } catch (error) {
       console.error("Error al obtener plan:", error);
+      setPlanUsuario("Sin plan");
     }
   };
 
@@ -145,6 +151,9 @@ const FormularioReserva = () => {
       return;
     }
 
+    console.log("🔍 Validando plan:", planUsuario);
+    console.log("🔍 Tipo de plan:", typeof planUsuario);
+
     // Verificar plan activo
     if (!planUsuario || planUsuario === "Sin plan") {
       Swal.fire(
@@ -157,7 +166,8 @@ const FormularioReserva = () => {
     }
 
     // Verificar que el plan incluya clases
-    if (planUsuario === "Musculación") {
+    const planesSoloMusculacion = ["Musculación", "SOLO MUSCULACIÓN"];
+    if (planesSoloMusculacion.includes(planUsuario)) {
       Swal.fire(
         "❌ Plan no válido",
         "Tu plan solo incluye musculación, no clases",
@@ -213,85 +223,134 @@ const FormularioReserva = () => {
   };
 
   return (
-    <Container className="my-4">
-      <Row className="justify-content-center">
-        <Col xs={12} sm={10} md={8} lg={6}>
-          <Form
-            onSubmit={handleSubmit}
-            className="p-4 border rounded shadow bg-light"
-          >
-            <h2 className="text-center mb-4">Reservar clase</h2>
+    <div className="container-md">
+      <div className="card fade-in shadow-lg border-0">
+        <div className="card-header bg-gradient-primary text-white text-center py-4">
+          <h2 className="card-title mb-0">
+            <i className="fas fa-calendar-plus me-2"></i>
+            Reservar Clase
+          </h2>
+          <p className="mb-0 mt-2 opacity-75">Selecciona tu clase preferida</p>
+        </div>
 
-            {/* Información del plan del usuario */}
-            {planUsuario && (
-              <div className="alert alert-info text-center mb-3">
-                <strong>Tu plan actual:</strong> {planUsuario}
-                {planUsuario === "Musculación" && (
-                  <div className="text-warning mt-1">
-                    ⚠️ Este plan no incluye clases grupales
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Información de cupos */}
-            {cuposDisponibles > 0 && (
-              <div className="alert alert-success text-center mb-3">
-                <strong>Cupos disponibles:</strong> {cuposDisponibles}
-              </div>
-            )}
-            {cuposDisponibles === 0 &&
-              reserva.fecha &&
-              reserva.tipoClase &&
-              reserva.profesor && (
-                <div className="alert alert-warning text-center mb-3">
-                  <strong>Verificando cupos disponibles...</strong>
+        <div className="card-body p-4">
+          {/* Información del plan del usuario */}
+          {planUsuario && (
+            <div
+              className={`alert ${
+                planUsuario === "Musculación" ? "alert-warning" : "alert-info"
+              } mb-4 border-0 shadow-sm`}
+            >
+              <div className="d-flex align-items-center">
+                <i
+                  className={`fas ${
+                    planUsuario === "Musculación"
+                      ? "fa-exclamation-triangle"
+                      : "fa-check-circle"
+                  } me-2`}
+                ></i>
+                <div>
+                  <strong>Tu plan actual:</strong> {planUsuario}
+                  {planUsuario === "Musculación" && (
+                    <div className="mt-1 small">
+                      ⚠️ Este plan no incluye clases grupales
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
+            </div>
+          )}
 
-            <Form.Group controlId="tipoClase" className="mb-3">
-              <Form.Label>Tipo de clase</Form.Label>
-              <Form.Select
+          {/* Información de cupos */}
+          {cuposDisponibles > 0 && (
+            <div className="alert alert-success mb-4 border-0 shadow-sm">
+              <div className="d-flex align-items-center">
+                <i className="fas fa-users me-2"></i>
+                <div>
+                  <strong>Cupos disponibles:</strong> {cuposDisponibles}
+                </div>
+              </div>
+            </div>
+          )}
+          {cuposDisponibles === 0 &&
+            reserva.fecha &&
+            reserva.tipoClase &&
+            reserva.profesor && (
+              <div className="alert alert-warning mb-4 border-0 shadow-sm">
+                <div className="d-flex align-items-center">
+                  <i className="fas fa-clock me-2"></i>
+                  <div>
+                    <strong>Verificando cupos disponibles...</strong>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Tipo de clase */}
+            <div className="form-group">
+              <label htmlFor="tipoClase" className="form-label fw-bold">
+                <i className="fas fa-dumbbell me-2 text-primary"></i>
+                Tipo de clase
+              </label>
+              <select
+                id="tipoClase"
                 name="tipoClase"
                 value={reserva.tipoClase}
                 onChange={handleChange}
+                className="form-control form-control-lg shadow-sm border-0"
                 required
               >
-                <option value="Spinning">Spinning</option>
-                <option value="Funcional">Funcional</option>
-                <option value="Crossfit">Crossfit</option>
-              </Form.Select>
-            </Form.Group>
+                <option value="">Selecciona una clase</option>
+                <option value="Spinning">🚴 Spinning</option>
+                <option value="Funcional">💪 Funcional</option>
+                <option value="Crossfit">🏋️ Crossfit</option>
+              </select>
+            </div>
 
-            <Form.Group controlId="profesor" className="mb-3">
-              <Form.Label>Profesor</Form.Label>
-              <Form.Select
+            {/* Profesor */}
+            <div className="form-group">
+              <label htmlFor="profesor" className="form-label fw-bold">
+                <i className="fas fa-user-tie me-2 text-primary"></i>
+                Profesor
+              </label>
+              <select
+                id="profesor"
                 name="profesor"
                 value={reserva.profesor}
                 onChange={handleChange}
+                className="form-control form-control-lg shadow-sm border-0"
                 required
               >
+                <option value="">Selecciona un profesor</option>
                 <option value="andres">
-                  Andrés (Lun y Mié - 08:00 a 10:00)
+                  👨‍🏫 Andrés (Lun y Mié - 08:00 a 10:00)
                 </option>
                 <option value="walter">
-                  Walter (Mar y Jue - 14:00 a 16:00)
+                  👨‍🏫 Walter (Mar y Jue - 14:00 a 16:00)
                 </option>
                 <option value="daniela">
-                  Daniela (Vie y Sáb - 20:00 a 22:00)
+                  👩‍🏫 Daniela (Vie y Sáb - 20:00 a 22:00)
                 </option>
-              </Form.Select>
-            </Form.Group>
+              </select>
+            </div>
 
-            <Form.Group controlId="fecha" className="mb-3">
-              <Form.Label>Fecha</Form.Label>
-              <Form.Select
+            {/* Fecha */}
+            <div className="form-group">
+              <label htmlFor="fecha" className="form-label fw-bold">
+                <i className="fas fa-calendar-alt me-2 text-primary"></i>
+                Fecha
+              </label>
+              <select
+                id="fecha"
                 name="fecha"
                 value={reserva.fecha}
                 onChange={handleChange}
+                className="form-control form-control-lg shadow-sm border-0"
                 required
                 disabled={!reserva.profesor}
               >
+                <option value="">Selecciona una fecha</option>
                 {fechasValidas.map((fecha) => (
                   <option key={fecha} value={fecha}>
                     {new Date(fecha).toLocaleDateString("es-AR", {
@@ -302,38 +361,54 @@ const FormularioReserva = () => {
                     })}
                   </option>
                 ))}
-              </Form.Select>
-            </Form.Group>
+              </select>
+            </div>
 
-            <Button
-              variant="primary"
-              type="submit"
-              className="w-100"
-              disabled={
-                loading ||
-                !reserva.fecha ||
-                !reserva.tipoClase ||
-                !reserva.profesor ||
-                planUsuario === "Musculación"
-              }
-            >
-              {loading ? "Reservando..." : "Reservar"}
-            </Button>
+            {/* Botón de reserva */}
+            <div className="text-center mt-5">
+              <button
+                type="submit"
+                className={`btn btn-primary btn-lg px-5 py-3 shadow-lg ${
+                  loading ? "loading" : ""
+                }`}
+                disabled={
+                  loading ||
+                  !reserva.fecha ||
+                  !reserva.tipoClase ||
+                  !reserva.profesor ||
+                  planUsuario === "Musculación"
+                }
+              >
+                {loading ? (
+                  <>
+                    <i className="fas fa-spinner fa-spin me-2"></i>
+                    Reservando...
+                  </>
+                ) : (
+                  <>
+                    <i className="fas fa-calendar-check me-2"></i>
+                    Reservar Clase
+                  </>
+                )}
+              </button>
+            </div>
 
-            {/* Mensaje informativo */}
+            {/* Mensajes informativos */}
             {!reserva.fecha || !reserva.tipoClase || !reserva.profesor ? (
-              <div className="alert alert-warning text-center mt-2">
+              <div className="alert alert-warning mt-4 border-0 shadow-sm text-center">
+                <i className="fas fa-info-circle me-2"></i>
                 Completa todos los campos para habilitar la reserva
               </div>
             ) : planUsuario === "Musculación" ? (
-              <div className="alert alert-danger text-center mt-2">
+              <div className="alert alert-error mt-4 border-0 shadow-sm text-center">
+                <i className="fas fa-exclamation-triangle me-2"></i>
                 Tu plan de Musculación no incluye clases grupales
               </div>
             ) : null}
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

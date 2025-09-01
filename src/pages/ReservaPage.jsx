@@ -5,11 +5,12 @@ import { useChangeTitle } from "../helpers/useChangeTitlePage";
 const ReservaPage = () => {
   useChangeTitle("reservar");
   return (
-    <div className="text-center my-4 text-secondary fw-bold">
-      <h1>Reserva de clases TucuGym</h1>
-      <FormularioReserva />
-      <hr />
-      <ListaReservas />
+    <div className="contenedor-pagina">
+      <div className="container">
+        <h1 className="text-center mb-5">Reserva de Clases TucuGym</h1>
+        <FormularioReserva />
+        <ListaReservas />
+      </div>
     </div>
   );
 };

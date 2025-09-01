@@ -19,7 +19,7 @@ const productos = [
   {
     titulo: "ROPA DEPORTIVA",
     url: "https://res.cloudinary.com/dpy5kwico/image/upload/f_auto,q_auto,c_fill,w_600,h_360/v1754950153/ropadeportiva_cheeph.jpg",
-    descripcion: "Camisetas dry-fit, shorts y joggers cómodos.",
+    descripcion: "Camisetas dry-fit, shorts y joggers cómodos. Todo lo necesario para entrenar. ",
     ruta: "/productos/ropa-deportiva",
   },
 ];

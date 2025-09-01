@@ -1,13 +1,9 @@
 import { useNavigate } from "react-router";
 import { Card, Row, Col, Button } from "react-bootstrap";
-import { useState } from "react";
-import FormularioContratacion from "../forms/FormularioContratacion";
 import "./Componentes.css";
 
 const Planes = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [planSeleccionado, setPlanSeleccionado] = useState(null);
 
   const planes = [
     {
@@ -17,6 +13,7 @@ const Planes = () => {
       alt: "Área de musculación con máquinas",
       descripcion:
         "Acceso ilimitado al área de pesas y máquinas. Ideal para quienes entrenan por cuenta propia.",
+      color: "primary",
     },
     {
       nombre: "SOLO CLASES",
@@ -25,6 +22,7 @@ const Planes = () => {
       alt: "Clases grupales de funcional y spinning",
       descripcion:
         "Incluye todas las clases grupales: funcional, spinning, zumba. Ideal para quienes buscan variedad y motivación.",
+      color: "secondary",
     },
     {
       nombre: "PLAN FULL",
@@ -33,26 +31,17 @@ const Planes = () => {
       alt: "Entrenamiento integral con musculación y clases",
       descripcion:
         "Incluye musculación y clases. La opción más completa para transformar tu cuerpo. Elegí la que más te guste.",
+      color: "accent",
     },
   ];
 
-  const handleShowModal = (plan) => {
-    setPlanSeleccionado(plan);
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setPlanSeleccionado(null);
-  };
-
-  const handleSuccess = () => {
-    // Aquí podrías actualizar algo si es necesario
-    console.log("Plan contratado exitosamente");
+  const handlePlanSelection = (plan) => {
+    // Navegar a la página de detalles del plan
+    navigate(`/planes/${plan.ruta}`);
   };
 
   return (
-    <section className="bg-dark text-white padding-vertical ">
+    <section className="bg-dark text-white padding-vertical">
       <div className="container-fluid">
         <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
 
@@ -84,10 +73,10 @@ const Planes = () => {
                   {/* Botón de inscripción */}
                   <div className="p-3 text-center">
                     <Button
-                      variant="success"
+                      variant="primary"
                       size="lg"
                       className="w-100 fw-bold"
-                      onClick={() => handleShowModal(plan)}
+                      onClick={() => handlePlanSelection(plan)}
                     >
                       INSCRIBIRSE
                     </Button>
@@ -98,16 +87,6 @@ const Planes = () => {
           ))}
         </Row>
       </div>
-
-      {/* Modal de contratación */}
-      {planSeleccionado && (
-        <FormularioContratacion
-          show={showModal}
-          handleClose={handleCloseModal}
-          plan={planSeleccionado}
-          onSuccess={handleSuccess}
-        />
-      )}
     </section>
   );
 };

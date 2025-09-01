@@ -1,13 +1,11 @@
-
 import { useParams, useNavigate } from "react-router";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import { Container, Card, Row, Col, Button } from "react-bootstrap";
 
 const PLANES = {
   musculacion: {
     nombre: "SOLO MUSCULACIÓN",
     descripcion:
       "Acceso ilimitado al área de pesas y máquinas. Ideal para quienes entrenan por cuenta propia.",
-
     imagen:
       "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020300/musculaci%C3%B3n1_jnsmsa.jpg",
     beneficios: [
@@ -15,8 +13,8 @@ const PLANES = {
       "Asesoramiento inicial de técnica",
       "Seguimiento básico mensual",
     ],
-
     precio: "ARS 20.000 / mes",
+    color: "primary",
   },
   clases: {
     nombre: "SOLO CLASES",
@@ -30,6 +28,7 @@ const PLANES = {
       "Ambiente grupal motivador",
     ],
     precio: "ARS 25.000 / mes",
+    color: "secondary",
   },
   full: {
     nombre: "PLAN FULL",
@@ -43,21 +42,21 @@ const PLANES = {
       "Descuentos en productos del gym",
     ],
     precio: "ARS 30.000 / mes",
+    color: "accent",
   },
 };
 
 const DetallesPlan = () => {
-  const { slug } = useParams(); 
+  const { slug } = useParams();
   const navigate = useNavigate();
 
-  const plan = PLANES[slug]; 
+  const plan = PLANES[slug];
 
   if (!plan) {
- 
     return (
       <Container className="py-2 text-center">
         <h2>Plan no encontrado</h2>
-        <Button className="mt-3" onClick={() => navigate(-1)}>
+        <Button variant="primary" className="mt-3" onClick={() => navigate(-1)}>
           Volver
         </Button>
       </Container>
@@ -65,8 +64,8 @@ const DetallesPlan = () => {
   }
 
   const handleInscripcion = () => {
-    // 1) Navegar a un formulario interno:
-    // navigate(`/inscripcion?plan=${slug}`);
+    // Navegar a la página de inscripción
+    navigate(`/inscripcion/${slug}`);
   };
 
   return (
@@ -75,7 +74,6 @@ const DetallesPlan = () => {
         <Row className="justify-content-center">
           <Col xs={10} md={8} lg={6}>
             <Card className="borde-card shadow overflow-hidden">
-            
               <Card.Img
                 src={plan.imagen}
                 alt={plan.nombre}
@@ -89,24 +87,20 @@ const DetallesPlan = () => {
                   {plan.nombre}
                 </Card.Title>
 
-              
                 <p className="text-center mb-3">{plan.descripcion}</p>
 
-             
                 <ul className="mb-3">
                   {plan.beneficios.map((b, idx) => (
                     <li key={idx}>{b}</li>
                   ))}
                 </ul>
 
-               
                 {plan.precio && (
                   <p className="text-center fw-bold mb-4">{plan.precio}</p>
                 )}
 
-              
                 <div className="d-flex gap-2 justify-content-center">
-                  <Button variant="success" onClick={handleInscripcion}>
+                  <Button variant="primary" onClick={handleInscripcion}>
                     Inscribirme
                   </Button>
                   <Button variant="secondary" onClick={() => navigate(-1)}>
