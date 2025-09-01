@@ -1,13 +1,15 @@
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { Link, /* useNavigate */} from "react-router";
+import { Link /* useNavigate */ } from "react-router";
 import Swal from "sweetalert2";
-import { eliminarUsuario, habilitarDeshabilitarUsuario } from "../../helpers/usuarios.helper";
+import {
+  eliminarUsuario,
+  habilitarDeshabilitarUsuario,
+} from "../../helpers/usuarios.helper";
 /* import { borrarProducto, deshabilitarOhabilitarProducto } from "../../helpers/productos.helper"; */
-import "./TableC.css"; 
+import "./TableC.css";
 
-const TableC = ({ array, idPage, funcionReseteador }) => {
-
+const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
   /* const navigate = useNavigate(); */
 
   return (
@@ -122,38 +124,53 @@ const TableC = ({ array, idPage, funcionReseteador }) => {
                 </Button>
 
                 <Button
-  className="mx-2"
-  variant={element.estado === "habilitado" ? "secondary" : "success"}
-  onClick={async () => {
-    const accion =
-      element.estado === "habilitado" ? "deshabilitar" : "habilitar";
-    const mensaje = `¿${accion} usuario?`;
+                  className="mx-2"
+                  variant={
+                    element.estado === "habilitado" ? "secondary" : "success"
+                  }
+                  onClick={async () => {
+                    const accion =
+                      element.estado === "habilitado"
+                        ? "deshabilitar"
+                        : "habilitar";
+                    const mensaje = `¿${accion} usuario?`;
 
-    const result = await Swal.fire({
-      title: mensaje,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: `Sí, ${accion}`,
-      cancelButtonText: "Cancelar",
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-    });
+                    const result = await Swal.fire({
+                      title: mensaje,
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: `Sí, ${accion}`,
+                      cancelButtonText: "Cancelar",
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                    });
 
-    if (result.isConfirmed) {
-      try {
-        await habilitarDeshabilitarUsuario(element._id);
-        funcionReseteador();
-        Swal.fire(`Usuario ${accion} correctamente`, "", "success");
-      } catch {
-        Swal.fire("Error al cambiar estado", "", "error");
-      }
-    }
-  }}
->
-  {element.estado === "habilitado" ? "Deshabilitar" : "Habilitar"}
-</Button>
+                    if (result.isConfirmed) {
+                      try {
+                        await habilitarDeshabilitarUsuario(element._id);
+                        funcionReseteador();
+                        Swal.fire(
+                          `Usuario ${accion} correctamente`,
+                          "",
+                          "success"
+                        );
+                      } catch {
+                        Swal.fire("Error al cambiar estado", "", "error");
+                      }
+                    }
+                  }}
+                >
+                  {element.estado === "habilitado"
+                    ? "Deshabilitar"
+                    : "Habilitar"}
+                </Button>
 
-                <Button variant="primary">Editar</Button>
+                <Button
+                  variant="primary"
+                  onClick={() => onEditUser && onEditUser(element)}
+                >
+                  Editar
+                </Button>
               </td>
             </tr>
           )

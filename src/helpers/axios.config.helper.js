@@ -1,9 +1,17 @@
 import axios from "axios";
 
+// Detectar si estamos en desarrollo local o producción
+const isDevelopment = import.meta.env.DEV;
+
+// URL del backend según el entorno
+const backendURL = isDevelopment
+  ? import.meta.env.VITE_URL_BACK_LOCAL || "http://localhost:3005"
+  : import.meta.env.VITE_URL_BACK_PROD;
 
 const clientAxios = axios.create({
-  baseURL: `${import.meta.env.VITE_URL_BACK_PROD}/api`,
+  baseURL: `${backendURL}/api`,
 });
+
 
 
 export const configHeaders = () => {
@@ -16,7 +24,6 @@ export const configHeaders = () => {
     },
   };
 };
-
 
 export const configHeadersImagen = () => {
   return {
