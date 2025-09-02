@@ -1,13 +1,13 @@
 import { Card } from "react-bootstrap";
 
-const ClasesHoy = ({ clase }) => {
+const ClasesProximosDias = ({ clase }) => {
   return (
-    <Card className="mb-3 shadow-sm border-primary">
+    <Card className="mb-3 shadow-sm border-secondary">
       <Card.Body className="p-4">
-        <Card.Title className="text-primary fw-bold fs-4 mb-3">
+        <Card.Title className="text-secondary fw-bold fs-4 mb-3">
           🏋️ {clase.tipoClase} - Prof. {clase.profesor}
         </Card.Title>
-        <Card.Subtitle className="mb-3 text-secondary fs-6">
+        <Card.Subtitle className="mb-3 text-info fs-6">
           📅{" "}
           {new Date(clase.fecha).toLocaleDateString("es-AR", {
             weekday: "long",
@@ -34,4 +34,4 @@ const ClasesHoy = ({ clase }) => {
   );
 };
 
-export default ClasesHoy;
+export default ClasesProximosDias;

@@ -4,7 +4,7 @@ import "./BotonWhatsapp.css";
 function BotonWhatsapp() {
   return (
     <a
-      href="https://wa.me/5493815659051?text=Hola%2C%20quiero%20información%20sobre%20el%20gimnasio%20🙂"
+      href="https://wa.me/5493815659051?text=Hola%2C%20me%20gustaria%20obtener%20más%20información%20sobre%20el%20gimnasio%20🙂"
       target="_blank"
       rel="noopener noreferrer"
       className="boton-whatsapp"
