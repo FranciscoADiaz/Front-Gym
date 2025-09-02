@@ -88,30 +88,29 @@ const ListaReservas = () => {
   if (!usuarioActual) {
     return (
       <div className="container-md mt-5">
-        <div className="card fade-in shadow-lg border-0">
-          <div className="card-header bg-gradient-secondary text-white text-center py-4">
+        <div className="card reserva-card fade-in shadow-lg border-0">
+          <div className="card-header reserva-card-header bg-gradient-secondary text-white text-center py-4">
             <h3 className="card-title mb-0 text-black">
-              <i className="fas fa-list-alt me-2"></i>
+              <i className="fas fa-list-alt reserva-icon"></i>
               Mis Reservas
             </h3>
           </div>
-          <div className="card-body p-4 text-center">
-            <div className="mb-4">
-              <i
-                className="fas fa-user-lock text-muted"
-                style={{ fontSize: "4rem" }}
-              ></i>
+          <div className="card-body reserva-card-body p-4 text-center">
+            <div className="empty-state">
+              <div className="empty-state-icon">
+                <i className="fas fa-user-lock text-muted"></i>
+              </div>
+              <h5 className="text-muted mb-2">Debes iniciar sesión</h5>
+              <p className="text-muted small">
+                Para ver tus reservas, necesitas iniciar sesión
+              </p>
+              <button
+                className="btn btn-primary mt-3 btn-reserva"
+                onClick={() => navigate("/iniciarsesion")}
+              >
+                Iniciar Sesión
+              </button>
             </div>
-            <h5 className="text-muted mb-2">Debes iniciar sesión</h5>
-            <p className="text-muted small">
-              Para ver tus reservas, necesitas iniciar sesión
-            </p>
-            <button
-              className="btn btn-primary mt-3"
-              onClick={() => navigate("/iniciarsesion")}
-            >
-              Iniciar Sesión
-            </button>
           </div>
         </div>
       </div>
@@ -120,29 +119,26 @@ const ListaReservas = () => {
 
   return (
     <div className="container-md mt-5">
-      <div className="card fade-in shadow-lg border-0">
-        <div className="card-header bg-gradient-secondary text-white text-center py-4">
+      <div className="card reserva-card fade-in shadow-lg border-0">
+        <div className="card-header reserva-card-header bg-gradient-secondary text-white text-center py-4">
           <h3 className="card-title mb-0 text-black">
-            <i className="fas fa-list-alt me-2"></i>
+            <i className="fas fa-list-alt reserva-icon"></i>
             Mis Reservas
           </h3>
         </div>
 
-        <div className="card-body p-4">
+        <div className="card-body reserva-card-body p-4">
           {loading ? (
-            <div className="text-center p-5">
+            <div className="loading-spinner">
               <div className="spinner-border text-primary" role="status">
                 <span className="visually-hidden">Cargando...</span>
               </div>
               <p className="mt-3 text-muted">Cargando tus reservas...</p>
             </div>
           ) : reservas.length === 0 ? (
-            <div className="text-center p-5">
-              <div className="mb-4">
-                <i
-                  className="fas fa-calendar-times text-muted"
-                  style={{ fontSize: "4rem" }}
-                ></i>
+            <div className="empty-state">
+              <div className="empty-state-icon">
+                <i className="fas fa-calendar-times text-muted"></i>
               </div>
               <h5 className="text-muted mb-2">No tienes reservas activas</h5>
               <p className="text-muted small">
@@ -154,24 +150,24 @@ const ListaReservas = () => {
               {reservas.map((reserva) => (
                 <div
                   key={reserva._id}
-                  className="card hover-lift border-0 shadow-sm"
+                  className="card reserva-item hover-lift border-0 shadow-sm"
                   style={{ padding: "var(--spacing-lg)" }}
                 >
                   <div className="d-flex flex-column align-items-center text-center">
                     <div className="mb-3">
                       <div className="d-flex align-items-center justify-content-center mb-2">
-                        <i className="fas fa-dumbbell text-primary me-2"></i>
+                        <i className="fas fa-dumbbell text-primary reserva-icon"></i>
                         <h4 className="mb-0">{reserva.tipoClase}</h4>
                       </div>
                       <div className="d-flex align-items-center justify-content-center mb-1">
-                        <i className="fas fa-calendar text-secondary me-2"></i>
-                        <p className="text-secondary mb-0">
+                        <i className="fas fa-calendar text-secondary reserva-icon"></i>
+                        <p className="text-secondary mb-0 reserva-text">
                           {reserva.fecha.slice(0, 10)} a las {reserva.hora}
                         </p>
                       </div>
                       <div className="d-flex align-items-center justify-content-center">
-                        <i className="fas fa-user-tie text-muted me-2"></i>
-                        <p className="text-muted mb-0">
+                        <i className="fas fa-user-tie text-muted reserva-icon"></i>
+                        <p className="text-muted mb-0 reserva-text">
                           Profesor: {reserva.profesor}
                         </p>
                       </div>
@@ -180,7 +176,7 @@ const ListaReservas = () => {
                     <div className="w-full">
                       <button
                         onClick={() => cancelar(reserva._id)}
-                        className="btn btn-danger btn-sm shadow-sm w-full"
+                        className="btn btn-danger btn-sm shadow-sm w-full btn-reserva"
                       >
                         <i className="fas fa-times me-1"></i>
                         Cancelar

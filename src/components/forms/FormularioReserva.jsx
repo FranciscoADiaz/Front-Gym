@@ -201,32 +201,32 @@ const FormularioReserva = () => {
 
   return (
     <div className="container-md">
-      <div className="card fade-in shadow-lg border-0">
-        <div className="card-header bg-gradient-primary text-white text-center py-4">
+      <div className="card reserva-card fade-in shadow-lg border-0">
+        <div className="card-header reserva-card-header bg-gradient-primary text-white text-center py-4">
           <h2 className="card-title mb-0">
-            <i className="fas fa-calendar-plus me-2"></i>
+            <i className="fas fa-calendar-plus reserva-icon"></i>
             Reservar Clase
           </h2>
           <p className="mb-0 mt-2 opacity-75">Selecciona tu clase preferida</p>
         </div>
 
-        <div className="card-body p-4">
+        <div className="card-body reserva-card-body p-4">
           {/* Información del plan del usuario */}
           {planUsuario && (
             <div
-              className={`alert ${
+              className={`alert reserva-alert ${
                 planUsuario === "Musculación" ? "alert-warning" : "alert-info"
               } mb-4 border-0 shadow-sm`}
             >
               <div className="d-flex align-items-center">
                 <i
-                  className={`fas ${
+                  className={`fas reserva-icon ${
                     planUsuario === "Musculación"
                       ? "fa-exclamation-triangle"
                       : "fa-check-circle"
-                  } me-2`}
+                  }`}
                 ></i>
-                <div>
+                <div className="reserva-text">
                   <strong>Tu plan actual:</strong> {planUsuario}
                   {planUsuario === "Musculación" && (
                     <div className="mt-1 small">
@@ -240,10 +240,10 @@ const FormularioReserva = () => {
 
           {/* Información de cupos */}
           {cuposDisponibles > 0 && (
-            <div className="alert alert-success mb-4 border-0 shadow-sm">
+            <div className="alert alert-success reserva-alert mb-4 border-0 shadow-sm">
               <div className="d-flex align-items-center">
-                <i className="fas fa-users me-2"></i>
-                <div>
+                <i className="fas fa-users reserva-icon"></i>
+                <div className="reserva-text">
                   <strong>Cupos disponibles:</strong> {cuposDisponibles}
                 </div>
               </div>
@@ -253,10 +253,10 @@ const FormularioReserva = () => {
             reserva.fecha &&
             reserva.tipoClase &&
             reserva.profesor && (
-              <div className="alert alert-warning mb-4 border-0 shadow-sm">
+              <div className="alert alert-warning reserva-alert mb-4 border-0 shadow-sm">
                 <div className="d-flex align-items-center">
-                  <i className="fas fa-clock me-2"></i>
-                  <div>
+                  <i className="fas fa-clock reserva-icon"></i>
+                  <div className="reserva-text">
                     <strong>Verificando cupos disponibles...</strong>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ const FormularioReserva = () => {
             {/* Tipo de clase */}
             <div className="form-group">
               <label htmlFor="tipoClase" className="form-label fw-bold">
-                <i className="fas fa-dumbbell me-2 text-primary"></i>
+                <i className="fas fa-dumbbell reserva-icon text-primary"></i>
                 Tipo de clase
               </label>
               <select
@@ -288,7 +288,7 @@ const FormularioReserva = () => {
             {/* Profesor */}
             <div className="form-group">
               <label htmlFor="profesor" className="form-label fw-bold">
-                <i className="fas fa-user-tie me-2 text-primary"></i>
+                <i className="fas fa-user-tie reserva-icon text-primary"></i>
                 Profesor
               </label>
               <select
@@ -315,7 +315,7 @@ const FormularioReserva = () => {
             {/* Fecha */}
             <div className="form-group">
               <label htmlFor="fecha" className="form-label fw-bold">
-                <i className="fas fa-calendar-alt me-2 text-primary"></i>
+                <i className="fas fa-calendar-alt reserva-icon text-primary"></i>
                 Fecha
               </label>
               <select
@@ -345,7 +345,7 @@ const FormularioReserva = () => {
             <div className="text-center mt-5">
               <button
                 type="submit"
-                className={`btn btn-primary btn-lg px-5 py-3 shadow-lg ${
+                className={`btn btn-primary btn-lg px-5 py-3 shadow-lg btn-reserva ${
                   loading ? "loading" : ""
                 }`}
                 disabled={
@@ -372,13 +372,13 @@ const FormularioReserva = () => {
 
             {/* Mensajes informativos */}
             {!reserva.fecha || !reserva.tipoClase || !reserva.profesor ? (
-              <div className="alert alert-warning mt-4 border-0 shadow-sm text-center">
-                <i className="fas fa-info-circle me-2"></i>
+              <div className="alert alert-warning mt-4 reserva-alert border-0 shadow-sm text-center">
+                <i className="fas fa-info-circle reserva-icon"></i>
                 Completa todos los campos para habilitar la reserva
               </div>
             ) : planUsuario === "Musculación" ? (
-              <div className="alert alert-error mt-4 border-0 shadow-sm text-center">
-                <i className="fas fa-exclamation-triangle me-2"></i>
+              <div className="alert alert-error mt-4 reserva-alert border-0 shadow-sm text-center">
+                <i className="fas fa-exclamation-triangle reserva-icon"></i>
                 Tu plan de Musculación no incluye clases grupales
               </div>
             ) : null}

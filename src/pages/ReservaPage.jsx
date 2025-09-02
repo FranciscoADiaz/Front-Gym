@@ -1,13 +1,17 @@
 import FormularioReserva from "../components/forms/FormularioReserva";
 import ListaReservas from "../components/forms/ListaReservas";
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
+import "./ReservaPage.css";
 
 const ReservaPage = () => {
-  useChangeTitle("reservar");
+  useChangeTitle("Mis Clases");
   return (
-    <div className="contenedor-pagina">
+    <div className="mis-clases-container">
       <div className="container">
-        <h1 className="text-center mb-5">Reserva de Clases TucuGym</h1>
+        <div className="page-header">
+          <h1 className="page-title">Mis Clases</h1>
+          <p className="page-subtitle">Reserva y gestiona tus clases</p>
+        </div>
         <FormularioReserva />
         <ListaReservas />
       </div>

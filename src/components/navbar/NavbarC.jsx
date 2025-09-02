@@ -16,6 +16,20 @@ function NavbarC() {
   const usuarioLog = token ? JSON.parse(token) : null;
   const usuarioRolLog = rol ? JSON.parse(rol) : null;
 
+  // Obtener el nombre del usuario desde el token
+  const obtenerNombreUsuario = () => {
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.nombreUsuario;
+    } catch (error) {
+      console.error("Error al decodificar token:", error);
+      return null;
+    }
+  };
+
+  const nombreUsuario = obtenerNombreUsuario();
+
   const navigate = useNavigate();
 
   const logoutUser = () => {
@@ -78,8 +92,8 @@ function NavbarC() {
               <NavLink className="nav-link fw-semibold px-3" to="/reservar">
                 Mis Clases
               </NavLink>
-              <NavLink className="nav-link fw-semibold px-3" to="/planes">
-                Planes
+              <NavLink className="nav-link fw-semibold px-3" to="/mi-plan">
+                Mi Plan
               </NavLink>
               <NavLink
                 className="nav-link fw-semibold px-3"
@@ -129,13 +143,24 @@ function NavbarC() {
           {/* Login / Logout */}
           {usuarioLog ? (
             <Nav className="ms-3">
-              <NavLink
-                className="nav-link fw-bold px-3 text-danger"
-                to="#"
-                onClick={logoutUser}
-              >
-                Cerrar Sesión
-              </NavLink>
+              <div className="d-flex align-items-center">
+                <span className="user-greeting me-3 d-none d-md-inline">
+                  Hola, {nombreUsuario}
+                </span>
+                <span className="user-greeting me-3 d-md-none">
+                  Hola,{" "}
+                  {nombreUsuario?.length > 10
+                    ? nombreUsuario.substring(0, 10) + "..."
+                    : nombreUsuario}
+                </span>
+                <NavLink
+                  className="nav-link fw-bold px-3 text-danger"
+                  to="#"
+                  onClick={logoutUser}
+                >
+                  Cerrar Sesión
+                </NavLink>
+              </div>
             </Nav>
           ) : (
             <Nav className="ms-3">

@@ -44,6 +44,32 @@
   transform: translateY(-2px);
 }
 
+/* Estilos para el saludo del usuario */
+.user-greeting {
+  color: #ffffff !important;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.user-greeting:hover {
+  color: #0d6efd !important;
+  transform: translateY(-1px);
+}
+
+/* Responsive para el saludo */
+@media (max-width: 768px) {
+  .user-greeting {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .user-greeting {
+    font-size: 0.8rem;
+  }
+}
+
 .navbar-brand {
   transition: transform 0.3s ease;
 }

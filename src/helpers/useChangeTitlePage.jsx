@@ -48,7 +48,21 @@ export const useChangeTitle = (idPage) => {
     case "Administrar Clases":
       document.title = "Administrar Clases - Tucumán Gym";
       break;
-
+    case "404":
+      document.title = "Página no encontrada - Tucumán Gym";
+      break;
+    case "Suplementos":
+      document.title = "Suplementos - Tucumán Gym";
+      break;
+    case "Accesorios":
+      document.title = "Accesorios - Tucumán Gym";
+      break;
+    case "Ropa Deportiva":
+      document.title = "Ropa Deportiva - Tucumán Gym";
+      break;
+    case "Mi Plan":
+      document.title = "Mi Plan - Tucumán Gym";
+      break;
     default:
       document.title = "Tucumán Gym";
       break;

@@ -16,9 +16,14 @@ import Sobrenosotros from "./pages/Sobrenosotros";
 import Contacto from "./pages/ContactoPage";
 import PlanDetalle from "./components/planes/DetallesPlanC";
 import PlanesPage from "./pages/PlanesPage";
+import MiPlanPage from "./pages/MiPlanPage";
 import InscripcionPage from "./pages/InscripcionPage";
 import PagoExitosoPage from "./pages/PagoExitosoPage";
 import PagoFallidoPage from "./pages/PagoFallidoPage";
+import Error404 from "./pages/Error404";
+import ProductoSuplementosPage from "./pages/ProductoSuplementosPage";
+import ProductoAccesoriosPage from "./pages/ProductoAccesoriosPage";
+import ProductoRopaPage from "./pages/ProductoRopaPage";
 
 const App = () => {
   return (
@@ -31,6 +36,7 @@ const App = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/user" element={<HomePage />} />
               <Route path="/planes" element={<PlanesPage />} />
+              <Route path="/mi-plan" element={<MiPlanPage />} />
               <Route path="/planes/:slug" element={<PlanDetalle />} />
               <Route path="/inscripcion/:slug" element={<InscripcionPage />} />
               <Route path="/pago-exitoso" element={<PagoExitosoPage />} />
@@ -49,6 +55,23 @@ const App = () => {
 
               <Route path="/sobre-nosotros" element={<Sobrenosotros />} />
               <Route path="/contacto" element={<Contacto />} />
+
+              {/* Rutas de productos que muestran 404 */}
+              <Route
+                path="/productos/suplementos"
+                element={<ProductoSuplementosPage />}
+              />
+              <Route
+                path="/productos/accesorios"
+                element={<ProductoAccesoriosPage />}
+              />
+              <Route
+                path="/productos/ropa-deportiva"
+                element={<ProductoRopaPage />}
+              />
+
+              {/* Ruta 404 para cualquier otra página no encontrada */}
+              <Route path="*" element={<Error404 />} />
             </Routes>
           </main>
           <Footer />
