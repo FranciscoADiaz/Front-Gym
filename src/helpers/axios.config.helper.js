@@ -1,9 +1,7 @@
 import axios from "axios";
 
-// Detectar si estamos en desarrollo local o producción
 const isDevelopment = import.meta.env.DEV;
 
-// URL del backend según el entorno
 const backendURL = isDevelopment
   ? import.meta.env.VITE_URL_BACK_LOCAL || "http://localhost:3005"
   : import.meta.env.VITE_URL_BACK_PROD;
@@ -12,7 +10,6 @@ const clientAxios = axios.create({
   baseURL: `${backendURL}/api`,
 });
 
-// Interceptor para agregar el token automáticamente a todas las peticiones
 clientAxios.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("token");
