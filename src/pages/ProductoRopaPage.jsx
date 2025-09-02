@@ -14,3 +14,4 @@ const ProductoRopaPage = () => {
 };
 
 export default ProductoRopaPage;
+

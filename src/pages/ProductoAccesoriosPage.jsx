@@ -14,3 +14,4 @@ const ProductoAccesoriosPage = () => {
 };
 
 export default ProductoAccesoriosPage;
+
