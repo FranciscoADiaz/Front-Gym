@@ -12,6 +12,12 @@ TucuGym es una plataforma integral que conecta usuarios con servicios de gimnasi
 - **Panel administrativo**: Control completo de usuarios, clases y reservas
 - **Información del gimnasio**: Servicios, horarios y contacto
 
+
+## USUARIO DE PRUEBA
+User: DiMaria11
+Pass: DiMaria11:)
+
+
 ## 🛠️ Tecnologías Utilizadas
 
 ### Frontend
