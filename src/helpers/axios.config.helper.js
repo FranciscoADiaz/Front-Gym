@@ -6,7 +6,7 @@ const isDevelopment = import.meta.env.DEV;
 // URL del backend según el entorno
 const backendURL = isDevelopment
   ? import.meta.env.VITE_URL_BACK_LOCAL || "http://localhost:3005"
-  : import.meta.env.VITE_URL_BACK_PROD;
+  : import.meta.env.VITE_URL_BACK_PROD || "https://back-gym.vercel.app" ;
 
 const clientAxios = axios.create({
   baseURL: `${backendURL}/api`,
