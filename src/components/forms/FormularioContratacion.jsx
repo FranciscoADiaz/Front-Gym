@@ -80,7 +80,7 @@ const FormularioContratacion = ({ show, handleClose, plan, onSuccess }) => {
   // Mapeo de nombres de display a valores del enum del backend
   const mapeoPlanes = {
     "SOLO MUSCULACIÓN": "Musculación",
-    "SOLO CLASES": "Funcional", // Asumiendo que "SOLO CLASES" corresponde a "Funcional"
+    "SOLO CLASES": "SOLO CLASES", // Asumiendo que "SOLO CLASES" corresponde a "SOLO CLASES"
     "PLAN FULL": "Completo",
   };
 

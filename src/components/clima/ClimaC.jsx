@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Card, Spinner } from "react-bootstrap";
 import axios from "axios";
+import "./ClimaC.css";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -94,6 +96,15 @@ const getWeatherColor = (temp) => {
   return "text-primary"; // Frío
 };
 
+// Función para obtener el gradiente de fondo según la temperatura
+const getWeatherGradient = (temp) => {
+  if (temp >= 30) return "weather-hot"; // Muy caliente
+  if (temp >= 25) return "weather-warm"; // Caliente
+  if (temp >= 15) return "weather-mild"; // Templado
+  if (temp >= 5) return "weather-cool"; // Fresco
+  return "weather-cold"; // Frío
+};
+
 function Clima() {
   const [clima, setClima] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -128,41 +139,57 @@ function Clima() {
 
   if (loading) {
     return (
-      <div className="weather-widget loading">
-        <div className="weather-icon">🌡️</div>
-        <div className="weather-info">
-          <div className="weather-location">Cargando...</div>
-          <div className="weather-temp">--°C</div>
-        </div>
-      </div>
+      <Card className="weather-card weather-loading">
+        <Card.Body className="d-flex align-items-center justify-content-center p-3">
+          <Spinner animation="border" size="sm" className="me-2" />
+          <span className="text-muted">Cargando clima...</span>
+        </Card.Body>
+      </Card>
     );
   }
 
   if (error || !clima) {
     return (
-      <div className="weather-widget error">
-        <div className="weather-icon">🌡️</div>
-        <div className="weather-info">
-          <div className="weather-location">Tucumán</div>
-          <div className="weather-temp">--°C</div>
-        </div>
-      </div>
+      <Card className="weather-card weather-error">
+        <Card.Body className="p-3">
+          <div className="d-flex align-items-center">
+            <div className="weather-icon-large me-3">🌡️</div>
+            <div className="weather-info">
+              <div className="weather-location">Tucumán</div>
+              <div className="weather-temp text-muted">--°C</div>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
     );
   }
 
   const weatherIcon = getWeatherIcon(clima.weather[0].id, true);
   const tempColor = getWeatherColor(clima.main.temp);
   const tempRounded = Math.round(clima.main.temp);
+  const weatherGradient = getWeatherGradient(clima.main.temp);
 
   return (
-    <div className="weather-widget">
-      <div className="weather-icon">{weatherIcon}</div>
-      <div className="weather-info">
-        <div className="weather-location">{clima.name}</div>
-        <div className={`weather-temp ${tempColor}`}>{tempRounded}°C</div>
-        <div className="weather-desc">{clima.weather[0].description}</div>
-      </div>
-    </div>
+    <Card className={`weather-card ${weatherGradient}`}>
+      <Card.Body className="p-3">
+        <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <div className="weather-icon-large me-3">{weatherIcon}</div>
+            <div className="weather-info">
+              <div className="weather-location">{clima.name}</div>
+              <div className={`weather-temp ${tempColor}`}>{tempRounded}°C</div>
+              <div className="weather-desc">{clima.weather[0].description}</div>
+            </div>
+          </div>
+          <div className="weather-details text-end">
+            <div className="weather-humidity">💧 {clima.main.humidity}%</div>
+            <div className="weather-wind">
+              💨 {Math.round(clima.wind.speed)} km/h
+            </div>
+          </div>
+        </div>
+      </Card.Body>
+    </Card>
   );
 }
 

@@ -21,6 +21,18 @@ const AdminPlanesPage = () => {
   const [planSeleccionado, setPlanSeleccionado] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Mapeo de imágenes de la home para los planes
+  const imagenesPlanes = {
+    Musculación:
+      "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020300/musculaci%C3%B3n1_jnsmsa.jpg",
+    "SOLO CLASES":
+      "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020301/clases2_v1u6as.jpg",
+    Funcional:
+      "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020301/clases2_v1u6as.jpg",
+    Completo:
+      "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020303/full3_u19eol.webp",
+  };
+
   useEffect(() => {
     cargarPlanes();
   }, []);
@@ -29,7 +41,21 @@ const AdminPlanesPage = () => {
     try {
       setLoading(true);
       const response = await clientAxios.get("/planes", configHeaders);
-      setPlanes(response.data.data || []);
+      let planesData = response.data.data || [];
+
+      // Corregir planes que tengan "Funcional" en lugar de "SOLO CLASES"
+      planesData = planesData.map((plan) => {
+        if (plan.tipo === "Funcional") {
+          return {
+            ...plan,
+            tipo: "SOLO CLASES",
+            nombre: plan.nombre === "Funcional" ? "Solo Clases" : plan.nombre,
+          };
+        }
+        return plan;
+      });
+
+      setPlanes(planesData);
     } catch (error) {
       console.error("Error al cargar planes:", error);
       Swal.fire("Error", "No se pudieron cargar los planes", "error");
@@ -116,7 +142,8 @@ const AdminPlanesPage = () => {
   const getTipoPlanBadge = (tipo) => {
     const tipos = {
       Musculación: { variant: "primary", text: "💪 Musculación" },
-      Funcional: { variant: "info", text: "🏃 Funcional" },
+      "SOLO CLASES": { variant: "info", text: "🏃 SOLO CLASES" },
+      Funcional: { variant: "info", text: "🏃 SOLO CLASES" },
       Completo: { variant: "danger", text: "🏋️ Completo" },
     };
     const config = tipos[tipo] || {
@@ -187,6 +214,7 @@ const AdminPlanesPage = () => {
                       variant="top"
                       src={
                         plan.imagen ||
+                        imagenesPlanes[plan.tipo] ||
                         "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020301/default_plan.jpg"
                       }
                       style={{ height: "200px", objectFit: "cover" }}

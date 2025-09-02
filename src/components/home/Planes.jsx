@@ -70,7 +70,7 @@ const Planes = () => {
   // Mapeo de nombres de display a valores del enum del backend
   const mapeoPlanes = {
     "SOLO MUSCULACIÓN": "Musculación",
-    "SOLO CLASES": "Funcional",
+    "SOLO CLASES": "SOLO CLASES",
     "PLAN FULL": "Completo",
   };
 

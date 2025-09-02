@@ -29,7 +29,7 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
   // Precios por plan y duración
   const precios = {
     Musculación: { 1: 20000, 3: 50000, 6: 90000 },
-    Funcional: { 1: 25000, 3: 65000, 6: 120000 },
+    "SOLO CLASES": { 1: 25000, 3: 65000, 6: 120000 },
     Completo: { 1: 30000, 3: 80000, 6: 150000 },
   };
 
@@ -267,7 +267,7 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
                           required
                         >
                           <option value="Musculación">Musculación</option>
-                          <option value="Funcional">Funcional</option>
+                          <option value="SOLO CLASES">SOLO CLASES</option>
                           <option value="Completo">Completo</option>
                         </Form.Select>
                       </Form.Group>

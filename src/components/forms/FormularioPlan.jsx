@@ -18,7 +18,7 @@ const FormularioPlan = ({ plan, onGuardar, onCancelar }) => {
 
   const tiposPlan = [
     { value: "Musculación", label: "💪 Musculación" },
-    { value: "Funcional", label: "🏃 Funcional" },
+    { value: "SOLO CLASES", label: "🏃 SOLO CLASES" },
     { value: "Completo", label: "🏋️ Completo" },
   ];
 
