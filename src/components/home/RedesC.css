@@ -14,14 +14,15 @@
 
 .container-redes a {
   text-decoration: none;
-  color: #ffffff;
+  color: #333333;
   width: 70px;
   height: 55px;
   transition: all 0.3s ease; 
 }
 
 .container-redes a:hover {
-  color: #424242; 
+  color: #0d6efd; 
+  transform: scale(1.1);
 }
 
 

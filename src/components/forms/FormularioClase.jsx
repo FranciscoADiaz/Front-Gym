@@ -8,7 +8,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
     tipoClase: "",
     capacidad: 20,
     duracion: 60,
-    precio: 0,
     estado: "activa",
     imagen: "",
     horarios: [],
@@ -50,7 +49,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
         tipoClase: clase.tipoClase || "",
         capacidad: clase.capacidad || 20,
         duracion: clase.duracion || 60,
-        precio: clase.precio || 0,
         estado: clase.estado || "activa",
         imagen: clase.imagen || "",
         horarios: clase.horarios || [],
@@ -141,10 +139,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
 
     if (formData.duracion < 60 || formData.duracion > 120) {
       nuevosErrors.duracion = "La duración debe estar entre 60 y 120 minutos";
-    }
-
-    if (formData.precio < 0) {
-      nuevosErrors.precio = "El precio no puede ser negativo";
     }
 
     if (formData.horarios.length === 0) {
@@ -274,24 +268,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
             />
             <Form.Control.Feedback type="invalid">
               {errors.duracion}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-
-        <Col md={4}>
-          <Form.Group className="mb-3">
-            <Form.Label className="fw-bold">💰 Precio</Form.Label>
-            <Form.Control
-              type="number"
-              name="precio"
-              value={formData.precio}
-              onChange={handleInputChange}
-              min="0"
-              step="100"
-              isInvalid={!!errors.precio}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.precio}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>

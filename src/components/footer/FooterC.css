@@ -7,3 +7,74 @@
   transform: scale(1.2);
 }
 
+/* Navbar personalizado */
+.navbar-custom {
+  background: rgba(26, 26, 26, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Footer personalizado */
+.footer-custom {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 26, 0.9) 0%,
+    rgba(45, 45, 45, 0.9) 100%
+  );
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom-custom {
+  background: linear-gradient(
+    135deg,
+    rgba(52, 58, 64, 0.9) 0%,
+    rgba(73, 80, 87, 0.9) 100%
+  );
+  backdrop-filter: blur(10px);
+}
+
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #6c757d !important;
+  transform: translateY(-2px);
+}
+
+.navbar-brand {
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos para los iconos de redes sociales en la página de contacto */
+.contacto-redes a {
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.contacto-redes a:hover {
+  transform: translateY(-5px);
+}
+
+.contacto-redes .fs-1 {
+  color: #333333;
+  transition: all 0.3s ease;
+}
+
+.contacto-redes a:hover .fs-1 {
+  color: #0d6efd;
+  transform: scale(1.1);
+}
+
+.contacto-redes h6 {
+  transition: color 0.3s ease;
+}
+
+.contacto-redes a:hover h6 {
+  color: #0d6efd !important;
+}

@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router";
 
 import Clima from "../clima/ClimaC";
 import Swal from "sweetalert2";
-import "../home/Componentes.css";
+import "../footer/FooterC.css";
 
 function NavbarC() {
   // Traigo los valores del sessionStorage
@@ -41,7 +41,7 @@ function NavbarC() {
   };
 
   return (
-    <Navbar expand="lg" className="bg-dark text-white">
+    <Navbar expand="lg" className="navbar-custom text-white shadow-sm">
       <Container fluid>
         <NavLink
           to={
@@ -51,57 +51,76 @@ function NavbarC() {
               ? "/admin"
               : "/"
           }
+          className="text-decoration-none"
         >
-          <img
-            src="https://res.cloudinary.com/dpy5kwico/image/upload/v1754950155/logo_vbmdlo.png"
-            alt="Logo"
-            className="img-circular-sm"
-          />
+          <div className="d-flex align-items-center">
+            <img
+              src="https://res.cloudinary.com/dpy5kwico/image/upload/v1754950155/logo_vbmdlo.png"
+              alt="Logo"
+              className="img-circular-sm me-2"
+              style={{ maxHeight: "80px", width: "auto" }}
+            />
+          </div>
         </NavLink>
 
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Toggle aria-controls="navbarScroll" className="border-0" />
         <Navbar.Collapse id="navbarScroll">
-          <div className="ms-3">
+          <div className="ms-3 me-4">
             <Clima />
           </div>
 
           {/* Menú según rol */}
           {usuarioLog && usuarioRolLog === "usuario" ? (
             <Nav className="ms-auto">
-              <NavLink className="nav-link" to="/">
+              <NavLink className="nav-link fw-semibold px-3" to="/">
                 Inicio
               </NavLink>
-              <NavLink className="nav-link" to="/reservar">
+              <NavLink className="nav-link fw-semibold px-3" to="/reservar">
                 Mis Clases
               </NavLink>
-              <NavLink className="nav-link" to="/planes">
+              <NavLink className="nav-link fw-semibold px-3" to="/planes">
                 Planes
+              </NavLink>
+              <NavLink
+                className="nav-link fw-semibold px-3"
+                to="/sobre-nosotros"
+              >
+                Sobre Nosotros
+              </NavLink>
+              <NavLink className="nav-link fw-semibold px-3" to="/contacto">
+                Contacto
               </NavLink>
             </Nav>
           ) : usuarioLog && usuarioRolLog === "admin" ? (
             <Nav className="ms-auto">
-              <NavLink className="nav-link" to="/admin">
+              <NavLink className="nav-link fw-semibold px-3" to="/admin">
                 Inicio
               </NavLink>
-              <NavLink className="nav-link" to="/admin/usuarios">
-                Administrar Usuarios
+              <NavLink
+                className="nav-link fw-semibold px-3"
+                to="/admin/usuarios"
+              >
+                Usuarios
               </NavLink>
-              <NavLink className="nav-link" to="/admin/clases">
-                Administrar Clases
+              <NavLink className="nav-link fw-semibold px-3" to="/admin/clases">
+                Clases
               </NavLink>
-              <NavLink className="nav-link" to="/admin/planes">
-                Administrar Planes
+              <NavLink className="nav-link fw-semibold px-3" to="/admin/planes">
+                Planes
               </NavLink>
             </Nav>
           ) : (
             <Nav className="ms-auto">
-              <NavLink className="nav-link" to="/">
+              <NavLink className="nav-link fw-semibold px-3" to="/">
                 Inicio
               </NavLink>
-              <NavLink className="nav-link" to="/sobre-nosotros">
+              <NavLink
+                className="nav-link fw-semibold px-3"
+                to="/sobre-nosotros"
+              >
                 Sobre Nosotros
               </NavLink>
-              <NavLink className="nav-link" to="/contacto">
+              <NavLink className="nav-link fw-semibold px-3" to="/contacto">
                 Contacto
               </NavLink>
             </Nav>
@@ -109,17 +128,24 @@ function NavbarC() {
 
           {/* Login / Logout */}
           {usuarioLog ? (
-            <Nav className="ms-auto">
-              <NavLink className="nav-link" to="#" onClick={logoutUser}>
-                Cerrar Sesion
+            <Nav className="ms-3">
+              <NavLink
+                className="nav-link fw-bold px-3 text-danger"
+                to="#"
+                onClick={logoutUser}
+              >
+                Cerrar Sesión
               </NavLink>
             </Nav>
           ) : (
-            <Nav className="ms-auto">
-              <NavLink className="nav-link" to="/iniciarsesion">
-                Iniciar Sesion
+            <Nav className="ms-3">
+              <NavLink
+                className="nav-link fw-semibold px-3"
+                to="/iniciarsesion"
+              >
+                Iniciar Sesión
               </NavLink>
-              <NavLink className="nav-link" to="/registrarse">
+              <NavLink className="nav-link fw-semibold px-3" to="/registrarse">
                 Registrarse
               </NavLink>
             </Nav>

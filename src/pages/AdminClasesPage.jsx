@@ -221,8 +221,6 @@ const AdminClasesPage = () => {
                         <br />
                         <strong>⏱️ Duración:</strong> {clase.duracion} min
                         <br />
-                        <strong>💰 Precio:</strong> ${clase.precio}
-                        <br />
                         <strong>📅 Horarios:</strong>{" "}
                         {formatearHorarios(clase.horarios)}
                       </small>
