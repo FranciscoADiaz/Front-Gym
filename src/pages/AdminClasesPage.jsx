@@ -10,8 +10,6 @@ import {
 } from "react-bootstrap";
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
 import FormularioClase from "../components/forms/FormularioClase";
-import EstadisticasClases from "../components/admin/EstadisticasClases";
-import FiltrosClases from "../components/admin/FiltrosClases";
 import clientAxios, { configHeaders } from "../helpers/axios.config.helper";
 import Swal from "sweetalert2";
 
@@ -19,66 +17,9 @@ const AdminClasesPage = () => {
   useChangeTitle("Administrar Clases");
 
   const [clases, setClases] = useState([]);
-  const [clasesFiltradas, setClasesFiltradas] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [claseSeleccionada, setClaseSeleccionada] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // Datos de ejemplo para mostrar la funcionalidad
-  const clasesEjemplo = [
-    {
-      _id: "1",
-      nombre: "Spinning Intensivo",
-      descripcion: "Clase de spinning de alta intensidad para quemar calorías",
-      tipoClase: "Spinning",
-      profesor: "andres",
-      capacidad: 20,
-      duracion: 60,
-      horarios: [
-        { dia: "lunes", hora: "08:00" },
-        { dia: "miercoles", hora: "08:00" },
-        { dia: "viernes", hora: "08:00" },
-      ],
-      precio: 1500,
-      estado: "activa",
-      imagen:
-        "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020301/spinning_placeholder.jpg",
-    },
-    {
-      _id: "2",
-      nombre: "Funcional Avanzado",
-      descripcion: "Entrenamiento funcional para deportistas avanzados",
-      tipoClase: "Funcional",
-      profesor: "walter",
-      capacidad: 15,
-      duracion: 45,
-      horarios: [
-        { dia: "martes", hora: "19:00" },
-        { dia: "jueves", hora: "19:00" },
-      ],
-      precio: 1800,
-      estado: "activa",
-      imagen:
-        "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020301/funcional_placeholder.jpg",
-    },
-    {
-      _id: "3",
-      nombre: "Yoga Relajante",
-      descripcion: "Clase de yoga para relajación y flexibilidad",
-      tipoClase: "Yoga",
-      profesor: "daniela",
-      capacidad: 25,
-      duracion: 90,
-      horarios: [
-        { dia: "sabado", hora: "10:00" },
-        { dia: "domingo", hora: "10:00" },
-      ],
-      precio: 1200,
-      estado: "inactiva",
-      imagen:
-        "https://res.cloudinary.com/dpy5kwico/image/upload/v1755020301/yoga_placeholder.jpg",
-    },
-  ];
 
   useEffect(() => {
     cargarClases();
@@ -87,11 +28,8 @@ const AdminClasesPage = () => {
   const cargarClases = async () => {
     try {
       setLoading(true);
-      // Por ahora usamos datos de ejemplo
-      // const response = await clientAxios.get("/admin/clases", configHeaders);
-      // setClases(response.data);
-      setClases(clasesEjemplo);
-      setClasesFiltradas(clasesEjemplo);
+      const response = await clientAxios.get("/clases", configHeaders);
+      setClases(response.data.data || []);
     } catch (error) {
       console.error("Error al cargar clases:", error);
       Swal.fire("Error", "No se pudieron cargar las clases", "error");
@@ -124,9 +62,8 @@ const AdminClasesPage = () => {
 
     if (result.isConfirmed) {
       try {
-        // await clientAxios.delete(`/admin/clases/${id}`, configHeaders);
+        await clientAxios.delete(`/clases/${id}`, configHeaders);
         setClases(clases.filter((clase) => clase._id !== id));
-        setClasesFiltradas(clasesFiltradas.filter((clase) => clase._id !== id));
         Swal.fire("Eliminada", "La clase ha sido eliminada", "success");
       } catch (error) {
         console.error("Error al eliminar clase:", error);
@@ -139,28 +76,25 @@ const AdminClasesPage = () => {
     try {
       if (claseSeleccionada) {
         // Actualizar clase existente
-        // await clientAxios.put(`/admin/clases/${claseSeleccionada._id}`, datosClase, configHeaders);
+        const response = await clientAxios.put(
+          `/clases/${claseSeleccionada._id}`,
+          datosClase,
+          configHeaders
+        );
         setClases(
           clases.map((clase) =>
-            clase._id === claseSeleccionada._id
-              ? { ...datosClase, _id: clase._id }
-              : clase
-          )
-        );
-        setClasesFiltradas(
-          clasesFiltradas.map((clase) =>
-            clase._id === claseSeleccionada._id
-              ? { ...datosClase, _id: clase._id }
-              : clase
+            clase._id === claseSeleccionada._id ? response.data.data : clase
           )
         );
         Swal.fire("Actualizada", "La clase ha sido actualizada", "success");
       } else {
         // Crear nueva clase
-        // const response = await clientAxios.post("/admin/clases", datosClase, configHeaders);
-        const nuevaClase = { ...datosClase, _id: Date.now().toString() };
-        setClases([...clases, nuevaClase]);
-        setClasesFiltradas([...clasesFiltradas, nuevaClase]);
+        const response = await clientAxios.post(
+          "/clases",
+          datosClase,
+          configHeaders
+        );
+        setClases([...clases, response.data.data]);
         Swal.fire("Creada", "La clase ha sido creada exitosamente", "success");
       }
       setShowModal(false);
@@ -185,9 +119,6 @@ const AdminClasesPage = () => {
       Spinning: { variant: "primary", text: "🚴 Spinning" },
       Funcional: { variant: "info", text: "💪 Funcional" },
       Crossfit: { variant: "danger", text: "🔥 Crossfit" },
-      Yoga: { variant: "success", text: "🧘 Yoga" },
-      Pilates: { variant: "warning", text: "🤸 Pilates" },
-      Zumba: { variant: "purple", text: "💃 Zumba" },
     };
     const config = tipos[tipoClase] || {
       variant: "secondary",
@@ -198,70 +129,6 @@ const AdminClasesPage = () => {
 
   const formatearHorarios = (horarios) => {
     return horarios.map((h) => `${h.dia} ${h.hora}`).join(", ");
-  };
-
-  const aplicarFiltros = (filtros) => {
-    let resultado = [...clases];
-
-    // Filtro por búsqueda
-    if (filtros.busqueda) {
-      resultado = resultado.filter(
-        (clase) =>
-          clase.nombre.toLowerCase().includes(filtros.busqueda.toLowerCase()) ||
-          clase.descripcion
-            .toLowerCase()
-            .includes(filtros.busqueda.toLowerCase())
-      );
-    }
-
-    // Filtro por tipo de clase
-    if (filtros.tipoClase) {
-      resultado = resultado.filter(
-        (clase) => clase.tipoClase === filtros.tipoClase
-      );
-    }
-
-    // Filtro por profesor
-    if (filtros.profesor) {
-      resultado = resultado.filter(
-        (clase) => clase.profesor === filtros.profesor
-      );
-    }
-
-    // Filtro por estado
-    if (filtros.estado) {
-      resultado = resultado.filter((clase) => clase.estado === filtros.estado);
-    }
-
-    // Filtro por capacidad
-    if (filtros.capacidadMin) {
-      resultado = resultado.filter(
-        (clase) => clase.capacidad >= parseInt(filtros.capacidadMin)
-      );
-    }
-    if (filtros.capacidadMax) {
-      resultado = resultado.filter(
-        (clase) => clase.capacidad <= parseInt(filtros.capacidadMax)
-      );
-    }
-
-    // Filtro por precio
-    if (filtros.precioMin) {
-      resultado = resultado.filter(
-        (clase) => clase.precio >= parseInt(filtros.precioMin)
-      );
-    }
-    if (filtros.precioMax) {
-      resultado = resultado.filter(
-        (clase) => clase.precio <= parseInt(filtros.precioMax)
-      );
-    }
-
-    setClasesFiltradas(resultado);
-  };
-
-  const limpiarFiltros = () => {
-    setClasesFiltradas(clases);
   };
 
   if (loading) {
@@ -299,41 +166,25 @@ const AdminClasesPage = () => {
         </Row>
       </div>
 
-      {/* Estadísticas */}
-      <EstadisticasClases clases={clases} />
-
-      {/* Filtros */}
-      <FiltrosClases onFiltrar={aplicarFiltros} onLimpiar={limpiarFiltros} />
-
       {/* Lista de Clases */}
       <div className="bg-light p-4 rounded-3 shadow-sm">
         <h3 className="text-primary fw-bold mb-4">
-          📋 Lista de Clases ({clasesFiltradas.length})
+          📋 Lista de Clases ({clases.length})
         </h3>
 
-        {clasesFiltradas.length === 0 ? (
+        {clases.length === 0 ? (
           <div className="text-center py-5">
             <div className="text-muted mb-3">
               <i className="fas fa-dumbbell fs-1"></i>
             </div>
-            <p className="text-muted fs-5 mb-3">
-              {clases.length === 0
-                ? "No hay clases registradas"
-                : "No se encontraron clases con los filtros aplicados"}
-            </p>
-            {clases.length === 0 ? (
-              <Button variant="primary" onClick={handleCrearClase}>
-                Crear Primera Clase
-              </Button>
-            ) : (
-              <Button variant="outline-primary" onClick={limpiarFiltros}>
-                Limpiar Filtros
-              </Button>
-            )}
+            <p className="text-muted fs-5 mb-3">No hay clases registradas</p>
+            <Button variant="primary" onClick={handleCrearClase}>
+              Crear Primera Clase
+            </Button>
           </div>
         ) : (
           <Row>
-            {clasesFiltradas.map((clase) => (
+            {clases.map((clase) => (
               <Col key={clase._id} lg={6} xl={4} className="mb-4">
                 <Card className="h-100 shadow-sm border-0">
                   <div className="position-relative">
@@ -365,8 +216,6 @@ const AdminClasesPage = () => {
 
                     <div className="mb-3">
                       <small className="text-muted">
-                        <strong>👨‍🏫 Profesor:</strong> {clase.profesor}
-                        <br />
                         <strong>👥 Capacidad:</strong> {clase.capacidad}{" "}
                         personas
                         <br />

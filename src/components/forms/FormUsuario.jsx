@@ -29,9 +29,7 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
   // Precios por plan y duración
   const precios = {
     Musculación: { 1: 20000, 3: 50000, 6: 90000 },
-    Spinning: { 1: 25000, 3: 65000, 6: 120000 },
     Funcional: { 1: 25000, 3: 65000, 6: 120000 },
-    Crossfit: { 1: 30000, 3: 80000, 6: 150000 },
     Completo: { 1: 30000, 3: 80000, 6: 150000 },
   };
 
@@ -192,11 +190,7 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
                   value={formData.contrasenia}
                   onChange={handleChange}
                   required={!isEditing}
-                  placeholder={
-                    isEditing
-                      ? "Dejar vacío para no cambiar"
-                      : "Ingrese contraseña"
-                  }
+                  placeholder={isEditing ? "********" : "Ingrese contraseña"}
                 />
                 {isEditing && (
                   <Form.Text className="text-muted">
@@ -273,9 +267,7 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
                           required
                         >
                           <option value="Musculación">Musculación</option>
-                          <option value="Spinning">Spinning</option>
                           <option value="Funcional">Funcional</option>
-                          <option value="Crossfit">Crossfit</option>
                           <option value="Completo">Completo</option>
                         </Form.Select>
                       </Form.Group>

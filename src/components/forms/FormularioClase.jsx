@@ -6,7 +6,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
     nombre: "",
     descripcion: "",
     tipoClase: "",
-    profesor: "",
     capacidad: 20,
     duracion: 60,
     precio: 0,
@@ -25,17 +24,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
     { value: "Spinning", label: "🚴 Spinning" },
     { value: "Funcional", label: "💪 Funcional" },
     { value: "Crossfit", label: "🔥 Crossfit" },
-    { value: "Yoga", label: "🧘 Yoga" },
-    { value: "Pilates", label: "🤸 Pilates" },
-    { value: "Zumba", label: "💃 Zumba" },
-  ];
-
-  const profesores = [
-    { value: "andres", label: "Andrés" },
-    { value: "walter", label: "Walter" },
-    { value: "daniela", label: "Daniela" },
-    { value: "maria", label: "María" },
-    { value: "carlos", label: "Carlos" },
   ];
 
   const dias = [
@@ -60,7 +48,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
         nombre: clase.nombre || "",
         descripcion: clase.descripcion || "",
         tipoClase: clase.tipoClase || "",
-        profesor: clase.profesor || "",
         capacidad: clase.capacidad || 20,
         duracion: clase.duracion || 60,
         precio: clase.precio || 0,
@@ -148,16 +135,12 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
       nuevosErrors.tipoClase = "Debe seleccionar un tipo de clase";
     }
 
-    if (!formData.profesor) {
-      nuevosErrors.profesor = "Debe seleccionar un profesor";
-    }
-
     if (formData.capacidad < 1 || formData.capacidad > 50) {
       nuevosErrors.capacidad = "La capacidad debe estar entre 1 y 50";
     }
 
-    if (formData.duracion < 30 || formData.duracion > 120) {
-      nuevosErrors.duracion = "La duración debe estar entre 30 y 120 minutos";
+    if (formData.duracion < 60 || formData.duracion > 120) {
+      nuevosErrors.duracion = "La duración debe estar entre 60 y 120 minutos";
     }
 
     if (formData.precio < 0) {
@@ -242,28 +225,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
       <Row>
         <Col md={6}>
           <Form.Group className="mb-3">
-            <Form.Label className="fw-bold">👨‍🏫 Profesor</Form.Label>
-            <Form.Select
-              name="profesor"
-              value={formData.profesor}
-              onChange={handleInputChange}
-              isInvalid={!!errors.profesor}
-            >
-              <option value="">Seleccionar profesor...</option>
-              {profesores.map((prof) => (
-                <option key={prof.value} value={prof.value}>
-                  {prof.label}
-                </option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              {errors.profesor}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-
-        <Col md={6}>
-          <Form.Group className="mb-3">
             <Form.Label className="fw-bold">📊 Estado</Form.Label>
             <Form.Select
               name="estado"
@@ -307,7 +268,7 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
               name="duracion"
               value={formData.duracion}
               onChange={handleInputChange}
-              min="30"
+              min="60"
               max="120"
               isInvalid={!!errors.duracion}
             />

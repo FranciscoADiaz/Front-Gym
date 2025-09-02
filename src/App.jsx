@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import ReservaPage from "./pages/ReservaPage";
 import AdminHomePage from "./pages/AdminHomePage";
 import AdminClasesPage from "./pages/AdminClasesPage";
+import AdminPlanesPage from "./pages/AdminPlanesPage";
 import Navbar from "./components/navbar/NavbarC";
 import Footer from "./components/footer/FooterC";
 import HomePage from "./pages/HomePage";
@@ -40,6 +41,7 @@ const App = () => {
               <Route path="/admin" element={<AdminHomePage />} />
               <Route path="/admin/usuarios" element={<AdminUsersPage />} />
               <Route path="/admin/clases" element={<AdminClasesPage />} />
+              <Route path="/admin/planes" element={<AdminPlanesPage />} />
               <Route
                 path="/recuperarcontrasenia"
                 element={<RecuperarContrasenia />}

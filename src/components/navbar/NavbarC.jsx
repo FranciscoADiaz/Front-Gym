@@ -89,6 +89,9 @@ function NavbarC() {
               <NavLink className="nav-link" to="/admin/clases">
                 Administrar Clases
               </NavLink>
+              <NavLink className="nav-link" to="/admin/planes">
+                Administrar Planes
+              </NavLink>
             </Nav>
           ) : (
             <Nav className="ms-auto">
