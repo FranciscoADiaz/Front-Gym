@@ -35,3 +35,4 @@ const ClasesProximosDias = ({ clase }) => {
 };
 
 export default ClasesProximosDias;
+

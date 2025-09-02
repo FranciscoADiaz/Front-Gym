@@ -19,7 +19,8 @@ const productos = [
   {
     titulo: "ROPA DEPORTIVA",
     url: "https://res.cloudinary.com/dpy5kwico/image/upload/f_auto,q_auto,c_fill,w_600,h_360/v1754950153/ropadeportiva_cheeph.jpg",
-    descripcion: "Camisetas dry-fit, shorts y joggers cómodos. Todo lo necesario para entrenar. ",
+    descripcion:
+      "Camisetas dry-fit, shorts y joggers cómodos. Todo lo necesario para entrenar. ",
     ruta: "/productos/ropa-deportiva",
   },
 ];
@@ -33,13 +34,11 @@ const Productos = () => {
         <Row className="g-4 justify-content-center">
           {productos.map((prod, i) => (
             <Col key={i} xs={10} sm={6} md={4}>
-          
               <Link
                 to={prod.ruta}
                 className="text-decoration-none text-dark d-block"
               >
                 <Card className="h-100 text-center card-hover cursor-pointer borde-card">
-               
                   <Card.Img
                     className="altura"
                     variant="top"
