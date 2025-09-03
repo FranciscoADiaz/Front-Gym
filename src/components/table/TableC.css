@@ -37,8 +37,8 @@
 
 .table-modern tbody tr:hover {
   background-color: #f8f9fa;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: none;
+  box-shadow: none;
 }
 
 .table-modern tbody tr:last-child td {
@@ -153,6 +153,33 @@
   }
 }
 
+/* Extra ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .table-modern td {
+    padding: 0.5rem 1rem 0.5rem 48%;
+  }
+
+  .table-modern td::before {
+    width: 46%;
+    top: 0.5rem;
+  }
+
+  .badge {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+/* En pantallas ultra pequeñas, solo iconos en acciones */
+@media (max-width: 360px) {
+  .table-modern td .btn-sm span {
+    display: none;
+  }
+  .table-modern td .btn-sm i {
+    margin-right: 0 !important;
+  }
+}
+
 /* Animaciones */
 @keyframes fadeIn {
   from {
@@ -172,7 +199,8 @@
 /* Scroll horizontal para tablas grandes */
 .table-responsive {
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 /* Estilos para el contenedor de la tabla */

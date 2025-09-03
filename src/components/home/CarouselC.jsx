@@ -1,5 +1,5 @@
 import { Carousel } from "react-bootstrap";
-
+import "./Componentes.css";
 
 const slides = [
   {
@@ -29,19 +29,16 @@ const CarouselC = () => {
     <Carousel fade controls={false} indicators={false} interval={5000}>
       {slides.map((slide, i) => (
         <Carousel.Item key={i}>
-          <div>
-          
+          <div className="hero-slide">
             <img
-              className="d-block w-100"
+              className="d-block w-100 hero-img"
               src={slide.url}
               alt={slide.alt}
-              style={{ maxHeight: "500px", objectFit: "cover" }}
               loading="lazy"
             />
-          
-            <div className="bg-dark text-white p-4 text-center">
-              <h3>{slide.titulo}</h3>
-              <p>{slide.texto}</p>
+            <div className="hero-overlay text-center">
+              <h3 className="hero-title mb-2">{slide.titulo}</h3>
+              <p className="hero-text mb-0">{slide.texto}</p>
             </div>
           </div>
         </Carousel.Item>

@@ -166,14 +166,16 @@ const Planes = () => {
 
   return (
     <>
-      <section className="bg-dark text-white padding-vertical">
+      <section className="section-neutral padding-vertical">
         <div className="container-fluid">
-          <h2 className="text-center mb-4">NUESTROS PLANES MENSUALES</h2>
+          <h2 className="text-center mb-4 text-dark">
+            NUESTROS PLANES MENSUALES
+          </h2>
 
           <Row className="g-4 justify-content-center">
             {planes.map((plan, i) => (
               <Col key={i} xs={10} sm={6} md={4}>
-                <Card className="h-100 card-hover borde-card">
+                <Card className="h-100 card-hover borde-card bg-white text-dark">
                   <Card.Body className="p-0">
                     <img
                       src={plan.url}
@@ -187,12 +189,17 @@ const Planes = () => {
                       }}
                     />
 
-                    <Card.Title className="text-center text-dark mb-2">
+                    <Card.Title className="text-center text-dark mb-2 mt-2">
                       {plan.nombre}
                     </Card.Title>
 
-                    <div className="descripcion-card py-2 my-0 text-center">
-                      <Card.Text className="mx-2">{plan.descripcion}</Card.Text>
+                    <div
+                      className="py-2 my-0 text-center"
+                      style={{ background: "#f8f9fa" }}
+                    >
+                      <Card.Text className="mx-2 text-muted">
+                        {plan.descripcion}
+                      </Card.Text>
                     </div>
 
                     {/* Botón de inscripción */}

@@ -6,7 +6,7 @@ import {
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
-const ListaReservas = () => {
+const ListaReservas = ({ refreshKey = 0 }) => {
   const navigate = useNavigate();
   const token = JSON.parse(sessionStorage.getItem("token")) || null;
   const usuarioActual = token
@@ -23,6 +23,52 @@ const ListaReservas = () => {
 
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [tick, setTick] = useState(0); // re-render para actualizar estados de tiempo
+
+  // Utilidades de fecha/hora
+  const parseReservaDateTime = (fechaStr, horaStr) => {
+    try {
+      const soloFecha = (fechaStr || "").slice(0, 10); // YYYY-MM-DD
+      const hora = (horaStr || "00:00").padEnd(5, ":0");
+      // Construir Date local "YYYY-MM-DDTHH:MM:SS"
+      const inicio = new Date(`${soloFecha}T${hora}:00`);
+      // Duración estándar 60 min (ajustable si se define por clase)
+      const fin = new Date(inicio.getTime() + 60 * 60 * 1000);
+      return { inicio, fin, soloFecha };
+    } catch {
+      return { inicio: null, fin: null, soloFecha: null };
+    }
+  };
+
+  const getEstadoTemporal = (reserva) => {
+    const ahora = new Date();
+    const { inicio, fin, soloFecha } = parseReservaDateTime(
+      reserva.fecha,
+      reserva.hora
+    );
+
+    if (!inicio || !fin) return { estado: "proxima", badge: "secondary" };
+
+    const hoy = new Date(
+      ahora.getFullYear(),
+      ahora.getMonth(),
+      ahora.getDate()
+    );
+    const fechaReserva = new Date(
+      parseInt(soloFecha.substring(0, 4), 10),
+      parseInt(soloFecha.substring(5, 7), 10) - 1,
+      parseInt(soloFecha.substring(8, 10), 10)
+    );
+
+    // Si la fecha es anterior a hoy, se considera pasada y no se muestra
+    if (fechaReserva < hoy) return { estado: "pasada", badge: "light" };
+
+    if (ahora < inicio) return { estado: "proxima", badge: "info" };
+    if (ahora >= inicio && ahora <= fin)
+      return { estado: "en_curso", badge: "success" };
+    // Mismo día pero ya terminó
+    return { estado: "finalizada", badge: "secondary" };
+  };
 
   const cargarReservas = useCallback(async () => {
     if (!usuarioActual) {
@@ -41,7 +87,11 @@ const ListaReservas = () => {
         return;
       }
 
-      setReservas(reservasData);
+      // Filtrar: ocultar reservaciones de días pasados
+      const procesadas = reservasData.filter(
+        (r) => getEstadoTemporal(r).estado !== "pasada"
+      );
+      setReservas(procesadas);
     } catch (error) {
       if (error.response?.status === 401) {
         Swal.fire({
@@ -63,7 +113,13 @@ const ListaReservas = () => {
 
   useEffect(() => {
     cargarReservas();
-  }, [cargarReservas]);
+  }, [cargarReservas, refreshKey]);
+
+  // Timer para refrescar indicadores (cada 60s)
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => t + 1), 60000);
+    return () => clearInterval(id);
+  }, []);
 
   const cancelar = async (id) => {
     const confirm = await Swal.fire({
@@ -147,44 +203,58 @@ const ListaReservas = () => {
             </div>
           ) : (
             <div className="space-y-3">
-              {reservas.map((reserva) => (
-                <div
-                  key={reserva._id}
-                  className="card reserva-item hover-lift border-0 shadow-sm"
-                  style={{ padding: "var(--spacing-lg)" }}
-                >
-                  <div className="d-flex flex-column align-items-center text-center">
-                    <div className="mb-3">
-                      <div className="d-flex align-items-center justify-content-center mb-2">
-                        <i className="fas fa-dumbbell text-primary reserva-icon"></i>
-                        <h4 className="mb-0">{reserva.tipoClase}</h4>
+              {reservas.map((reserva) => {
+                const estadoTemp = getEstadoTemporal(reserva);
+                const puedeCancelar = estadoTemp.estado === "proxima";
+                const textoEstado =
+                  estadoTemp.estado === "proxima"
+                    ? "Próxima"
+                    : estadoTemp.estado === "en_curso"
+                    ? "En curso"
+                    : "Finalizada";
+                return (
+                  <div
+                    key={reserva._id}
+                    className="card reserva-item hover-lift border-0 shadow-sm"
+                    style={{ padding: "var(--spacing-lg)" }}
+                  >
+                    <div className="d-flex flex-column align-items-center text-center">
+                      <div className="mb-3">
+                        <div className="d-flex align-items-center justify-content-center mb-2">
+                          <i className="fas fa-dumbbell text-primary reserva-icon"></i>
+                          <h4 className="mb-0">{reserva.tipoClase}</h4>
+                          <span className={`badge bg-${estadoTemp.badge} ms-2`}>
+                            {textoEstado}
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center mb-1">
+                          <i className="fas fa-calendar text-secondary reserva-icon"></i>
+                          <p className="text-secondary mb-0 reserva-text">
+                            {reserva.fecha.slice(0, 10)} a las {reserva.hora}
+                          </p>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center">
+                          <i className="fas fa-user-tie text-muted reserva-icon"></i>
+                          <p className="text-muted mb-0 reserva-text">
+                            Profesor: {reserva.profesor}
+                          </p>
+                        </div>
                       </div>
-                      <div className="d-flex align-items-center justify-content-center mb-1">
-                        <i className="fas fa-calendar text-secondary reserva-icon"></i>
-                        <p className="text-secondary mb-0 reserva-text">
-                          {reserva.fecha.slice(0, 10)} a las {reserva.hora}
-                        </p>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-center">
-                        <i className="fas fa-user-tie text-muted reserva-icon"></i>
-                        <p className="text-muted mb-0 reserva-text">
-                          Profesor: {reserva.profesor}
-                        </p>
-                      </div>
-                    </div>
 
-                    <div className="w-full">
-                      <button
-                        onClick={() => cancelar(reserva._id)}
-                        className="btn btn-danger btn-sm shadow-sm w-full btn-reserva"
-                      >
-                        <i className="fas fa-times me-1"></i>
-                        Cancelar
-                      </button>
+                      <div className="w-full">
+                        <button
+                          onClick={() => cancelar(reserva._id)}
+                          className="btn btn-danger btn-sm shadow-sm w-full btn-reserva"
+                          disabled={!puedeCancelar}
+                        >
+                          <i className="fas fa-times me-1"></i>
+                          {puedeCancelar ? "Cancelar" : "No disponible"}
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

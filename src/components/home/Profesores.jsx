@@ -25,22 +25,21 @@ const listaProfes = [
 
 const Profesores = () => {
   return (
-    <section className="padding-vertical bg-dark text-white">
+    <section className="padding-vertical section-neutral-soft text-dark">
       <Container>
         <h2 className="text-center mb-4">PROFESORES</h2>
 
         <Row className="g-4 justify-content-center">
           {listaProfes.map((profe, i) => (
             <Col key={i} xs={12} sm={6} md={4}>
-              <Card className="h-100 text-center text-bg-primary bg-dark shadow-sm border-0 card-hover">
-              
+              <Card className="h-100 text-center bg-white text-dark shadow-sm border-0 card-hover borde-card">
                 <img
                   src={profe.url}
                   alt={profe.nombre}
                   loading="lazy"
-                  className="img-circular" 
+                  className="img-circular"
                   style={{
-                    width: 180, 
+                    width: 180,
                     height: 180,
                     objectFit: "cover",
                     display: "block",

@@ -3,7 +3,6 @@
   padding-bottom: 6rem;
 }
 
-
 .card-hover:hover {
   transform: scale(1.02);
   transition: transform 0.2s;
@@ -17,8 +16,8 @@
   width: 180px;
   height: 180px;
   object-fit: cover;
-  border-radius: 50%; 
-  border: 3px solid #ccc; 
+  border-radius: 50%;
+  border: 3px solid #ccc;
   margin: 20px auto 0;
   display: block;
 }
@@ -27,15 +26,15 @@
   width: 110px;
   height: 110px;
   object-fit: cover;
-  border-radius: 50%; 
-  border: 3px solid #ccc; 
+  border-radius: 50%;
+  border: 3px solid #ccc;
   margin: 20px auto 0;
   display: block;
 }
 
 .borde-card {
-  border: 3px solid #0dcaf0cc !important;
-  box-shadow: 0 0 10px yellow;
+  border: 1px solid #e5e7eb !important; /* gris claro */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   border-radius: 0.5rem;
 }
 
@@ -45,14 +44,85 @@
 }
 
 .descripcion-card {
-  background-color: #000;  
-  color: white;             
-  border-top: 1px solid #444; 
+  background-color: #000;
+  color: white;
+  border-top: 1px solid #444;
 }
 
 @media (max-width: 576px) {
   .col-10 {
     max-width: 50%;
     margin: 0 auto;
+  }
+}
+
+/* Hero overlay for carousel */
+.hero-slide {
+  position: relative;
+}
+
+.hero-img {
+  max-height: 520px;
+  object-fit: cover;
+}
+
+/* Secciones con paleta neutra */
+.section-neutral {
+  background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f5 50%, #e9ecef 100%);
+}
+
+.section-neutral-soft {
+  background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f5 100%);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  color: #fff;
+}
+
+.hero-title {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.hero-text {
+  max-width: 900px;
+  opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+  .hero-img {
+    max-height: 420px;
+  }
+  .hero-title {
+    font-size: 1.4rem;
+  }
+  .hero-text {
+    font-size: 0.95rem;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-img {
+    max-height: 360px;
+  }
+  .hero-title {
+    font-size: 1.15rem;
+  }
+  .hero-text {
+    font-size: 0.9rem;
   }
 }

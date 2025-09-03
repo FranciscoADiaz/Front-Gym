@@ -8,6 +8,7 @@ const AdminHomePage = () => {
   useChangeTitle("admin");
 
   const [todasLasReservas, setTodasLasReservas] = useState([]);
+  const [tick, setTick] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const [admin, setAdmin] = useState({ nombre: "" });
@@ -30,7 +31,19 @@ const AdminHomePage = () => {
           "/admin/todas-las-reservas",
           configHeaders
         );
-        setTodasLasReservas(Array.isArray(resTodas.data) ? resTodas.data : []);
+        const data = Array.isArray(resTodas.data) ? resTodas.data : [];
+        const hoy = new Date();
+        const inicioDeHoy = new Date(
+          hoy.getFullYear(),
+          hoy.getMonth(),
+          hoy.getDate()
+        );
+        // Filtrar fuera las reservas cuya fecha sea anterior a hoy
+        const futuras = data.filter((r) => {
+          const f = new Date(r.fecha);
+          return f >= inicioDeHoy;
+        });
+        setTodasLasReservas(futuras);
       } catch (error) {
         console.error("Error al obtener datos:", error);
       } finally {
@@ -39,6 +52,12 @@ const AdminHomePage = () => {
     };
 
     obtenerDatos();
+  }, [tick]);
+
+  // Refresco automático cada 60s para mantener vista actualizada
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => t + 1), 60000);
+    return () => clearInterval(id);
   }, []);
 
   return (

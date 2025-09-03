@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, Link } from "react-router";
-import { Container, Row, Col, Form, Button} from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./FormC.css";
 import clientAxios, { configHeaders } from "../../helpers/axios.config.helper";
 
@@ -40,7 +40,6 @@ const FormC = ({ idPage }) => {
       });
       return;
     }
-
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
@@ -87,12 +86,11 @@ const FormC = ({ idPage }) => {
 
     if (usuario && email && contrasenia && repContrasenia && check) {
       if (contrasenia === repContrasenia) {
-        const res = await clientAxios.post("/usuarios/registrarse",
-          {
-            nombreUsuario: usuario,
-            emailUsuario: email,
-            contrasenia,
-          });
+        const res = await clientAxios.post("/usuarios/registrarse", {
+          nombreUsuario: usuario,
+          emailUsuario: email,
+          contrasenia,
+        });
 
         if (res.status === 201) {
           Swal.fire({
@@ -116,63 +114,60 @@ const FormC = ({ idPage }) => {
     setErrores(nuevoError);
   };
 
-
   const handleChangeFormLogin = (ev) => {
     setInicioSesion({ ...inicioSesion, [ev.target.name]: ev.target.value });
   };
 
+  const iniciarSesionUsuario = async (ev) => {
+    ev.preventDefault();
+    const { usuario, contrasenia } = inicioSesion;
 
-
- const iniciarSesionUsuario = async (ev) => {
-  ev.preventDefault();
-  const { usuario, contrasenia } = inicioSesion;
-
-  if (!usuario || !contrasenia) {
-    return Swal.fire({
-      icon: "error",
-      title: "ERROR",
-      text: "Los campos usuario y contraseña no pueden estar vacíos.",
-    });
-  }
-
-  try {
-    const res = await clientAxios.post(
-      "/usuarios/iniciarsesion",
-      {
-        nombreUsuario: usuario, 
-        contrasenia,
-      },
-      configHeaders
-    );
-
-    if (res.status === 200) {
-      Swal.fire({
-        title: "Inicio de sesión exitoso",
-        text: ``,
-        icon: "success",
+    if (!usuario || !contrasenia) {
+      return Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Los campos usuario y contraseña no pueden estar vacíos.",
       });
-
-      sessionStorage.setItem("token", JSON.stringify(res.data.token));
-      sessionStorage.setItem("rol", JSON.stringify(res.data.rolUsuario));
-
-      if (res.data.rolUsuario === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/user");
-      }
     }
-  } catch (error) {
-    // Mostrar mensaje del backend o un mensaje genérico
-    Swal.fire({
-      icon: "error",
-      title: "ERROR",
-      text: error.response?.data?.msg || "No se pudo iniciar sesión. Verificá tus datos.",
-    });
-    console.error("Error al iniciar sesión:", error);
-  }
-};
 
-  
+    try {
+      const res = await clientAxios.post(
+        "/usuarios/iniciarsesion",
+        {
+          nombreUsuario: usuario,
+          contrasenia,
+        },
+        configHeaders
+      );
+
+      if (res.status === 200) {
+        Swal.fire({
+          title: "Inicio de sesión exitoso",
+          text: ``,
+          icon: "success",
+        });
+
+        sessionStorage.setItem("token", JSON.stringify(res.data.token));
+        sessionStorage.setItem("rol", JSON.stringify(res.data.rolUsuario));
+
+        if (res.data.rolUsuario === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/user");
+        }
+      }
+    } catch (error) {
+      // Mostrar mensaje del backend o un mensaje genérico
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text:
+          error.response?.data?.msg ||
+          "No se pudo iniciar sesión. Verificá tus datos.",
+      });
+      // Silenciar logs en producción
+    }
+  };
 
   return (
     <div className="formulario-page">
@@ -330,18 +325,22 @@ const FormC = ({ idPage }) => {
                       ? "Registrarse"
                       : "Iniciar Sesión"}
                   </Button>
-                  <div className="mt-2">
-                    {idPage === "registrarse" ? (
-                      <div className="text-light">
+                  {idPage === "registrarse" ? (
+                    <div className="mt-3 text-center form-help-links">
+                      <div>
                         ¿Ya tenés cuenta?{" "}
                         <Link to="/iniciarsesion">Iniciar sesión</Link>
                       </div>
-                    ) : (
+                    </div>
+                  ) : (
+                    <div className="mt-3 d-flex justify-content-center gap-3 flex-wrap form-help-links">
                       <Link to="/recuperarcontrasenia">
                         ¿Olvidaste tu contraseña?
                       </Link>
-                    )}
-                  </div>
+                      <span className="text-muted">|</span>
+                      <Link to="/registrarse">Crear cuenta</Link>
+                    </div>
+                  )}
                 </Form>
               )}
             </div>

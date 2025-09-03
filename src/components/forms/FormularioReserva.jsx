@@ -34,7 +34,7 @@ const esDiaPermitido = (profesor, fechaString) => {
   return diasPermitidosPorProfesor[profesor]?.includes(dia);
 };
 
-const FormularioReserva = () => {
+const FormularioReserva = ({ onReservada }) => {
   const idUsuario = obtenerIdUsuario();
 
   const [reserva, setReserva] = useState({
@@ -188,6 +188,8 @@ const FormularioReserva = () => {
       Swal.fire("✅ Turno reservado con éxito", "", "success");
       setReserva({ fecha: "", tipoClase: "", profesor: "" });
       setCuposDisponibles((prev) => prev - 1); // Actualizar cupos
+      // Avisar para refrescar lista sin recargar página
+      if (typeof onReservada === "function") onReservada();
     } catch (error) {
       Swal.fire(
         "❌ Error",
