@@ -1,346 +1,235 @@
-# 🎨 Frontend - TucuGym Web App
+# 🏋️‍♂️ TucuGym - Sistema de Gestión de Gimnasio
 
-**Frontend del sistema de gestión de gimnasio TucuGym** - Aplicación web desarrollada en React con diseño moderno y responsive.
+**TucuGym** es una aplicación web completa para la gestión de un gimnasio que permite a los usuarios contratar planes mensuales, reservar clases y administrar todas las operaciones del negocio desde un panel de administración.
 
-## 📋 Descripción
+## 📋 Descripción del Proyecto
 
-Interfaz de usuario completa para el sistema TucuGym que permite a los usuarios contratar planes, reservar clases y a los administradores gestionar todo el sistema. Desarrollada con React y diseño dark mode minimalista.
+TucuGym es una plataforma integral que conecta usuarios con servicios de gimnasio, ofreciendo:
+
+- **Gestión de usuarios**: Registro, login y administración de cuentas
+- **Planes de membresía**: Contratación de planes mensuales con MercadoPago
+- **Reserva de clases**: Sistema de reservas para Spinning, Funcional y Crossfit
+- **Panel administrativo**: Control completo de usuarios, clases y reservas
+- **Información del gimnasio**: Servicios, horarios y contacto
+
+
+## USUARIO DE PRUEBA
+User: DiMaria11
+Pass: DiMaria11:)
+
 
 ## 🛠️ Tecnologías Utilizadas
+
+### Frontend
 
 - **React.js** - Framework de interfaz de usuario
 - **React Bootstrap** - Componentes de UI responsivos
 - **Axios** - Cliente HTTP para comunicación con el backend
-- **React Router** - Navegación entre páginas
 - **SweetAlert2** - Alertas y notificaciones
-- **Font Awesome** - Iconos dinámicos
-- **CSS3** - Estilos personalizados y animaciones
+- **React Router** - Navegación entre páginas
 
-## 📁 Estructura del Proyecto
+### Backend
 
-```
-front-gym/
-├── public/
-│   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── components/
-│   │   ├── admin/           # Componentes del panel admin
-│   │   │   ├── AdminHomePage.jsx
-│   │   │   ├── AdminUsersPage.jsx
-│   │   │   ├── AdminClasesPage.jsx
-│   │   │   ├── TodasLasReservasAdmin.jsx
-│   │   │   └── TableC.jsx
-│   │   ├── forms/           # Formularios
-│   │   │   ├── FormularioReserva.jsx
-│   │   │   ├── ListaReservas.jsx
-│   │   │   ├── FormUsuario.jsx
-│   │   │   ├── FormularioClase.jsx
-│   │   │   └── Contacto.jsx
-│   │   ├── home/            # Componentes de la página principal
-│   │   │   ├── Planes.jsx
-│   │   │   └── Hero.jsx
-│   │   ├── clima/           # Widget del clima
-│   │   │   └── ClimaC.jsx
-│   │   ├── planes/          # Componentes de planes
-│   │   │   └── DetallesPlanC.jsx
-│   │   └── layout/          # Componentes de layout
-│   │       ├── Navbar.jsx
-│   │       └── Footer.jsx
-│   ├── pages/               # Páginas principales
-│   │   ├── HomePage.jsx
-│   │   ├── LoginPage.jsx
-│   │   ├── RegistroPage.jsx
-│   │   ├── ReservaPage.jsx
-│   │   ├── AdminHomePage.jsx
-│   │   ├── AdminUsersPage.jsx
-│   │   └── AdminClasesPage.jsx
-│   ├── helpers/             # Funciones auxiliares
-│   │   ├── apiReservas.js
-│   │   ├── usuarios.helper.js
-│   │   └── planes.helper.js
-│   ├── App.jsx              # Componente principal
-│   ├── index.js             # Punto de entrada
-│   ├── App.css              # Estilos del componente App
-│   └── index.css            # Estilos globales
-├── package.json
-└── README.md
-```
-
-## 🚀 Instalación y Configuración
-
-### Prerrequisitos
-
-- Node.js (versión 16 o superior)
-- Backend TucuGym funcionando
-
-### 1. Instalar dependencias
-
-```bash
-npm install
-```
-
-### 2. Configurar variables de entorno
-
-Crear archivo `.env`:
-
-```env
-REACT_APP_API_URL=http://localhost:3005/api
-REACT_APP_WEATHER_API_KEY=tu_api_key_clima
-```
-
-### 3. Ejecutar la aplicación
-
-```bash
-# Desarrollo
-npm run dev
-
-# Producción
-npm run build
-npm start
-```
-
-## 🎨 Características de Diseño
-
-### Dark Mode
-
-- Tema oscuro por defecto
-- Colores suaves y profesionales
-- Contraste optimizado para lectura
-
-### Responsive Design
-
-- Mobile-first approach
-- Breakpoints: SM (576px), MD (768px), LG (992px), XL (1200px)
-- Componentes adaptativos
-
-### Componentes Principales
-
-- **Navbar**: Navegación principal con autenticación
-- **Hero**: Sección principal con llamada a la acción
-- **Planes**: Cards interactivas para contratación
-- **Formularios**: Validación en tiempo real
-- **Tablas**: Datos organizados para administración
-
-## 🔌 Integración con APIs
-
-### Backend API
-
-- **Base URL**: `http://localhost:3005/api`
-- **Autenticación**: JWT tokens
-- **Endpoints**: Usuarios, clases, reservas, pagos
+- **Node.js** - Entorno de ejecución
+- **Express.js** - Framework web
+- **MongoDB** - Base de datos NoSQL
+- **Mongoose** - ODM para MongoDB
+- **JWT** - Autenticación con tokens
+- **Argon2** - Encriptación de contraseñas
+- **MercadoPago** - Procesamiento de pagos
 
 ### APIs Externas
 
-- **OpenWeatherMap**: Datos del clima en tiempo real
-- **MercadoPago**: Procesamiento de pagos
+- **OpenWeatherMap** - Datos del clima
+- **MercadoPago** - Procesamiento de pagos online
 
-## 📱 Funcionalidades por Rol
+## 🚀 Funcionalidades Principales
 
-### 👤 Usuario Común
+### 👤 Para Usuarios
 
 - ✅ Registro e inicio de sesión
-- ✅ Contratación de planes (Musculación, Funcional, Completo)
-- ✅ Reserva de clases (Spinning, Funcional, Crossfit)
+- ✅ Contratación de planes mensuales (Musculación, Funcional, Completo)
+- ✅ Reserva de clases grupales (Spinning, Funcional, Crossfit)
 - ✅ Visualización de reservas activas
 - ✅ Cancelación de reservas
-- ✅ Información del clima
+- ✅ Información del clima en tiempo real
 
-### 👨‍💼 Administrador
+### 👨‍💼 Para Administradores
 
 - ✅ Panel de administración completo
-- ✅ Gestión de usuarios (CRUD completo)
-- ✅ Asignación de planes a usuarios
+- ✅ Gestión de usuarios (crear, editar, eliminar, asignar planes)
 - ✅ Administración de clases (CRUD completo)
 - ✅ Visualización de todas las reservas activas
 - ✅ Control de estados de usuarios y clases
 
-## 🎯 Componentes Destacados
+## 📁 Estructura del Proyecto
 
-### Planes.jsx
-
-```javascript
-// Cards interactivas para contratación de planes
-// Integración directa con MercadoPago
-// Diseño responsive con animaciones
+```
+Proyecto Gym/
+├── front-gym/          # Aplicación React (Frontend)
+│   ├── src/
+│   │   ├── components/ # Componentes reutilizables
+│   │   ├── pages/      # Páginas principales
+│   │   ├── helpers/    # Funciones auxiliares
+│   │   └── styles/     # Archivos CSS
+│   └── package.json
+├── back-gym/           # Servidor Node.js (Backend)
+│   ├── src/
+│   │   ├── controllers/ # Lógica de negocio
+│   │   ├── models/      # Modelos de MongoDB
+│   │   ├── routes/      # Endpoints de la API
+│   │   ├── services/    # Servicios de datos
+│   │   └── middlewares/ # Autenticación y validaciones
+│   └── package.json
+└── README.md
 ```
 
-### ClimaC.jsx
+## ⚙️ Instalación y Configuración
 
-```javascript
-// Widget dinámico del clima
-// Iconos según condiciones meteorológicas
-// Actualización automática cada 30 minutos
-```
+### Prerrequisitos
 
-### FormularioReserva.jsx
+- Node.js (versión 16 o superior)
+- MongoDB (local o Atlas)
+- Cuenta de MercadoPago (para pagos)
 
-```javascript
-// Formulario de reserva con validación
-// Verificación de plan activo
-// Integración con calendario de clases
-```
-
-### ListaReservas.jsx
-
-```javascript
-// Lista de reservas del usuario
-// Funcionalidad de cancelación
-// Estados de carga y error
-```
-
-## 🎨 Sistema de Estilos
-
-### CSS Variables
-
-```css
-:root {
-  --primary-color: #007bff;
-  --secondary-color: #6c757d;
-  --success-color: #28a745;
-  --danger-color: #dc3545;
-  --dark-bg: #1a1a1a;
-  --card-bg: #2d2d2d;
-  --text-color: #ffffff;
-}
-```
-
-### Clases Utilitarias
-
-- `.glass-effect`: Efecto de cristal
-- `.gradient-bg`: Fondos con gradientes
-- `.hover-scale`: Animación de escala en hover
-- `.text-gradient`: Texto con gradiente
-
-### Responsive Utilities
-
-- `.d-sm-none`: Ocultar en pantallas pequeñas
-- `.d-md-block`: Mostrar en pantallas medianas
-- `.text-center-sm`: Centrar texto en móviles
-
-## 🔐 Autenticación y Estado
-
-### Gestión de Sesión
-
-- **sessionStorage**: Almacenamiento de tokens
-- **Context API**: Estado global de autenticación
-- **Redirección automática**: Login/logout
-
-### Protección de Rutas
-
-- **Rutas privadas**: Requieren autenticación
-- **Rutas admin**: Requieren rol de administrador
-- **Middleware de navegación**: Verificación automática
-
-## 📊 Manejo de Datos
-
-### Estado Local
-
-- **useState**: Estado de componentes
-- **useEffect**: Efectos secundarios
-- **useCallback**: Optimización de funciones
-
-### Comunicación con Backend
-
-- **Axios**: Cliente HTTP configurado
-- **Interceptors**: Manejo automático de errores
-- **Loading states**: Estados de carga
-
-## 🚀 Optimización
-
-### Performance
-
-- **Lazy loading**: Carga diferida de componentes
-- **Memoización**: React.memo para componentes
-- **Bundle splitting**: División de código
-
-### SEO
-
-- **Meta tags**: Configuración para motores de búsqueda
-- **Semantic HTML**: Estructura semántica
-- **Accessibility**: Accesibilidad web
-
-## 🧪 Testing
+### 1. Clonar el repositorio
 
 ```bash
-# Ejecutar tests
-npm test
-
-# Tests en modo watch
-npm run test:watch
-
-# Coverage
-npm run test:coverage
+git clone https://github.com/tu-usuario/tucugym.git
+cd tucugym
 ```
 
-## 📦 Scripts Disponibles
+### 2. Configurar el Backend
 
-```json
-{
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "test": "jest",
-  "test:watch": "jest --watch",
-  "test:coverage": "jest --coverage"
-}
+```bash
+cd back-gym
+npm install
 ```
+
+Crear archivo `.env`:
+
+```env
+PORT=3005
+MONGO_URI=tu_conexion_mongodb
+JWT_SECRET=tu_clave_secreta
+MERCADOPAGO_ACCESS_TOKEN=tu_token_mercadopago
+OPENWEATHER_API_KEY=tu_api_key_clima
+```
+
+### 3. Configurar el Frontend
+
+```bash
+cd ../front-gym
+npm install
+```
+
+### 4. Ejecutar el proyecto
+
+```bash
+# Terminal 1 - Backend
+cd back-gym
+npm run dev
+
+# Terminal 2 - Frontend
+cd front-gym
+npm run dev
+```
+
+
+
+## 📱 Características Técnicas
+
+- **Responsive Design**: Interfaz adaptada a móviles, tablets y desktop
+- **Dark Mode**: Tema oscuro por defecto con diseño minimalista
+- **Autenticación JWT**: Sistema seguro de login/logout
+- **Validaciones**: Formularios con validación en tiempo real
+- **Manejo de Errores**: Interfaz amigable para errores y excepciones
+- **Optimización**: Carga rápida y experiencia fluida
+
+## 🎯 Funcionalidades Destacadas
+
+### Sistema de Planes
+
+- **3 tipos de planes**: Musculación, Funcional, Completo
+- **Duración flexible**: 1, 3 o 6 meses
+- **Pagos seguros**: Integración completa con MercadoPago
+- **Gestión automática**: Activación inmediata de planes
+
+### Gestión de Clases
+
+- **3 tipos de clases**: Spinning, Funcional, Crossfit
+- **Horarios flexibles**: Configuración de días y horarios
+- **Control de capacidad**: Límite de personas por clase
+- **Estado de clases**: Activa, Inactiva, Suspendida
+
+### Panel Administrativo
+
+- **Dashboard completo**: Vista general de reservas y usuarios
+- **Gestión de usuarios**: CRUD completo con asignación de planes
+- **Administración de clases**: Creación y edición de clases
+- **Monitoreo en tiempo real**: Estado de reservas y usuarios
+
+## 👥 Integrantes del Equipo
+
+### Francisco Díaz
+
+- **Rol**: Desarrollador Full Stack
+- **Especialidad**: React, Node.js, MongoDB
+- **Contribución**: Arquitectura del sistema, desarrollo frontend y backend
+
+### Valentín
+
+- **Rol**: Desarrollador Full Stack
+- **Especialidad**: JavaScript, Express, APIs
+- **Contribución**: Desarrollo backend, integración de APIs externas
 
 ## 🚀 Despliegue
 
-### Vercel/Netlify
+### Frontend (Vercel/Netlify)
 
 ```bash
+cd front-gym
 npm run build
-# Subir carpeta dist/ a la plataforma
+# Subir carpeta dist/ a Vercel o Netlify
 ```
 
-### GitHub Pages
+### Backend (Railway/Heroku)
 
 ```bash
-npm run build
-# Configurar GitHub Actions para deploy automático
+cd back-gym
+# Configurar variables de entorno en la plataforma
+# Deploy automático desde GitHub
 ```
 
-## 🔧 Configuración de Desarrollo
+## 📈 Próximas Mejoras
 
-### ESLint
+- [ ] Notificaciones push para recordatorios de clases
+- [ ] Sistema de puntuación y reviews de clases
+- [ ] Integración con redes sociales
+- [ ] App móvil nativa (React Native)
+- [ ] Sistema de fidelización y descuentos
+- [ ] Reportes y analytics avanzados
 
-```json
-{
-  "extends": ["react-app", "react-app/jest"],
-  "rules": {
-    "no-console": "warn",
-    "no-unused-vars": "warn"
-  }
-}
-```
+## 📄 Licencia
 
-### Prettier
-
-```json
-{
-  "semi": true,
-  "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "es5"
-}
-```
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## 🤝 Contribuciones
 
+Las contribuciones son bienvenidas. Por favor:
+
 1. Fork el proyecto
-2. Crea una rama para tu feature
-3. Commit tus cambios
-4. Push a la rama
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
 ## 📞 Contacto
 
-- **Desarrollador**: Francisco Díaz
 - **Email**: contacto@tucugym.com
 - **GitHub**: [@FranciscoADiaz](https://github.com/FranciscoADiaz)
+- **LinkedIn**: [Francisco Díaz](https://linkedin.com/in/francisco-diaz)
 
 ---
 
-⭐ Si este frontend te fue útil, ¡no olvides darle una estrella en GitHub!
+⭐ Si este proyecto te fue útil, ¡no olvides darle una estrella en GitHub!
