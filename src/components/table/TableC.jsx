@@ -51,8 +51,8 @@ const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
 
     const planColors = {
       "SOLO CLASES": "info",
-      COMPLETO: "success",
-      PREMIUM: "warning",
+      Completo: "success",
+      Musculación: "secondary",
     };
 
     return <Badge bg={planColors[plan] || "primary"}>{plan}</Badge>;
@@ -199,8 +199,10 @@ const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
                       size="sm"
                       onClick={() => onEditUser && onEditUser(element)}
                       title="Editar usuario"
+                      aria-label="Editar usuario"
                     >
-                      <i className="fas fa-edit"></i>
+                      <i className="fas fa-edit me-2"></i>
+                      <span>Editar</span>
                     </Button>
 
                     <Button
@@ -246,12 +248,24 @@ const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
                           ? "Deshabilitar usuario"
                           : "Habilitar usuario"
                       }
+                      aria-label={
+                        element.estado === "habilitado"
+                          ? "Deshabilitar usuario"
+                          : "Habilitar usuario"
+                      }
                     >
                       <i
                         className={`fas fa-${
-                          element.estado === "habilitado" ? "ban" : "check"
+                          element.estado === "habilitado"
+                            ? "ban me-2"
+                            : "check me-2"
                         }`}
                       ></i>
+                      <span>
+                        {element.estado === "habilitado"
+                          ? "Deshabilitar"
+                          : "Habilitar"}
+                      </span>
                     </Button>
 
                     <Button
@@ -263,6 +277,7 @@ const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
                           ? "No puedes eliminarte a ti mismo"
                           : "Eliminar usuario"
                       }
+                      aria-label="Eliminar usuario"
                       disabled={
                         usuarioLog && usuarioLog.idUsuario === element._id
                       }
@@ -272,7 +287,8 @@ const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
                           : ""
                       }
                     >
-                      <i className="fas fa-trash"></i>
+                      <i className="fas fa-trash me-2"></i>
+                      <span>Eliminar</span>
                     </Button>
                   </div>
                 </td>

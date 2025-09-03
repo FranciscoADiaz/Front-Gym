@@ -4,7 +4,7 @@ const isDevelopment = import.meta.env.DEV;
 
 const backendURL = isDevelopment
   ? import.meta.env.VITE_URL_BACK_LOCAL || "http://localhost:3005"
-  : import.meta.env.VITE_URL_BACK_PROD || "https://back-gym.vercel.app" ;
+  : import.meta.env.VITE_URL_BACK_PROD || "https://back-gym.vercel.app";
 
 const clientAxios = axios.create({
   baseURL: `${backendURL}/api`,
@@ -18,8 +18,8 @@ clientAxios.interceptors.request.use(
       try {
         const parsedToken = JSON.parse(token);
         config.headers.Authorization = `Bearer ${parsedToken}`;
-      } catch (error) {
-        console.error("Error parsing token:", error);
+      } catch {
+        // token inválido en storage: ignorar
       }
     }
 

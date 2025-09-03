@@ -27,7 +27,7 @@ const productos = [
 
 const Productos = () => {
   return (
-    <section className="bg-dark text-white padding-vertical contenedor-pagina">
+    <section className="section-neutral-soft padding-vertical contenedor-pagina">
       <Container>
         <h2 className="text-center mb-4">PRODUCTOS DISPONIBLES</h2>
 
@@ -38,7 +38,7 @@ const Productos = () => {
                 to={prod.ruta}
                 className="text-decoration-none text-dark d-block"
               >
-                <Card className="h-100 text-center card-hover cursor-pointer borde-card">
+                <Card className="h-100 text-center card-hover cursor-pointer borde-card bg-white text-dark">
                   <Card.Img
                     className="altura"
                     variant="top"
@@ -56,8 +56,13 @@ const Productos = () => {
                       {prod.titulo}
                     </Card.Title>
 
-                    <div className="descripcion-card py-2 my-0 text-center">
-                      <Card.Text className="mx-2">{prod.descripcion}</Card.Text>
+                    <div
+                      className="py-2 my-0 text-center"
+                      style={{ background: "#f8f9fa" }}
+                    >
+                      <Card.Text className="mx-2 text-muted">
+                        {prod.descripcion}
+                      </Card.Text>
                     </div>
                   </Card.Body>
                 </Card>

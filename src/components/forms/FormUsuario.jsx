@@ -44,6 +44,16 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
         telefono: usuario.telefono || "",
       };
       setFormData(datosUsuario);
+
+      // Inicializar la sección de plan con el plan actual del usuario si existe
+      const planActual =
+        usuario.plan && usuario.plan !== "Sin plan" ? usuario.plan : "Completo";
+      const duracionDefault = 1;
+      setPlanData({
+        plan: planActual,
+        duracion: duracionDefault,
+        precio: precios[planActual]?.[duracionDefault] || 30000,
+      });
     } else {
       const datosNuevo = {
         nombreUsuario: "",
@@ -53,6 +63,13 @@ const FormUsuario = ({ show, handleClose, usuario = null, onSuccess }) => {
         telefono: "",
       };
       setFormData(datosNuevo);
+
+      // Resetear plan por defecto para nuevo usuario
+      setPlanData({
+        plan: "Completo",
+        duracion: 1,
+        precio: precios["Completo"][1],
+      });
     }
   }, [usuario]);
 

@@ -89,7 +89,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
       return;
     }
 
-    // Verificar que no exista el horario
     const existe = formData.horarios.some(
       (h) => h.dia === horarioTemp.dia && h.hora === horarioTemp.hora
     );
@@ -284,7 +283,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
         />
       </Form.Group>
 
-      {/* Sección de Horarios */}
       <div className="border rounded p-3 mb-3">
         <h6 className="fw-bold mb-3">📅 Horarios de la Clase</h6>
 
@@ -327,7 +325,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
           </Col>
         </Row>
 
-        {/* Lista de horarios agregados */}
         {formData.horarios.length > 0 && (
           <div>
             <h6 className="mb-2">Horarios configurados:</h6>
@@ -354,7 +351,6 @@ const FormularioClase = ({ clase, onGuardar, onCancelar }) => {
         )}
       </div>
 
-      {/* Botones */}
       <div className="d-flex gap-2 justify-content-end">
         <Button variant="secondary" onClick={onCancelar}>
           ❌ Cancelar

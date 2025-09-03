@@ -49,7 +49,6 @@ const FormularioPlan = ({ plan, onGuardar, onCancelar }) => {
       [name]: value,
     }));
 
-    // Limpiar error del campo
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -71,7 +70,6 @@ const FormularioPlan = ({ plan, onGuardar, onCancelar }) => {
       return;
     }
 
-    // Verificar que no exista la característica
     const existe = formData.caracteristicas.some(
       (c) => c.toLowerCase() === caracteristicaTemp.trim().toLowerCase()
     );

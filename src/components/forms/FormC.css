@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Orbitron:wght@500;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Orbitron:wght@500;700&display=swap");
 
 .formulario-page {
   margin-top: 35px;
   margin-bottom: 35px;
 }
-
 
 .form-personalizado {
   padding: 40px;
@@ -15,7 +13,7 @@
 }
 
 .form-titulo {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 2.2rem;
   color: #0066ff;
   text-align: center;
@@ -26,25 +24,37 @@
   border-radius: 20px;
   font-size: 1rem;
   padding: 12px;
-  font-family: 'Montserrat', sans-serif;
-  border: 1px solid #1A1A2E;
+  font-family: "Montserrat", sans-serif;
+  border: 1px solid #1a1a2e;
 }
 
 .form-personalizado .form-label {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 500;
   color: #0066ff;
+}
+
+/* Enlaces de ayuda debajo del formulario */
+.form-help-links {
+  color: #0d6efd; /* enlaces visibles en fondo claro u oscuro */
+}
+.form-help-links a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+.form-help-links a:hover {
+  text-decoration: underline;
 }
 
 .form-check-input {
   border: 1px solid white;
   border-radius: 6px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .form-check-label {
   font-size: 0.95rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .btn-agregar {
@@ -55,7 +65,7 @@
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   transition: all 0.3s ease;
 }
 
@@ -70,7 +80,6 @@
   transform: scale(0.95);
 }
 
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -81,4 +90,3 @@
     transform: translateY(0);
   }
 }
-
