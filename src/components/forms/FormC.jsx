@@ -27,6 +27,31 @@ const FormC = ({ idPage }) => {
     setRegistro({ ...registro, [ev.target.name]: value });
   };
 
+  const verificarDisponibilidad = async (campo, valor) => {
+    try {
+      if (!valor || !valor.trim()) return;
+      const params =
+        campo === "usuario"
+          ? { nombreUsuario: valor }
+          : { emailUsuario: valor };
+      const res = await clientAxios.get("/usuarios/disponibilidad", { params });
+      if (campo === "usuario" && res.data?.disponibleUsuario === false) {
+        Swal.fire({
+          icon: "warning",
+          title: "Nombre de usuario no disponible",
+          text: "Probá con otro nombre de usuario.",
+        });
+      }
+      if (campo === "email" && res.data?.disponibleEmail === false) {
+        Swal.fire({
+          icon: "warning",
+          title: "Email ya registrado",
+          text: "Ingresá otro correo electrónico.",
+        });
+      }
+    } catch {}
+  };
+
   const registroUsuario = async (ev) => {
     ev.preventDefault();
     const { usuario, email, contrasenia, repContrasenia, check } = registro;
@@ -86,22 +111,53 @@ const FormC = ({ idPage }) => {
 
     if (usuario && email && contrasenia && repContrasenia && check) {
       if (contrasenia === repContrasenia) {
-        const res = await clientAxios.post("/usuarios/registrarse", {
-          nombreUsuario: usuario,
-          emailUsuario: email,
-          contrasenia,
-        });
-
-        if (res.status === 201) {
-          Swal.fire({
-            title: "Gracias por registrarte! 😃",
-            text: ``,
-            icon: "success",
+        try {
+          const res = await clientAxios.post("/usuarios/registrarse", {
+            nombreUsuario: usuario,
+            emailUsuario: email,
+            contrasenia,
           });
 
-          setTimeout(() => {
-            navigate("/iniciarsesion");
-          }, 1000);
+          if (res.status === 201) {
+            Swal.fire({
+              title: "Gracias por registrarte! 😃",
+              text: ``,
+              icon: "success",
+            });
+
+            setTimeout(() => {
+              navigate("/iniciarsesion");
+            }, 1000);
+          }
+        } catch (error) {
+          const status = error?.response?.status;
+          const serverMsg = error?.response?.data?.msg;
+
+          if (status === 409) {
+            return Swal.fire({
+              icon: "warning",
+              title: "Usuario o email ya registrado",
+              text:
+                serverMsg ||
+                "El nombre de usuario o correo ya existe. Probá con otros datos.",
+              confirmButtonText: "Entendido",
+            });
+          }
+
+          if (status === 400 || status === 422) {
+            return Swal.fire({
+              icon: "error",
+              title: "Datos inválidos",
+              text:
+                serverMsg || "Revisá que los datos ingresados sean correctos.",
+            });
+          }
+
+          Swal.fire({
+            icon: "error",
+            title: "ERROR",
+            text: serverMsg || "No se pudo completar el registro.",
+          });
         }
       } else {
         Swal.fire({
@@ -232,6 +288,10 @@ const FormC = ({ idPage }) => {
                           ? handleChangeFormRegister
                           : handleChangeFormLogin
                       }
+                      onBlur={() =>
+                        idPage === "registrarse" &&
+                        verificarDisponibilidad("usuario", registro.usuario)
+                      }
                       name="usuario"
                       className={
                         errores.usuario
@@ -255,6 +315,9 @@ const FormC = ({ idPage }) => {
                         placeholder="Ingresa tu correo"
                         value={registro.email}
                         onChange={handleChangeFormRegister}
+                        onBlur={() =>
+                          verificarDisponibilidad("email", registro.email)
+                        }
                       />
                       <Form.Text className="text-muted">
                         Nunca compartiremos tu e-mail con nadie
