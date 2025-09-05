@@ -14,27 +14,42 @@ const obtenerIdUsuario = () => {
   }
 };
 
-const definirHoraPorProfesor = (profesor) => {
-  if (profesor === "andres") return "08:00";
-  if (profesor === "walter") return "14:00";
-  if (profesor === "daniela") return "20:00";
-  return "";
+// Horarios desde backend (evita duplicar reglas en FE)
+const obtenerHorarios = async () => {
+  const res = await clientAxios.get("/reservar/profesores-horarios");
+  return res.data?.data || {};
 };
 
-const diasPermitidosPorProfesor = {
-  andres: [1, 3], // lunes, miércoles
-  walter: [2, 4], // martes, jueves
-  daniela: [5, 6], // viernes, sábado
+const definirHoraPorProfesor = (profesor, horarios) => {
+  return horarios?.[profesor]?.hora || "";
 };
 
-const esDiaPermitido = (profesor, fechaString) => {
+// Convierte 'YYYY-MM-DD' a Date local sin cambiar de día por zona horaria
+const parseLocalDateFromYMD = (ymd) => {
+  if (typeof ymd !== "string") return null;
+  const [y, m, d] = ymd.split("-").map((v) => parseInt(v, 10));
+  if (!y || !m || !d) return null;
+  return new Date(y, m - 1, d);
+};
+
+const formatLocalYMD = (date) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+};
+
+const esDiaPermitido = (profesor, fechaString, horarios) => {
   if (!profesor || !fechaString) return false;
-  const fecha = new Date(fechaString);
+  const fecha = parseLocalDateFromYMD(fechaString);
+  if (!fecha) return false;
   const dia = fecha.getDay();
-  return diasPermitidosPorProfesor[profesor]?.includes(dia);
+  return Array.isArray(horarios?.[profesor]?.dias)
+    ? horarios[profesor].dias.includes(dia)
+    : false;
 };
 
-const FormularioReserva = () => {
+const FormularioReserva = ({ onReservada }) => {
   const idUsuario = obtenerIdUsuario();
 
   const [reserva, setReserva] = useState({
@@ -46,27 +61,72 @@ const FormularioReserva = () => {
   const [cuposDisponibles, setCuposDisponibles] = useState(0);
   const [planUsuario, setPlanUsuario] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [horarios, setHorarios] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const h = await obtenerHorarios();
+      setHorarios(h);
+    })();
+  }, []);
 
   const handleChange = (e) => {
-    setReserva({ ...reserva, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "profesor") {
+      // Resetear fecha si cambia el profesor para evitar inconsistencias
+      setReserva({ ...reserva, profesor: value, fecha: "" });
+    } else if (name === "fecha") {
+      // Validar inmediatamente que la fecha coincida con los días del profesor
+      if (
+        reserva.profesor &&
+        !esDiaPermitido(reserva.profesor, value, horarios)
+      ) {
+        Swal.fire(
+          "⚠️ Día no válido",
+          "El profesor seleccionado no trabaja ese día.",
+          "warning"
+        );
+        setReserva({ ...reserva, fecha: "" });
+      } else {
+        setReserva({ ...reserva, fecha: value });
+      }
+    } else {
+      setReserva({ ...reserva, [name]: value });
+    }
   };
 
-  const generarFechasValidas = () => {
-    if (!reserva.profesor) return [];
+  const [fechasValidas, setFechasValidas] = useState([]);
+
+  useEffect(() => {
+    if (!reserva.profesor || !horarios) {
+      setFechasValidas([]);
+      return;
+    }
+
+    const diasPermitidos = horarios?.[reserva.profesor]?.dias || [];
+    if (!Array.isArray(diasPermitidos) || diasPermitidos.length === 0) {
+      setFechasValidas([]);
+      return;
+    }
 
     const hoy = new Date();
-    const fechas = [];
-    for (let i = 0; i < 14; i++) {
-      const fecha = new Date(hoy);
-      fecha.setDate(hoy.getDate() + i);
-      if (esDiaPermitido(reserva.profesor, fecha.toISOString().split("T")[0])) {
-        fechas.push(fecha.toISOString().split("T")[0]);
-      }
-    }
-    return fechas;
-  };
+    hoy.setHours(0, 0, 0, 0);
 
-  const fechasValidas = generarFechasValidas();
+    const fechas = [];
+    let cursor = new Date(hoy);
+    for (let i = 0; i < 21; i++) {
+      const dow = cursor.getDay();
+      if (diasPermitidos.includes(dow)) {
+        fechas.push(formatLocalYMD(cursor));
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+
+    setFechasValidas(fechas);
+  }, [reserva.profesor, horarios]);
+
+  const opcionesFecha = fechasValidas;
+  const diasPermitidosActuales = horarios?.[reserva.profesor]?.dias || [];
 
   // Verificar cupos disponibles y plan del usuario
   const verificarDisponibilidad = async (fecha, hora, tipoClase) => {
@@ -106,11 +166,23 @@ const FormularioReserva = () => {
 
   // Verificar disponibilidad cuando cambie la fecha
   useEffect(() => {
-    if (reserva.fecha && reserva.profesor && reserva.tipoClase) {
-      const hora = definirHoraPorProfesor(reserva.profesor);
+    if (
+      reserva.fecha &&
+      reserva.profesor &&
+      reserva.tipoClase &&
+      horarios &&
+      fechasValidas.includes(reserva.fecha)
+    ) {
+      const hora = definirHoraPorProfesor(reserva.profesor, horarios);
       verificarDisponibilidad(reserva.fecha, hora, reserva.tipoClase);
     }
-  }, [reserva.fecha, reserva.profesor, reserva.tipoClase]);
+  }, [
+    reserva.fecha,
+    reserva.profesor,
+    reserva.tipoClase,
+    horarios,
+    fechasValidas,
+  ]);
 
   // Obtener plan del usuario al cargar
   useEffect(() => {
@@ -154,14 +226,14 @@ const FormularioReserva = () => {
       return;
     }
 
-    const hora = definirHoraPorProfesor(reserva.profesor);
+    const hora = definirHoraPorProfesor(reserva.profesor, horarios);
     if (!hora) {
       Swal.fire("⚠️ Seleccioná un profesor válido", "", "warning");
       setLoading(false);
       return;
     }
 
-    if (!esDiaPermitido(reserva.profesor, reserva.fecha)) {
+    if (!esDiaPermitido(reserva.profesor, reserva.fecha, horarios)) {
       Swal.fire("❌ Día no válido", "Ese profesor no atiende ese día", "error");
       setLoading(false);
       return;
@@ -179,15 +251,31 @@ const FormularioReserva = () => {
     // }
 
     try {
-      await clientAxios.post("/reservar", {
+      // preservar selección actual para refrescar cupos después
+      const fechaSel = reserva.fecha;
+      const tipoSel = reserva.tipoClase;
+      const profesorSel = reserva.profesor;
+
+      const res = await clientAxios.post("/reservar", {
         ...reserva,
         hora,
         idUsuario,
       });
 
-      Swal.fire("✅ Turno reservado con éxito", "", "success");
-      setReserva({ fecha: "", tipoClase: "", profesor: "" });
-      setCuposDisponibles((prev) => prev - 1); // Actualizar cupos
+      // Mensaje de éxito consistente con backend
+      Swal.fire(
+        "✅ Reserva creada con éxito",
+        res.data?.msg || "Tu clase fue reservada correctamente.",
+        "success"
+      );
+
+      // Refrescar cupos desde el backend para reflejar el nuevo estado
+      await verificarDisponibilidad(fechaSel, hora, tipoSel);
+
+      // Notificar a la página para refrescar la lista inmediatamente
+      if (typeof onReservada === "function") {
+        onReservada();
+      }
     } catch (error) {
       Swal.fire(
         "❌ Error",
@@ -239,29 +327,29 @@ const FormularioReserva = () => {
           )}
 
           {/* Información de cupos */}
-          {cuposDisponibles > 0 && (
-            <div className="alert alert-success reserva-alert mb-4 border-0 shadow-sm">
-              <div className="d-flex align-items-center">
-                <i className="fas fa-users reserva-icon"></i>
-                <div className="reserva-text">
-                  <strong>Cupos disponibles:</strong> {cuposDisponibles}
-                </div>
-              </div>
-            </div>
-          )}
-          {cuposDisponibles === 0 &&
-            reserva.fecha &&
+          {reserva.fecha &&
             reserva.tipoClase &&
-            reserva.profesor && (
-              <div className="alert alert-warning reserva-alert mb-4 border-0 shadow-sm">
+            reserva.profesor &&
+            (cuposDisponibles > 0 ? (
+              <div className="alert alert-success reserva-alert mb-4 border-0 shadow-sm">
                 <div className="d-flex align-items-center">
-                  <i className="fas fa-clock reserva-icon"></i>
+                  <i className="fas fa-users reserva-icon"></i>
                   <div className="reserva-text">
-                    <strong>Verificando cupos disponibles...</strong>
+                    <strong>Cupos disponibles:</strong> {cuposDisponibles}
                   </div>
                 </div>
               </div>
-            )}
+            ) : (
+              <div className="alert alert-danger reserva-alert mb-4 border-0 shadow-sm">
+                <div className="d-flex align-items-center">
+                  <i className="fas fa-ban reserva-icon"></i>
+                  <div className="reserva-text">
+                    <strong>Sin cupos para esta clase y horario.</strong>{" "}
+                    Seleccioná otra fecha.
+                  </div>
+                </div>
+              </div>
+            ))}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Tipo de clase */}
@@ -310,6 +398,18 @@ const FormularioReserva = () => {
                   👩‍🏫 Daniela (Vie y Sáb - 20:00 a 22:00)
                 </option>
               </select>
+              {reserva.profesor && diasPermitidosActuales.length > 0 && (
+                <div className="mt-2 text-muted small">
+                  Días disponibles:{" "}
+                  {diasPermitidosActuales.includes(1) ? "Lun " : ""}
+                  {diasPermitidosActuales.includes(2) ? "Mar " : ""}
+                  {diasPermitidosActuales.includes(3) ? "Mié " : ""}
+                  {diasPermitidosActuales.includes(4) ? "Jue " : ""}
+                  {diasPermitidosActuales.includes(5) ? "Vie " : ""}
+                  {diasPermitidosActuales.includes(6) ? "Sáb " : ""}
+                  {diasPermitidosActuales.includes(0) ? "Dom " : ""}
+                </div>
+              )}
             </div>
 
             {/* Fecha */}
@@ -328,9 +428,9 @@ const FormularioReserva = () => {
                 disabled={!reserva.profesor}
               >
                 <option value="">Selecciona una fecha</option>
-                {fechasValidas.map((fecha) => (
+                {opcionesFecha.map((fecha) => (
                   <option key={fecha} value={fecha}>
-                    {new Date(fecha).toLocaleDateString("es-AR", {
+                    {parseLocalDateFromYMD(fecha).toLocaleDateString("es-AR", {
                       weekday: "long",
                       year: "numeric",
                       month: "long",
@@ -353,13 +453,19 @@ const FormularioReserva = () => {
                   !reserva.fecha ||
                   !reserva.tipoClase ||
                   !reserva.profesor ||
-                  planUsuario === "Musculación"
+                  planUsuario === "Musculación" ||
+                  cuposDisponibles <= 0
                 }
               >
                 {loading ? (
                   <>
                     <i className="fas fa-spinner fa-spin me-2"></i>
                     Reservando...
+                  </>
+                ) : cuposDisponibles <= 0 ? (
+                  <>
+                    <i className="fas fa-ban me-2"></i>
+                    Sin cupos
                   </>
                 ) : (
                   <>
