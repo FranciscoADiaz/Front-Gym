@@ -11,7 +11,7 @@ import {
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
 import FormularioPlan from "../components/forms/FormularioPlan";
 import clientAxios, { configHeaders } from "../helpers/axios.config.helper";
-import Swal from "sweetalert2";
+import { confirmDelete, showSuccess, showError } from "../helpers/swal.helper";
 
 const AdminPlanesPage = () => {
   useChangeTitle("Administrar Planes");
@@ -75,25 +75,16 @@ const AdminPlanesPage = () => {
   };
 
   const handleEliminarPlan = async (id) => {
-    const result = await Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción no se puede deshacer",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    });
+    const result = await confirmDelete();
 
     if (result.isConfirmed) {
       try {
         await clientAxios.delete(`/planes/${id}`, configHeaders);
         setPlanes(planes.filter((plan) => plan._id !== id));
-        Swal.fire("Eliminado", "El plan ha sido eliminado", "success");
+        showSuccess("Eliminado", "El plan ha sido eliminado");
       } catch (error) {
         console.error("Error al eliminar plan:", error);
-        Swal.fire("Error", "No se pudo eliminar el plan", "error");
+        showError("Error", "No se pudo eliminar el plan");
       }
     }
   };
@@ -112,7 +103,7 @@ const AdminPlanesPage = () => {
             plan._id === planSeleccionado._id ? response.data.data : plan
           )
         );
-        Swal.fire("Actualizado", "El plan ha sido actualizado", "success");
+        showSuccess("Actualizado", "El plan ha sido actualizado");
       } else {
         // Crear nuevo plan
         const response = await clientAxios.post(
@@ -121,12 +112,12 @@ const AdminPlanesPage = () => {
           configHeaders
         );
         setPlanes([...planes, response.data.data]);
-        Swal.fire("Creado", "El plan ha sido creado exitosamente", "success");
+        showSuccess("Creado", "El plan ha sido creado exitosamente");
       }
       setShowModal(false);
     } catch (error) {
       console.error("Error al guardar plan:", error);
-      Swal.fire("Error", "No se pudo guardar el plan", "error");
+      showError("Error", "No se pudo guardar el plan");
     }
   };
 

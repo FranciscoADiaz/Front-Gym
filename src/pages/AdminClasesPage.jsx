@@ -11,7 +11,7 @@ import {
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
 import FormularioClase from "../components/forms/FormularioClase";
 import clientAxios, { configHeaders } from "../helpers/axios.config.helper";
-import Swal from "sweetalert2";
+import { confirmDelete, showSuccess, showError } from "../helpers/swal.helper";
 
 const AdminClasesPage = () => {
   useChangeTitle("Administrar Clases");
@@ -49,25 +49,16 @@ const AdminClasesPage = () => {
   };
 
   const handleEliminarClase = async (id) => {
-    const result = await Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción no se puede deshacer",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    });
+    const result = await confirmDelete();
 
     if (result.isConfirmed) {
       try {
         await clientAxios.delete(`/clases/${id}`, configHeaders);
         setClases(clases.filter((clase) => clase._id !== id));
-        Swal.fire("Eliminada", "La clase ha sido eliminada", "success");
+        showSuccess("Eliminada", "La clase ha sido eliminada");
       } catch (error) {
         console.error("Error al eliminar clase:", error);
-        Swal.fire("Error", "No se pudo eliminar la clase", "error");
+        showError("Error", "No se pudo eliminar la clase");
       }
     }
   };
@@ -86,7 +77,7 @@ const AdminClasesPage = () => {
             clase._id === claseSeleccionada._id ? response.data.data : clase
           )
         );
-        Swal.fire("Actualizada", "La clase ha sido actualizada", "success");
+        showSuccess("Actualizada", "La clase ha sido actualizada");
       } else {
         // Crear nueva clase
         const response = await clientAxios.post(
@@ -95,12 +86,12 @@ const AdminClasesPage = () => {
           configHeaders
         );
         setClases([...clases, response.data.data]);
-        Swal.fire("Creada", "La clase ha sido creada exitosamente", "success");
+        showSuccess("Creada", "La clase ha sido creada exitosamente");
       }
       setShowModal(false);
     } catch (error) {
       console.error("Error al guardar clase:", error);
-      Swal.fire("Error", "No se pudo guardar la clase", "error");
+      showError("Error", "No se pudo guardar la clase");
     }
   };
 

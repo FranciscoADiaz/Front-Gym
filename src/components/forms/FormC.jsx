@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./FormC.css";
 import clientAxios, { configHeaders } from "../../helpers/axios.config.helper";
+import { solicitarRecuperacionPassword } from "../../helpers/usuarios.helper";
 
 const FormC = ({ idPage }) => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const FormC = ({ idPage }) => {
     usuario: "",
     contrasenia: "",
   });
+  const [loadingRecuperacion, setLoadingRecuperacion] = useState(false);
 
   const handleChangeFormRegister = (ev) => {
     const value =
@@ -257,7 +259,8 @@ const FormC = ({ idPage }) => {
                     className="btn-agregar"
                     variant="primary"
                     type="button"
-                    onClick={() => {
+                    disabled={loadingRecuperacion}
+                    onClick={async () => {
                       if (!registro.email.trim()) {
                         Swal.fire({
                           icon: "error",
@@ -266,9 +269,32 @@ const FormC = ({ idPage }) => {
                         });
                         return;
                       }
+                      try {
+                        setLoadingRecuperacion(true);
+                        const respuesta = await solicitarRecuperacionPassword(
+                          registro.email.trim()
+                        );
+                        Swal.fire({
+                          icon: "success",
+                          title: "Revisa tu correo",
+                          text:
+                            respuesta?.msg ||
+                            "Si el email existe, te enviaremos un enlace para recuperar tu contraseña.",
+                        });
+                      } catch (error) {
+                        Swal.fire({
+                          icon: "error",
+                          title: "ERROR",
+                          text:
+                            error.response?.data?.msg ||
+                            "No pudimos enviar el correo. Intenta nuevamente.",
+                        });
+                      } finally {
+                        setLoadingRecuperacion(false);
+                      }
                     }}
                   >
-                    Recuperar
+                    {loadingRecuperacion ? "Enviando..." : "Recuperar"}
                   </Button>
                 </Form>
               ) : (

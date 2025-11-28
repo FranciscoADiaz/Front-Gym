@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import clientAxios, { configHeaders } from "../helpers/axios.config.helper";
 import TodasLasReservasAdmin from "../components/admin/TodasLasReservasAdmin";
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
+import { getNombreUsuario } from "../helpers/auth.helper";
 
 const AdminHomePage = () => {
   useChangeTitle("admin");
@@ -13,11 +14,9 @@ const AdminHomePage = () => {
 
   const [admin, setAdmin] = useState({ nombre: "" });
   useEffect(() => {
-    const token = JSON.parse(sessionStorage.getItem("token"));
-    if (token) {
-      const payloadBase64 = token.split(".")[1];
-      const payload = JSON.parse(atob(payloadBase64));
-      setAdmin({ nombre: payload.nombreUsuario });
+    const nombre = getNombreUsuario();
+    if (nombre) {
+      setAdmin({ nombre });
     }
   }, []);
 

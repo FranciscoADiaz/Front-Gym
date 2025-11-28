@@ -1,14 +1,15 @@
 import React from "react";
-import Error404 from "./Error404";
+import ComingSoon from "../components/common/ComingSoon";
+import { FaTshirt } from "react-icons/fa";
 
 const ProductoRopaPage = () => {
   return (
-    <Error404
+    <ComingSoon
       title="¡Próximamente!"
       subtitle="Sección de Ropa Deportiva"
       description="Estamos preparando la mejor colección de ropa deportiva.\n¡Muy pronto podrás encontrar camisetas, shorts y más!"
       pageTitle="Ropa Deportiva"
-      infoText="Sección en desarrollo - Ropa Deportiva"
+      icon={FaTshirt}
     />
   );
 };

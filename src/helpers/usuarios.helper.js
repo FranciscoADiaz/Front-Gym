@@ -86,3 +86,18 @@ export const asignarPlanUsuario = async (idUsuario, planData) => {
     }
   }
 };
+
+export const solicitarRecuperacionPassword = async (emailUsuario) => {
+  const res = await clientAxios.post("/usuarios/recuperar-contrasenia", {
+    emailUsuario,
+  });
+  return res.data;
+};
+
+export const restablecerPassword = async ({ token, nuevaContrasenia }) => {
+  const res = await clientAxios.post("/usuarios/restablecer-contrasenia", {
+    token,
+    nuevaContrasenia,
+  });
+  return res.data;
+};

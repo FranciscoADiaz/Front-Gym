@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Card, Badge, Button, Alert } from "react-bootstrap";
 import { renovarPlan, cancelarPlan } from "../../helpers/planes.helper";
-import Swal from "sweetalert2";
+import { getIdUsuario } from "../../helpers/auth.helper";
+import { showSuccess, showError, confirmAction } from "../../helpers/swal.helper";
 
 const EstadoPlan = () => {
   const [planUsuario, setPlanUsuario] = useState(null);
@@ -12,12 +13,11 @@ const EstadoPlan = () => {
   }, []);
 
   const obtenerPlanUsuario = async () => {
-    const token = sessionStorage.getItem("token");
-    if (!token) return;
+    const idUsuario = getIdUsuario();
+    if (!idUsuario) return;
 
     try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const response = await fetch(`/api/usuarios/${payload.idUsuario}`);
+      const response = await fetch(`/api/usuarios/${idUsuario}`);
       const data = await response.json();
       setPlanUsuario(data.usuario);
     } catch (error) {
@@ -29,37 +29,31 @@ const EstadoPlan = () => {
     setLoading(true);
     try {
       await renovarPlan(planUsuario._id);
-      Swal.fire(
-        "✅ ¡Plan renovado!",
-        "Tu plan ha sido renovado exitosamente",
-        "success"
-      );
+      showSuccess("✅ ¡Plan renovado!", "Tu plan ha sido renovado exitosamente");
       obtenerPlanUsuario(); // Actualizar datos
     } catch (error) {
-      Swal.fire("❌ Error", "No se pudo renovar el plan", "error");
+      showError("❌ Error", "No se pudo renovar el plan");
     } finally {
       setLoading(false);
     }
   };
 
   const handleCancelar = async () => {
-    const result = await Swal.fire({
-      title: "¿Cancelar plan?",
-      text: "Esta acción no se puede deshacer",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, cancelar",
-      cancelButtonText: "No, mantener",
-    });
+    const result = await confirmAction(
+      "¿Cancelar plan?",
+      "Esta acción no se puede deshacer",
+      "Sí, cancelar",
+      "No, mantener"
+    );
 
     if (result.isConfirmed) {
       setLoading(true);
       try {
         await cancelarPlan(planUsuario._id);
-        Swal.fire("✅ Plan cancelado", "Tu plan ha sido cancelado", "success");
+        showSuccess("✅ Plan cancelado", "Tu plan ha sido cancelado");
         obtenerPlanUsuario(); // Actualizar datos
       } catch (error) {
-        Swal.fire("❌ Error", "No se pudo cancelar el plan", "error");
+        showError("❌ Error", "No se pudo cancelar el plan");
       } finally {
         setLoading(false);
       }
