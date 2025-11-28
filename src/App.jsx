@@ -11,6 +11,7 @@ import Navbar from "./components/navbar/NavbarC";
 import Footer from "./components/footer/FooterC";
 import HomePage from "./pages/HomePage";
 import RecuperarContrasenia from "./pages/RecuperarContrasenia";
+import ResetPassword from "./pages/ResetPassword";
 import AdminUsersPage from "./pages/AdminUsersPage";
 import Sobrenosotros from "./pages/Sobrenosotros";
 import Contacto from "./pages/ContactoPage";
@@ -52,6 +53,7 @@ const App = () => {
                 path="/recuperarcontrasenia"
                 element={<RecuperarContrasenia />}
               />
+              <Route path="/recoveryPass" element={<ResetPassword />} />
 
               <Route path="/sobre-nosotros" element={<Sobrenosotros />} />
               <Route path="/contacto" element={<Contacto />} />

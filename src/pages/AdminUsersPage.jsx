@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { obtenerUsuarios } from "../helpers/usuarios.helper";
 import FormUsuario from "../components/forms/FormUsuario";
-import Swal from "sweetalert2";
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
+import { useAdminAuth } from "../helpers/admin.helper";
+import { getToken } from "../helpers/auth.helper";
+import { showError } from "../helpers/swal.helper";
 
 const AdminUsersPage = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -14,44 +16,23 @@ const AdminUsersPage = () => {
   const navigate = useNavigate();
 
   useChangeTitle("Administrar Usuarios");
-
-  // Verificar autenticación y rol
-  const token = sessionStorage.getItem("token");
-  const rol = sessionStorage.getItem("rol");
+  
+  // Verificar autenticación admin usando el helper
+  useAdminAuth(navigate);
 
   useEffect(() => {
-    // Verificar que el usuario esté logueado y sea admin
-    if (!token) {
-      Swal.fire("Error", "Debes iniciar sesión", "error");
-      navigate("/iniciarsesion");
-      return;
-    }
-
-    try {
-      const rolUsuario = JSON.parse(rol);
-      if (rolUsuario !== "admin") {
-        Swal.fire("Error", "No tienes permisos de administrador", "error");
-        navigate("/");
-        return;
-      }
-    } catch (error) {
-      console.error("Error verificando rol:", error);
-      navigate("/iniciarsesion");
-      return;
-    }
-
     const cargarUsuarios = async () => {
       try {
         const usuariosDB = await obtenerUsuarios();
         setUsuarios(usuariosDB);
       } catch (error) {
         console.error("Error al obtener usuarios", error);
-        Swal.fire("Error", "No se pudieron cargar los usuarios", "error");
+        showError("Error", "No se pudieron cargar los usuarios");
       }
     };
 
     cargarUsuarios();
-  }, [token, rol, navigate]);
+  }, []);
 
   const handleShowModal = (usuario = null) => {
     setUsuarioEditando(usuario);
@@ -68,9 +49,11 @@ const AdminUsersPage = () => {
       const usuariosDB = await obtenerUsuarios();
       setUsuarios(usuariosDB);
     } catch (error) {
-      Swal.fire("Error", "No se pudieron cargar los usuarios", "error");
+      showError("Error", "No se pudieron cargar los usuarios");
     }
   };
+
+  const token = getToken();
 
   return (
     <>

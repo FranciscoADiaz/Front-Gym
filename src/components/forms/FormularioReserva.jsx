@@ -2,17 +2,7 @@ import React, { useState, useEffect } from "react";
 import clientAxios from "../../helpers/axios.config.helper";
 import Swal from "sweetalert2";
 
-const obtenerIdUsuario = () => {
-  const token = JSON.parse(sessionStorage.getItem("token")) || null;
-  if (!token) return null;
-  try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.idUsuario;
-  } catch (e) {
-    console.error("Error decodificando token:", e);
-    return null;
-  }
-};
+import { getIdUsuario } from "../../helpers/auth.helper";
 
 // Horarios desde backend (evita duplicar reglas en FE)
 const obtenerHorarios = async () => {
@@ -50,7 +40,7 @@ const esDiaPermitido = (profesor, fechaString, horarios) => {
 };
 
 const FormularioReserva = ({ onReservada }) => {
-  const idUsuario = obtenerIdUsuario();
+  const idUsuario = getIdUsuario();
 
   const [reserva, setReserva] = useState({
     fecha: "",

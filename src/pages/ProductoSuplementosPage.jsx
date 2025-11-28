@@ -1,14 +1,15 @@
 import React from "react";
-import Error404 from "./Error404";
+import ComingSoon from "../components/common/ComingSoon";
+import { FaCapsules } from "react-icons/fa";
 
 const ProductoSuplementosPage = () => {
   return (
-    <Error404
+    <ComingSoon
       title="¡Próximamente!"
       subtitle="Sección de Suplementos"
       description="Estamos trabajando para traerte la mejor selección de suplementos.\n¡Muy pronto podrás encontrar proteínas, creatinas y más!"
       pageTitle="Suplementos"
-      infoText="Sección en desarrollo - Suplementos"
+      icon={FaCapsules}
     />
   );
 };

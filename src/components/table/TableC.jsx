@@ -1,28 +1,17 @@
 import { Button, Badge } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router";
-import Swal from "sweetalert2";
 import {
   eliminarUsuario,
   habilitarDeshabilitarUsuario,
 } from "../../helpers/usuarios.helper";
+import { getUserInfo } from "../../helpers/auth.helper";
+import { confirmDelete, showSuccess, showError, showWarning, confirmAction } from "../../helpers/swal.helper";
 import "./TableC.css";
 
-// Función auxiliar para decodificar JWT
-const decodeJWT = (token) => {
-  try {
-    const payload = token.split(".")[1];
-    const decodedPayload = JSON.parse(atob(payload));
-    return decodedPayload;
-  } catch (error) {
-    return null;
-  }
-};
-
 const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
-  // Obtener el usuario logueado del token JWT
-  const token = sessionStorage.getItem("token");
-  const usuarioLog = token ? decodeJWT(token) : null;
+  // Obtener el usuario logueado del token JWT usando el helper
+  const usuarioLog = getUserInfo();
 
   const getEstadoBadge = (estado) => {
     return estado === "habilitado" ? (
@@ -58,35 +47,26 @@ const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
     return <Badge bg={planColors[plan] || "primary"}>{plan}</Badge>;
   };
 
-  const handleEliminarUsuario = (element) => {
+  const handleEliminarUsuario = async (element) => {
     // Verificar si el usuario logueado está intentando eliminarse a sí mismo
     if (usuarioLog && usuarioLog.idUsuario === element._id) {
-      Swal.fire({
-        title: "No puedes eliminarte a ti mismo",
-        text: "Por seguridad, no puedes eliminar tu propia cuenta de administrador",
-        icon: "warning",
-        confirmButtonColor: "#3085d6",
-      });
+      showWarning(
+        "No puedes eliminarte a ti mismo",
+        "Por seguridad, no puedes eliminar tu propia cuenta de administrador"
+      );
       return;
     }
 
-    Swal.fire({
-      title: "¿Seguro que deseas eliminar?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí",
-      cancelButtonText: "No",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await eliminarUsuario(element._id);
-          funcionReseteador();
-          Swal.fire("Eliminado!", "", "success");
-        } catch {
-          Swal.fire("Error al eliminar", "", "error");
-        }
+    const result = await confirmDelete("¿Seguro que deseas eliminar?", "");
+    if (result.isConfirmed) {
+      try {
+        await eliminarUsuario(element._id);
+        funcionReseteador();
+        showSuccess("Eliminado!", "El usuario ha sido eliminado correctamente");
+      } catch {
+        showError("Error al eliminar", "No se pudo eliminar el usuario");
       }
-    });
+    }
   };
 
   return (
@@ -219,27 +199,23 @@ const TableC = ({ array, idPage, funcionReseteador, onEditUser }) => {
                             : "habilitar";
                         const mensaje = `¿${accion} usuario?`;
 
-                        const result = await Swal.fire({
-                          title: mensaje,
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonText: `Sí, ${accion}`,
-                          cancelButtonText: "Cancelar",
-                          confirmButtonColor: "#3085d6",
-                          cancelButtonColor: "#d33",
-                        });
+                        const result = await confirmAction(
+                          mensaje,
+                          "",
+                          `Sí, ${accion}`,
+                          "Cancelar"
+                        );
 
                         if (result.isConfirmed) {
                           try {
                             await habilitarDeshabilitarUsuario(element._id);
                             funcionReseteador();
-                            Swal.fire(
+                            showSuccess(
                               `Usuario ${accion} correctamente`,
-                              "",
-                              "success"
+                              ""
                             );
                           } catch {
-                            Swal.fire("Error al cambiar estado", "", "error");
+                            showError("Error al cambiar estado", "");
                           }
                         }
                       }}

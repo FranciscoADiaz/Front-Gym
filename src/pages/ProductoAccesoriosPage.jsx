@@ -1,14 +1,15 @@
 import React from "react";
-import Error404 from "./Error404";
+import ComingSoon from "../components/common/ComingSoon";
+import { FaDumbbell } from "react-icons/fa";
 
 const ProductoAccesoriosPage = () => {
   return (
-    <Error404
+    <ComingSoon
       title="¡Próximamente!"
       subtitle="Sección de Accesorios"
       description="Estamos preparando la mejor selección de accesorios deportivos.\n¡Muy pronto podrás encontrar guantes, cinturones y más!"
       pageTitle="Accesorios"
-      infoText="Sección en desarrollo - Accesorios"
+      icon={FaDumbbell}
     />
   );
 };

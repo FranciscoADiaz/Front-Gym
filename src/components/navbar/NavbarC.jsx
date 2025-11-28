@@ -5,53 +5,32 @@ import { NavLink, useNavigate } from "react-router";
 
 import Clima from "../clima/ClimaC";
 import Swal from "sweetalert2";
+import { getToken, getRol, getNombreUsuario, clearSession } from "../../helpers/auth.helper";
+import { confirmAction } from "../../helpers/swal.helper";
 import "../footer/FooterC.css";
 
 function NavbarC() {
-  // Traigo los valores del sessionStorage
-  const token = sessionStorage.getItem("token");
-  const rol = sessionStorage.getItem("rol");
-
-  // Parseo los valores del sessionStorage
-  const usuarioLog = token ? JSON.parse(token) : null;
-  const usuarioRolLog = rol ? JSON.parse(rol) : null;
-
-  // Obtener el nombre del usuario desde el token
-  const obtenerNombreUsuario = () => {
-    if (!token) return null;
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload.nombreUsuario;
-    } catch (error) {
-      console.error("Error al decodificar token:", error);
-      return null;
-    }
-  };
-
-  const nombreUsuario = obtenerNombreUsuario();
+  // Usar helpers para obtener datos del usuario
+  const token = getToken();
+  const usuarioRolLog = getRol();
+  const nombreUsuario = getNombreUsuario();
 
   const navigate = useNavigate();
 
-  const logoutUser = () => {
-    Swal.fire({
-      title: "Confirmar Cierre de Sesión",
-      text: "Vas a cerrar sesión y volver al inicio",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d3333d",
-      confirmButtonText: "Sí, cerrar sesión",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem("rol");
-
-        setTimeout(() => {
-          navigate("/");
-        }, 100);
-      }
-    });
+  const logoutUser = async () => {
+    const result = await confirmAction(
+      "Confirmar Cierre de Sesión",
+      "Vas a cerrar sesión y volver al inicio",
+      "Sí, cerrar sesión",
+      "Cancelar"
+    );
+    
+    if (result.isConfirmed) {
+      clearSession();
+      setTimeout(() => {
+        navigate("/");
+      }, 100);
+    }
   };
 
   return (
@@ -59,9 +38,9 @@ function NavbarC() {
       <Container fluid>
         <NavLink
           to={
-            usuarioLog && usuarioRolLog === "usuario"
+            token && usuarioRolLog === "usuario"
               ? "/user"
-              : usuarioLog && usuarioRolLog === "admin"
+              : token && usuarioRolLog === "admin"
               ? "/admin"
               : "/"
           }
@@ -84,7 +63,7 @@ function NavbarC() {
           </div>
 
           {/* Menú según rol */}
-          {usuarioLog && usuarioRolLog === "usuario" ? (
+          {token && usuarioRolLog === "usuario" ? (
             <Nav className="ms-auto">
               <NavLink className="nav-link fw-semibold px-3" to="/">
                 Inicio
@@ -105,7 +84,7 @@ function NavbarC() {
                 Contacto
               </NavLink>
             </Nav>
-          ) : usuarioLog && usuarioRolLog === "admin" ? (
+          ) : token && usuarioRolLog === "admin" ? (
             <Nav className="ms-auto">
               <NavLink className="nav-link fw-semibold px-3" to="/admin">
                 Inicio
@@ -141,7 +120,7 @@ function NavbarC() {
           )}
 
           {/* Login / Logout */}
-          {usuarioLog ? (
+          {token ? (
             <Nav className="ms-3">
               <div className="d-flex align-items-center">
                 <span className="user-greeting me-3 d-none d-md-inline">

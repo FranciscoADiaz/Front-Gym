@@ -3,23 +3,13 @@ import {
   obtenerReservasUsuario,
   cancelarReserva,
 } from "../../helpers/apiReservas";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import { getIdUsuario, clearSession } from "../../helpers/auth.helper";
+import { showError, showSuccess, confirmAction } from "../../helpers/swal.helper";
 
 const ListaReservas = ({ refreshKey = 0 }) => {
   const navigate = useNavigate();
-  const token = JSON.parse(sessionStorage.getItem("token")) || null;
-  const usuarioActual = token
-    ? (() => {
-        try {
-          const payload = JSON.parse(atob(token.split(".")[1]));
-          return payload.idUsuario;
-        } catch (e) {
-          console.error("Error decodificando token:", e);
-          return null;
-        }
-      })()
-    : null;
+  const usuarioActual = getIdUsuario();
 
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -94,14 +84,11 @@ const ListaReservas = ({ refreshKey = 0 }) => {
       setReservas(procesadas);
     } catch (error) {
       if (error.response?.status === 401) {
-        Swal.fire({
-          title: "Sesión expirada",
-          text: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
-          icon: "warning",
-          confirmButtonText: "Iniciar Sesión",
-        }).then(() => {
-          sessionStorage.removeItem("token");
-          sessionStorage.removeItem("rol");
+        showError(
+          "Sesión expirada",
+          "Tu sesión ha expirado. Por favor, inicia sesión nuevamente."
+        ).then(() => {
+          clearSession();
           navigate("/iniciarsesion");
         });
       }
@@ -122,20 +109,20 @@ const ListaReservas = ({ refreshKey = 0 }) => {
   }, []);
 
   const cancelar = async (id) => {
-    const confirm = await Swal.fire({
-      title: "Confirmar Cancelación",
-      showCancelButton: true,
-      confirmButtonText: "Sí",
-      cancelButtonText: "No",
-    });
+    const confirm = await confirmAction(
+      "Confirmar Cancelación",
+      "",
+      "Sí",
+      "No"
+    );
 
     if (confirm.isConfirmed) {
       try {
         await cancelarReserva(id);
-        Swal.fire("Clase cancelada con éxito", "", "success");
+        showSuccess("Clase cancelada con éxito", "");
         cargarReservas();
       } catch {
-        Swal.fire("Error", "No se pudo cancelar la clase", "error");
+        showError("Error", "No se pudo cancelar la clase");
       }
     }
   };
