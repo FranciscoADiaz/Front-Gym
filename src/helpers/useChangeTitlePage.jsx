@@ -19,7 +19,7 @@ export const useChangeTitle = (idPage) => {
       document.title = "Registrarse";
       break;
     case "reservar":
-      document.title = "Mis Clases - Tucumán Gym";
+      document.title = "Planes - Tucumán Gym";
       break;
     case "recuperarcontrasenia":
       document.title = "Recuperar Contraseña";
@@ -46,7 +46,7 @@ export const useChangeTitle = (idPage) => {
       document.title = "Administrar Planes - Tucumán Gym";
       break;
     case "Administrar Clases":
-      document.title = "Administrar Clases - Tucumán Gym";
+      document.title = "Administrar Planes - Tucumán Gym";
       break;
     case "404":
       document.title = "Página no encontrada - Tucumán Gym";

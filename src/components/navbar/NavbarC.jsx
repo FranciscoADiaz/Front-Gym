@@ -68,8 +68,8 @@ function NavbarC() {
               <NavLink className="nav-link fw-semibold px-3" to="/">
                 Inicio
               </NavLink>
-              <NavLink className="nav-link fw-semibold px-3" to="/reservar">
-                Mis Clases
+              <NavLink className="nav-link fw-semibold px-3" to="/planes">
+                Planes
               </NavLink>
               <NavLink className="nav-link fw-semibold px-3" to="/mi-plan">
                 Mi Plan
@@ -94,9 +94,6 @@ function NavbarC() {
                 to="/admin/usuarios"
               >
                 Usuarios
-              </NavLink>
-              <NavLink className="nav-link fw-semibold px-3" to="/admin/clases">
-                Clases
               </NavLink>
               <NavLink className="nav-link fw-semibold px-3" to="/admin/planes">
                 Planes

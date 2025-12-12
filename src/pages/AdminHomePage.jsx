@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
-import clientAxios, { configHeaders } from "../helpers/axios.config.helper";
-import TodasLasReservasAdmin from "../components/admin/TodasLasReservasAdmin";
+import { Container, Card, Row, Col } from "react-bootstrap";
 import { useChangeTitle } from "../helpers/useChangeTitlePage";
 import { getNombreUsuario } from "../helpers/auth.helper";
 
 const AdminHomePage = () => {
   useChangeTitle("admin");
 
-  const [todasLasReservas, setTodasLasReservas] = useState([]);
-  const [tick, setTick] = useState(0);
-  const [loading, setLoading] = useState(true);
-
   const [admin, setAdmin] = useState({ nombre: "" });
+
   useEffect(() => {
     const nombre = getNombreUsuario();
     if (nombre) {
@@ -20,88 +15,47 @@ const AdminHomePage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        setLoading(true);
-
-        // Obtener todas las reservas
-        const resTodas = await clientAxios.get(
-          "/admin/todas-las-reservas",
-          configHeaders
-        );
-        const data = Array.isArray(resTodas.data) ? resTodas.data : [];
-        const hoy = new Date();
-        const inicioDeHoy = new Date(
-          hoy.getFullYear(),
-          hoy.getMonth(),
-          hoy.getDate()
-        );
-        // Filtrar fuera las reservas cuya fecha sea anterior a hoy
-        const futuras = data.filter((r) => {
-          const f = new Date(r.fecha);
-          return f >= inicioDeHoy;
-        });
-        setTodasLasReservas(futuras);
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    obtenerDatos();
-  }, [tick]);
-
-  // Refresco automático cada 60s para mantener vista actualizada
-  useEffect(() => {
-    const id = setInterval(() => setTick((t) => t + 1), 60000);
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <Container idPage="admin" className="my-4">
-      {/* Header con saludo */}
       <div className="bg-primary text-white p-4 rounded-3 mb-4 shadow">
         <h1 className="mb-2 fw-bold">👋 Bienvenido, {admin.nombre}</h1>
+        <p className="mb-0">
+          Gestión simplificada: planes mensuales, pagos y usuarios.
+        </p>
       </div>
 
-      {loading ? (
-        <div className="text-center py-5">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Cargando...</span>
-          </div>
-          <p className="mt-3 text-muted">Cargando datos...</p>
-        </div>
-      ) : (
-        <>
-          {/* Sección de todas las reservas */}
-          <div className="bg-light p-4 rounded-3 shadow-sm">
-            <h3 className="text-info fw-bold mb-4">
-              📊 Todas las reservas activas ({todasLasReservas.length})
-            </h3>
-
-            {todasLasReservas.length === 0 ? (
-              <div className="text-center py-5">
-                <div className="text-muted mb-3">
-                  <i className="fas fa-database fs-1"></i>
-                </div>
-                <p className="text-muted fs-5 mb-0">
-                  No hay reservas activas en el sistema
-                </p>
-              </div>
-            ) : (
-              <div className="row">
-                {todasLasReservas.map((reserva, index) => (
-                  <div key={index} className="col-12">
-                    <TodasLasReservasAdmin reserva={reserva} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </>
-      )}
+      <Row className="g-4">
+        <Col md={4}>
+          <Card className="shadow-sm border-0">
+            <Card.Body>
+              <Card.Title>Planes</Card.Title>
+              <Card.Text>
+                Administra los planes mensuales y verifica pagos.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card className="shadow-sm border-0">
+            <Card.Body>
+              <Card.Title>Usuarios</Card.Title>
+              <Card.Text>
+                Revisa altas, roles y estados de los usuarios.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card className="shadow-sm border-0">
+            <Card.Body>
+              <Card.Title>Pagos</Card.Title>
+              <Card.Text>
+                Mercado Pago para las suscripciones de los planes.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   );
 };
