@@ -23,8 +23,8 @@ const PagoExitosoPage = () => {
     navigate("/");
   };
 
-  const handleVerMisClases = () => {
-    navigate("/reservar");
+  const handleVerPlanes = () => {
+    navigate("/planes");
   };
 
   return (
@@ -52,7 +52,7 @@ const PagoExitosoPage = () => {
                 <ul className="list-unstyled mt-2 mb-0">
                   <li>✓ Recibirás un email con los detalles de tu plan</li>
                   <li>✓ Tu plan estará activo inmediatamente</li>
-                  <li>✓ Puedes reservar clases desde "Mis Clases"</li>
+                  <li>✓ Puedes gestionar tus planes desde “Planes”</li>
                 </ul>
               </div>
 
@@ -66,9 +66,9 @@ const PagoExitosoPage = () => {
                   Volver al Inicio
                 </Button>
 
-                <Button variant="success" onClick={handleVerMisClases}>
+                <Button variant="success" onClick={handleVerPlanes}>
                   <i className="fas fa-dumbbell me-2"></i>
-                  Ver Mis Clases
+                  Ver Planes
                 </Button>
               </div>
             </Card.Body>
