@@ -16,7 +16,7 @@ const AdminHomePage = () => {
   }, []);
 
   return (
-    <Container idPage="admin" className="my-4">
+    <Container className="my-4">
       <div className="bg-primary text-white p-4 rounded-3 mb-4 shadow">
         <h1 className="mb-2 fw-bold">👋 Bienvenido, {admin.nombre}</h1>
         <p className="mb-0">

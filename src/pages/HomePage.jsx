@@ -16,7 +16,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Container idPage="inicio">
+      <Container>
         <Redes />
         <Wp />
         <CarruselInicio />
