@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { enviarConsultaContacto } from "../../helpers/contacto.helper";
+import { showError, showSuccess } from "../../helpers/swal.helper";
 
 const Contacto = () => {
   const [formulario, setFormulario] = useState({
@@ -9,6 +11,7 @@ const Contacto = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [enviando, setEnviando] = useState(false);
 
   const manejarCambio = (e) => {
     const { name, value } = e.target;
@@ -17,7 +20,6 @@ const Contacto = () => {
       [name]: value,
     });
 
-    // Limpiar error del campo
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -47,14 +49,30 @@ const Contacto = () => {
     return Object.keys(nuevosErrors).length === 0;
   };
 
-  const manejarEnvio = (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
+    if (!validarFormulario()) return;
 
-    if (validarFormulario()) {
-      // Aquí se enviaría el formulario al backend
-      alert("¡Gracias por contactarnos! Te responderemos pronto.");
+    try {
+      setEnviando(true);
+      const { msg } = await enviarConsultaContacto({
+        nombre: formulario.nombre.trim(),
+        email: formulario.email.trim(),
+        mensaje: formulario.mensaje.trim(),
+      });
+      showSuccess(
+        "Mensaje enviado",
+        msg || "¡Gracias por contactarnos! Te responderemos pronto."
+      );
       setFormulario({ nombre: "", email: "", mensaje: "" });
       setErrors({});
+    } catch (error) {
+      const mensaje =
+        error?.response?.data?.msg ||
+        "No pudimos enviar tu mensaje. Intenta nuevamente.";
+      showError("Error al enviar", mensaje);
+    } finally {
+      setEnviando(false);
     }
   };
 
@@ -117,8 +135,9 @@ const Contacto = () => {
             variant="primary"
             size="lg"
             className="px-4 py-2 fw-bold"
+            disabled={enviando}
           >
-            Enviar Mensaje
+            {enviando ? "Enviando..." : "Enviar Mensaje"}
           </Button>
         </div>
       </Form>
