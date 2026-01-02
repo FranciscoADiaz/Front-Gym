@@ -2,7 +2,7 @@
 
 > Aplicación web Full Stack (MERN) para la gestión comercial y operativa de gimnasios, con pagos online y reservas en tiempo real.
 
-![En desarrollo](https://img.shields.io/badge/Status-Finalizado-success)
+![En desarrollo](https://img.shields.io/badge/Status-Desarrollo-success)
 ![MERN](https://img.shields.io/badge/Stack-MERN-blue)
 
 ## 📋 Sobre el Proyecto
