@@ -45,11 +45,12 @@
 * **Monitoreo:** Vista global de reservas y estado de pagos de socios.
 
 
-
-### Desarrollado por: Diaz Francisco Ariel
 ## ⚙️ Instalación Local
 
 ### 1. Clonar y Preparar
 ```bash
 git clone 
 cd tucugym
+
+
+### Desarrollado por: Diaz Francisco Ariel
