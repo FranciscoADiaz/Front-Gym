@@ -44,8 +44,9 @@
 * **Control de Clases:** Crear/Editar horarios, cupos y tipos de clase.
 * **Monitoreo:** Vista global de reservas y estado de pagos de socios.
 
----
 
+
+### Desarrollado por: Diaz Francisco Ariel
 ## ⚙️ Instalación Local
 
 ### 1. Clonar y Preparar
